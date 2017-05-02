@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Course</string>
+    <string name="title_gpa">GPA</string>
+    <string name="title_units">Units</string>
+    <string name="title_badges">Badges</string>
+    <string name="title_activity_side_drawer">SideDrawer</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
