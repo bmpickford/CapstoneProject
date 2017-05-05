@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "com.app.captsone.qut_app"
+        applicationId "com.app.captsone.app"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
@@ -17,9 +17,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets {
-        main.java.srcDirs += 'src/main/<YOUR DIRECTORY>'
-    }
 }
 
 dependencies {
@@ -28,6 +25,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'

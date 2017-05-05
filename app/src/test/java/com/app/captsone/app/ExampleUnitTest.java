@@ -1,4 +1,4 @@
-package com.app.capstone.qut_app;
+package com.app.captsone.app;
 
 import org.junit.Test;
 

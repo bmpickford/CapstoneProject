@@ -1,4 +1,4 @@
-package com.app.capstone.qut_app;
+package com.app.captsone.app;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.app.captsone.qut_app", appContext.getPackageName());
+        assertEquals("com.app.captsone.app", appContext.getPackageName());
     }
 }
