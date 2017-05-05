@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:elevation="5dp"
-    tools:context="com.app.captsone.app.LinksPage">
+    tools:context="com.app.captsone.app.LinksPage"
+    android:background="@color/colorBackground">
 
     <!-- TODO: Update blank fragment layout -->
     <!--    <TextView
@@ -21,59 +21,58 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/link1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/list_m_bottom"
+            android:layout_marginStart="@dimen/list_m_left"
+            android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginTop="@dimen/list_m_top"
             android:layout_weight="1"
-            android:autoLink="web"
             android:background="@android:color/white"
-            android:clickable="true"
-            android:elevation="5dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:text="https://www.lynda.com" />
+            android:elevation="@dimen/list_elevation"
+            android:paddingBottom="@dimen/list_p_bottom"
+            android:paddingLeft="@dimen/list_m_left"
+            android:paddingEnd="@dimen/list_p_right"
+            android:paddingTop="@dimen/list_p_top"
+            android:text="@string/link1"
+            android:autoLink="web"/>
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/link2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/list_m_bottom"
+            android:layout_marginStart="@dimen/list_m_left"
+            android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginTop="@dimen/list_m_top"
             android:layout_weight="1"
             android:background="@android:color/white"
             android:clickable="true"
-            android:elevation="5dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:text="STIMulate" />
+            android:elevation="@dimen/list_elevation"
+            android:paddingBottom="@dimen/list_p_bottom"
+            android:paddingLeft="@dimen/list_m_left"
+            android:paddingEnd="@dimen/list_p_right"
+            android:paddingTop="@dimen/list_p_top"
+            android:text="@string/link2" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/link3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/list_m_bottom"
+            android:layout_marginStart="@dimen/list_m_left"
+            android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginTop="@dimen/list_m_top"
             android:layout_weight="1"
             android:background="@android:color/white"
             android:clickable="true"
-            android:elevation="50dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:text="google?" />
+            android:elevation="@dimen/list_elevation"
+            android:paddingBottom="@dimen/list_p_bottom"
+            android:paddingLeft="@dimen/list_m_left"
+            android:paddingEnd="@dimen/list_p_right"
+            android:paddingTop="@dimen/list_p_top"
+            android:text="@string/link3" />
     </LinearLayout>
 
 

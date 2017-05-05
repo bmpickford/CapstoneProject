@@ -5,4 +5,17 @@
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">24dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <!-- LINKS/SETTING "BUTTONS" -->
+    <dimen name="list_m_bottom">4dp</dimen>
+    <dimen name="list_m_top">4dp</dimen>
+    <dimen name="list_m_left">10dp</dimen>
+    <dimen name="list_m_right">10dp</dimen>
+
+    <dimen name="list_p_bottom">16dp</dimen>
+    <dimen name="list_p_top">16dp</dimen>
+    <dimen name="list_p_left">10dp</dimen>
+    <dimen name="list_p_right">10dp</dimen>
+
+    <dimen name="list_elevation">2dp</dimen>
 </resources>

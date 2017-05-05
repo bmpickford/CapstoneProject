@@ -6,4 +6,11 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="logout">Logout</string>
+
+    <!-- LINKS -->
+    <string name="link1"><a href="https://www.lynda.com">Lynda</a></string>
+    <string name="link2">STIMulate</string>
+    <string name="link3">QUT Medical</string>
+
 </resources>

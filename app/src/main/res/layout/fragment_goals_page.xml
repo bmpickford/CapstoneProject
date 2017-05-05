@@ -14,15 +14,16 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="55dp"
+        android:layout_height="62dp"
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:clickable="true"
-        app:backgroundTint="@android:color/holo_blue_dark"
-        app:elevation="5dp"
+        android:tint="@color/colorWhite"
+        app:backgroundTint="@color/colorPrimaryDark"
         app:fabSize="mini"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        app:rippleColor="@color/colorWhite"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </FrameLayout>
