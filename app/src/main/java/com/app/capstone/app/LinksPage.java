@@ -1,37 +1,39 @@
-package com.app.captsone.app;
+package com.app.capstone.app;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link GoalsPage.OnFragmentInteractionListener} interface
+ * {@link LinksPage.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link GoalsPage#newInstance} factory method to
+ * Use the {@link LinksPage#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GoalsPage extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
+public class LinksPage extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public GoalsPage() {
+    // Add any extra links here
+    private int[] links = new int[] {R.id.link1, R.id.link2, R.id.link3};
+
+
+    public LinksPage() {
         // Required empty public constructor
     }
 
@@ -41,28 +43,20 @@ public class GoalsPage extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment GoalsPage.
+     * @return A new instance of fragment LinksPage.
      */
-    // TODO: Rename and change types and number of parameters
-    public static GoalsPage newInstance(String param1, String param2) {
-        GoalsPage fragment = new GoalsPage();
+    public static LinksPage newInstance(String param1, String param2) {
+        LinksPage fragment = new LinksPage();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
-
-
-
-
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -72,20 +66,17 @@ public class GoalsPage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_goals_page, container, false);
-        FloatingActionButton button = (FloatingActionButton) view.findViewById(R.id.addGoalButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                System.out.println("Button clicked");
-            }
-        });
+        View view = inflater.inflate(com.app.capstone.app.R.layout.fragment_links_page, container, false);
+
+        //Makes the link 'buttons' linkable
+        for (int link:links) {
+            TextView t = (TextView) view.findViewById(link);
+            t.setMovementMethod(LinkMovementMethod.getInstance());
+        }
 
         return view;
-
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -120,7 +111,6 @@ public class GoalsPage extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

@@ -1,4 +1,4 @@
-package com.app.captsone.app;
+package com.app.capstone.app;
 
 import org.junit.Test;
 
@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
+// TODO: Implement unit tests
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {

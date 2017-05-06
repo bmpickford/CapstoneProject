@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.app.captsone.app.LinksPage"
+    tools:context="com.app.capstone.app.LinksPage"
     android:background="@color/colorBackground">
 
     <!-- TODO: Update blank fragment layout -->
@@ -25,18 +25,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/list_m_bottom"
-            android:layout_marginStart="@dimen/list_m_left"
             android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginStart="@dimen/list_m_left"
             android:layout_marginTop="@dimen/list_m_top"
             android:layout_weight="1"
             android:background="@android:color/white"
+            android:clickable="true"
             android:elevation="@dimen/list_elevation"
             android:paddingBottom="@dimen/list_p_bottom"
-            android:paddingLeft="@dimen/list_m_left"
             android:paddingEnd="@dimen/list_p_right"
+            android:paddingLeft="@dimen/list_m_left"
             android:paddingTop="@dimen/list_p_top"
             android:text="@string/link1"
-            android:autoLink="web"/>
+            android:textColorLink="@android:color/black" />
+
 
         <TextView
             android:id="@+id/link2"
@@ -54,7 +56,8 @@
             android:paddingLeft="@dimen/list_m_left"
             android:paddingEnd="@dimen/list_p_right"
             android:paddingTop="@dimen/list_p_top"
-            android:text="@string/link2" />
+            android:text="@string/link2"
+            android:textColorLink="@android:color/black"/>
 
         <TextView
             android:id="@+id/link3"
@@ -72,7 +75,8 @@
             android:paddingLeft="@dimen/list_m_left"
             android:paddingEnd="@dimen/list_p_right"
             android:paddingTop="@dimen/list_p_top"
-            android:text="@string/link3" />
+            android:text="@string/link3"
+            android:textColorLink="@android:color/black"/>
     </LinearLayout>
 
 

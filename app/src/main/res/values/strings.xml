@@ -10,7 +10,7 @@
 
     <!-- LINKS -->
     <string name="link1"><a href="https://www.lynda.com">Lynda</a></string>
-    <string name="link2">STIMulate</string>
-    <string name="link3">QUT Medical</string>
+    <string name="link2"><a href="https://www.library.qut.edu.au/help/stimulate.jsp">STIMulate</a></string>
+    <string name="link3"><a href="http://www.medical-centre.qut.edu.au/">QUT Medical</a></string>
 
 </resources>

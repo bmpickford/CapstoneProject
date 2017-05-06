@@ -1,12 +1,9 @@
-package com.app.captsone.app;
+package com.app.capstone.app;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,31 +13,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import static com.app.captsone.app.R.styleable.NavigationView;
-
 public class MainActivity extends AppCompatActivity
         implements HomePage.OnFragmentInteractionListener, CoursePage.OnFragmentInteractionListener, LinksPage.OnFragmentInteractionListener, SettingsPage.OnFragmentInteractionListener, GoalsPage.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setContentView(com.app.capstone.app.R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(com.app.capstone.app.R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(com.app.capstone.app.R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, com.app.capstone.app.R.string.navigation_drawer_open, com.app.capstone.app.R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(com.app.capstone.app.R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(com.app.capstone.app.R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -51,7 +46,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(com.app.capstone.app.R.menu.main, menu);
         return true;
     }
 
@@ -63,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == com.app.capstone.app.R.id.action_settings) {
             return true;
         }
 
@@ -78,32 +73,32 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         Class fragmentClass = null;
 
-        if (id == R.id.nav_home) {
+        if (id == com.app.capstone.app.R.id.nav_home) {
             fragmentClass = HomePage.class;
             System.out.println("Home clicked");
-        } else if (id == R.id.nav_course) {
+        } else if (id == com.app.capstone.app.R.id.nav_course) {
             fragmentClass = CoursePage.class;
             System.out.println("Course clicked");
-        } else if (id == R.id.nav_goals) {
+        } else if (id == com.app.capstone.app.R.id.nav_goals) {
             fragmentClass = GoalsPage.class;
             System.out.println("Goals clicked");
-        } else if (id == R.id.nav_links) {
+        } else if (id == com.app.capstone.app.R.id.nav_links) {
             fragmentClass = LinksPage.class;
             System.out.println("Links clicked");
-        } else if (id == R.id.nav_settings) {
+        } else if (id == com.app.capstone.app.R.id.nav_settings) {
             fragmentClass = SettingsPage.class;
             System.out.println("Settings clicked");
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+            fragmentManager.beginTransaction().replace(com.app.capstone.app.R.id.flContent, fragment).commit();
         } catch (Exception e) {
             System.out.println(e);
             e.printStackTrace();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(com.app.capstone.app.R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
