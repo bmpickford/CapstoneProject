@@ -13,15 +13,16 @@
         android:text="Goals" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/addGoalButton"
         android:layout_width="55dp"
         android:layout_height="62dp"
         android:layout_gravity="bottom|right"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="12dp"
         android:clickable="true"
         android:tint="@color/colorWhite"
         app:backgroundTint="@color/colorPrimaryDark"
+        app:elevation="2dp"
         app:fabSize="mini"
         app:rippleColor="@color/colorWhite"
         app:srcCompat="@android:drawable/ic_input_add" />
