@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -66,11 +67,13 @@ public class GoalsPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(com.app.capstone.app.R.layout.fragment_goals_page, container, false);
+        final View view = inflater.inflate(com.app.capstone.app.R.layout.fragment_goals_page, container, false);
         FloatingActionButton button = (FloatingActionButton) view.findViewById(com.app.capstone.app.R.id.addGoalButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // TODO: Add button functionality for adding goals here
+                TextView text = (TextView) view.findViewById(R.id.goalContent);
+                text.setText("You clicked the button");
                 System.out.println("Button clicked");
             }
         });
