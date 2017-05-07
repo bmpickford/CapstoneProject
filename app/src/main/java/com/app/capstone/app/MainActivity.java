@@ -15,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements HomePage.OnFragmentInteractionListener, CoursePage.OnFragmentInteractionListener, LinksPage.OnFragmentInteractionListener, SettingsPage.OnFragmentInteractionListener, GoalsPage.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
+        implements ProfilePage.OnFragmentInteractionListener, HomePage.OnFragmentInteractionListener, CoursePage.OnFragmentInteractionListener, LinksPage.OnFragmentInteractionListener, SettingsPage.OnFragmentInteractionListener, GoalsPage.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +97,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == com.app.capstone.app.R.id.nav_settings) {
             fragmentClass = SettingsPage.class;
             System.out.println("Settings clicked");
+        }else if (id == com.app.capstone.app.R.id.nav_profile) {
+            fragmentClass = ProfilePage.class;
+            System.out.println("Profile clicked");
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();

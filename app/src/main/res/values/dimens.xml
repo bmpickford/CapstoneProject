@@ -18,4 +18,13 @@
     <dimen name="list_p_right">10dp</dimen>
 
     <dimen name="list_elevation">2dp</dimen>
+
+
+    <!-- PROFILE -->
+    <dimen name="profile_p_right">16dp</dimen>
+    <dimen name="profile_title_size">22sp</dimen>
+    <dimen name="profile_text_size">16sp</dimen>
+
+    <dimen name="profile_size">120dp</dimen>
+
 </resources>
