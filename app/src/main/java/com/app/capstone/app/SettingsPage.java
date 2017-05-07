@@ -1,6 +1,7 @@
 package com.app.capstone.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -74,15 +76,9 @@ public class SettingsPage extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // TODO: Add button functionality for logout here - Changes page but left menu needs to update
-                Fragment fragment = new HomePage();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flContent, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                //DrawerLayout drawer = (DrawerLayout) view.findViewById(com.app.capstone.app.R.id.drawer_layout);
-                //drawer.closeDrawer(GravityCompat.START);
                 System.out.println("Logout clicked");
+                Intent i= new Intent(getActivity(),LoginActivity.class);
+                startActivity(i);
             }
         });
 

@@ -31,6 +31,17 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(com.app.capstone.app.R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        Class fragmentClass = HomePage.class;
+        Fragment fragment = null;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(com.app.capstone.app.R.id.flContent, fragment).commit();
+        navigationView.setCheckedItem(R.id.nav_home);
     }
 
     @Override
@@ -68,7 +79,7 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        System.out.println(item);
         int id = item.getItemId();
         Fragment fragment = null;
         Class fragmentClass = null;
@@ -101,6 +112,42 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(com.app.capstone.app.R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void displayView(int id){
+        Fragment fragment = null;
+        Class fragmentClass = null;
+
+        if (id == com.app.capstone.app.R.id.nav_home) {
+            fragmentClass = HomePage.class;
+            System.out.println("Home clicked");
+        } else if (id == com.app.capstone.app.R.id.nav_course) {
+            fragmentClass = CoursePage.class;
+            System.out.println("Course clicked");
+        } else if (id == com.app.capstone.app.R.id.nav_goals) {
+            fragmentClass = GoalsPage.class;
+            System.out.println("Goals clicked");
+        } else if (id == com.app.capstone.app.R.id.nav_links) {
+            fragmentClass = LinksPage.class;
+            System.out.println("Links clicked");
+        } else if (id == com.app.capstone.app.R.id.nav_settings) {
+            fragmentClass = SettingsPage.class;
+            System.out.println("Settings clicked");
+        }
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(com.app.capstone.app.R.id.flContent, fragment).commit();
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(com.app.capstone.app.R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(com.app.capstone.app.R.id.nav_view);
+        navigationView.setCheckedItem(id);
+        //drawer. //getMenu().getItem(0).setChecked(true);
+        drawer.closeDrawer(GravityCompat.START);
     }
 
     @Override
