@@ -3,12 +3,23 @@ package com.app.capstone.app;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.app.capstone.app.Course.CourseBadges;
+import com.app.capstone.app.Course.CourseGPA;
+import com.app.capstone.app.Course.CourseUnits;
+import com.app.capstone.app.Links.LinkContacts;
+import com.app.capstone.app.Links.LinkHealth;
+import com.app.capstone.app.Links.LinkStudy;
 
 
 /**
@@ -20,60 +31,61 @@ import android.widget.TextView;
  * create an instance of this fragment.
  */
 public class LinksPage extends Fragment {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
-    // Add any extra links here
-    private int[] links = new int[] {R.id.link1, R.id.link2, R.id.link3};
-
 
     public LinksPage() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LinksPage.
-     */
-    public static LinksPage newInstance(String param1, String param2) {
+
+    public static LinksPage newInstance() {
         LinksPage fragment = new LinksPage();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(com.app.capstone.app.R.layout.fragment_links_page, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_links_page, container, false);
 
-        //Makes the link 'buttons' linkable
-        for (int link:links) {
-            TextView t = (TextView) view.findViewById(link);
-            t.setMovementMethod(LinkMovementMethod.getInstance());
-        }
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.link_bottom_navigation);
 
+        bottomNavigationView.setOnNavigationItemSelectedListener( new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment = null;
+                Class fragmentClass = null;
+                switch (item.getItemId()) {
+
+                    case R.id.action_contacts:
+                        fragmentClass = LinkContacts.class;
+                        System.out.println("You clicked contacts");
+                        break;
+                    case R.id.action_study:
+                        fragmentClass = LinkStudy.class;
+                        System.out.println("You clicked study");
+                        break;
+                    case R.id.action_health:
+                        fragmentClass = LinkHealth.class;
+                        System.out.println("You clicked health");
+                        break;
+                }
+                try {
+                    fragment = (Fragment) fragmentClass.newInstance();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.linkContent, fragment).commit();
+                } catch (Exception e) {
+                    System.out.println(e);
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        });
         return view;
     }
 
@@ -100,16 +112,6 @@ public class LinksPage extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }

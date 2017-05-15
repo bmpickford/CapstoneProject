@@ -3,10 +3,18 @@ package com.app.capstone.app;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.app.capstone.app.Course.CourseBadges;
+import com.app.capstone.app.Course.CourseGPA;
+import com.app.capstone.app.Course.CourseUnits;
 
 
 /**
@@ -17,7 +25,7 @@ import android.view.ViewGroup;
  * Use the {@link CoursePage#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CoursePage extends Fragment {
+public class CoursePage extends Fragment implements CourseGPA.OnFragmentInteractionListener, CourseUnits.OnFragmentInteractionListener, CourseBadges.OnFragmentInteractionListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -55,13 +63,59 @@ public class CoursePage extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        Fragment fragment = null;
+        Class fragmentClass = CourseGPA.class;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.courseContent, fragment).commit();
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(com.app.capstone.app.R.layout.fragment_course_page, container, false);
+        final View view = inflater.inflate(com.app.capstone.app.R.layout.fragment_course_page, container, false);
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment fragment = null;
+                        Class fragmentClass = null;
+                        switch (item.getItemId()) {
+
+                            case R.id.action_gpa:
+                                fragmentClass = CourseGPA.class;
+                                System.out.println("You clicked GPA");
+                                break;
+                            case R.id.action_units:
+                                fragmentClass = CourseUnits.class;
+                                System.out.println("You clicked Units");
+                                break;
+                            case R.id.action_badges:
+                                fragmentClass = CourseBadges.class;
+                                System.out.println("You clicked Badges");
+                                break;
+                        }
+                        try {
+                            fragment = (Fragment) fragmentClass.newInstance();
+                            FragmentManager fragmentManager = getFragmentManager();
+                            fragmentManager.beginTransaction().replace(R.id.courseContent, fragment).commit();
+                        } catch (Exception e) {
+                            System.out.println(e);
+                            e.printStackTrace();
+                        }
+                        return true;
+                    }
+                });
+        return view;
     }
 
     public void onButtonPressed(Uri uri) {
@@ -87,6 +141,12 @@ public class CoursePage extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -100,4 +160,6 @@ public class CoursePage extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

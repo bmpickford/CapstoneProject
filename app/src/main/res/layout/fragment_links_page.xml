@@ -2,82 +2,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.app.capstone.app.LinksPage"
     android:background="@color/colorBackground">
 
-    <!-- TODO: Update blank fragment layout -->
-    <!--    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:marginLeft="20dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:text="lynda.com" />-->
-
-
     <LinearLayout
+        android:id="@+id/linkContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/link1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/list_m_bottom"
-            android:layout_marginEnd="@dimen/list_m_right"
-            android:layout_marginStart="@dimen/list_m_left"
-            android:layout_marginTop="@dimen/list_m_top"
-            android:layout_weight="1"
-            android:background="@android:color/white"
-            android:clickable="true"
-            android:elevation="@dimen/list_elevation"
-            android:paddingBottom="@dimen/list_p_bottom"
-            android:paddingEnd="@dimen/list_p_right"
-            android:paddingLeft="@dimen/list_m_left"
-            android:paddingTop="@dimen/list_p_top"
-            android:text="@string/link1"
-            android:textColorLink="@android:color/black" />
-
-
-        <TextView
-            android:id="@+id/link2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/list_m_bottom"
-            android:layout_marginStart="@dimen/list_m_left"
-            android:layout_marginEnd="@dimen/list_m_right"
-            android:layout_marginTop="@dimen/list_m_top"
-            android:layout_weight="1"
-            android:background="@android:color/white"
-            android:clickable="true"
-            android:elevation="@dimen/list_elevation"
-            android:paddingBottom="@dimen/list_p_bottom"
-            android:paddingLeft="@dimen/list_m_left"
-            android:paddingEnd="@dimen/list_p_right"
-            android:paddingTop="@dimen/list_p_top"
-            android:text="@string/link2"
-            android:textColorLink="@android:color/black"/>
-
-        <TextView
-            android:id="@+id/link3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/list_m_bottom"
-            android:layout_marginStart="@dimen/list_m_left"
-            android:layout_marginEnd="@dimen/list_m_right"
-            android:layout_marginTop="@dimen/list_m_top"
-            android:layout_weight="1"
-            android:background="@android:color/white"
-            android:clickable="true"
-            android:elevation="@dimen/list_elevation"
-            android:paddingBottom="@dimen/list_p_bottom"
-            android:paddingLeft="@dimen/list_m_left"
-            android:paddingEnd="@dimen/list_p_right"
-            android:paddingTop="@dimen/list_p_top"
-            android:text="@string/link3"
-            android:textColorLink="@android:color/black"/>
     </LinearLayout>
+
+    <android.support.design.widget.BottomNavigationView
+            android:id="@+id/link_bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorWhite"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:paddingBottom="@dimen/nav_p_bottom"
+            app:menu="@menu/link_menu" />
 
 
 </FrameLayout>

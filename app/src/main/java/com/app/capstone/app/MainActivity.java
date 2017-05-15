@@ -13,9 +13,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.app.capstone.app.Course.CourseBadges;
+import com.app.capstone.app.Course.CourseGPA;
+import com.app.capstone.app.Course.CourseUnits;
+import com.app.capstone.app.Links.LinkContacts;
+import com.app.capstone.app.Links.LinkHealth;
+import com.app.capstone.app.Links.LinkStudy;
 
 public class MainActivity extends AppCompatActivity
-        implements ProfilePage.OnFragmentInteractionListener, HomePage.OnFragmentInteractionListener, CoursePage.OnFragmentInteractionListener, LinksPage.OnFragmentInteractionListener, SettingsPage.OnFragmentInteractionListener, GoalsPage.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
+        implements CourseGPA.OnFragmentInteractionListener, ProfilePage.OnFragmentInteractionListener, HomePage.OnFragmentInteractionListener,
+        CoursePage.OnFragmentInteractionListener, LinksPage.OnFragmentInteractionListener, SettingsPage.OnFragmentInteractionListener,
+        GoalsPage.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, CourseUnits.OnFragmentInteractionListener,
+        CourseBadges.OnFragmentInteractionListener, LinkStudy.OnFragmentInteractionListener, LinkContacts.OnFragmentInteractionListener,
+        LinkHealth.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +56,8 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(com.app.capstone.app.R.id.flContent, fragment).commit();
         navigationView.setCheckedItem(R.id.nav_home);
+
+        //assignProfileData();
     }
 
     @Override
@@ -154,5 +169,26 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    private void assignProfileData(){
+        // TODO: API call to retrieve this profile data
+        ImageView avatar = (ImageView) findViewById(com.app.capstone.app.R.id.pAvatar);
+        TextView name = (TextView) findViewById(com.app.capstone.app.R.id.pName);
+        TextView studentNo = (TextView) findViewById(com.app.capstone.app.R.id.pStudentNo);
+        TextView degree = (TextView) findViewById(com.app.capstone.app.R.id.pDegree);
+        TextView email = (TextView) findViewById(com.app.capstone.app.R.id.pEmail);
+
+        //int id = getResources().getIdentifier("ic_launcher_round", "drawable", getPackageName());
+
+        //avatar.setImageResource(id);
+        //name.setText("Random User");
+        //studentNo.setText("n01234567");
+        //degree.setText("Bachelor of Information Technology");
+        //email.setText("randomuser@student.qut.edu.au");
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(Uri uri);
     }
 }
