@@ -4,10 +4,140 @@
     android:layout_height="match_parent"
     tools:context="com.app.capstone.app.Course.CourseUnits">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Units" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollIndicators="right"
+            android:scrollbars="horizontal|vertical">
 
+            <TextView
+                android:id="@+id/semesterLabel1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:text="Semester 1, 2016"
+                android:textAppearance="@android:style/TextAppearance.Material.Large"
+                android:textSize="32dp" />
+
+            <TextView
+                android:id="@+id/subject1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:gravity="fill_vertical|center_horizontal"
+                android:text="IFB101"
+                android:textAllCaps="true"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/subject2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:gravity="fill_vertical|center_horizontal"
+                android:text="IFB102"
+                android:textAllCaps="true"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/subject3"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:gravity="fill_vertical|center_horizontal"
+                android:text="IFB103"
+                android:textAllCaps="true"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/subject4"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:gravity="fill_vertical|center_horizontal"
+                android:text="IFB104"
+                android:textAllCaps="true"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/semesterLabel2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:text="Semester 2, 2016"
+                android:textAppearance="@android:style/TextAppearance.Material.Large"
+                android:textSize="32dp" />
+
+            <TextView
+                android:id="@+id/subject5"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:gravity="fill_vertical|center_horizontal"
+                android:text="CAB101"
+                android:textAllCaps="true"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/subject6"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:gravity="fill_vertical|center_horizontal"
+                android:text="CAB102"
+                android:textAllCaps="true"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/subject7"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:gravity="fill_vertical|center_horizontal"
+                android:text="CAB201"
+                android:textAllCaps="true"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/subject8"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:gravity="fill_vertical|center_horizontal"
+                android:text="CAB202"
+                android:textAllCaps="true"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>

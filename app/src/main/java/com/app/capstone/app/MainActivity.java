@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity
         CoursePage.OnFragmentInteractionListener, LinksPage.OnFragmentInteractionListener, SettingsPage.OnFragmentInteractionListener,
         GoalsPage.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, CourseUnits.OnFragmentInteractionListener,
         CourseBadges.OnFragmentInteractionListener, LinkStudy.OnFragmentInteractionListener, LinkContacts.OnFragmentInteractionListener,
-        LinkHealth.OnFragmentInteractionListener {
+        LinkHealth.OnFragmentInteractionListener, PortfolioPage.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,13 +106,16 @@ public class MainActivity extends AppCompatActivity
         } else if (id == com.app.capstone.app.R.id.nav_goals) {
             fragmentClass = GoalsPage.class;
             System.out.println("Goals clicked");
+        } else if (id == com.app.capstone.app.R.id.nav_portfolio) {
+            fragmentClass = PortfolioPage.class;
+            System.out.println("Portfolio clicked");
         } else if (id == com.app.capstone.app.R.id.nav_links) {
             fragmentClass = LinksPage.class;
             System.out.println("Links clicked");
         } else if (id == com.app.capstone.app.R.id.nav_settings) {
             fragmentClass = SettingsPage.class;
             System.out.println("Settings clicked");
-        }else if (id == com.app.capstone.app.R.id.nav_profile) {
+        } else if (id == com.app.capstone.app.R.id.nav_profile) {
             fragmentClass = ProfilePage.class;
             System.out.println("Profile clicked");
         }

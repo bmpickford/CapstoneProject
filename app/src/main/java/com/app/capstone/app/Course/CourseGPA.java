@@ -1,32 +1,35 @@
 package com.app.capstone.app.Course;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.app.capstone.app.R;
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.MPPointF;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CourseGPA.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CourseGPA#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class CourseGPA extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private PieChart mChart;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -34,41 +37,132 @@ public class CourseGPA extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CourseGPA.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static CourseGPA newInstance(String param1, String param2) {
         CourseGPA fragment = new CourseGPA();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_course_gpa, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_course_gpa, container, false);
+
+        //mChart = (PieChart) view.findViewById(R.id.pieChart);
+        //PieChart pieChart = new PieChart();
+        mChart = (PieChart) view.findViewById(R.id.chart1);
+        mChart.setUsePercentValues(true);
+        mChart.getDescription().setEnabled(false);
+        mChart.setExtraOffsets(5, 10, 5, 5);
+
+        mChart.setDragDecelerationFrictionCoef(0.95f);
+
+        //mChart.setCenterTextTypeface(mTfLight);
+        //mChart.setCenterText(generateCenterSpannableText());
+
+        mChart.setDrawHoleEnabled(true);
+        mChart.setHoleColor(Color.WHITE);
+
+        mChart.setTransparentCircleColor(Color.WHITE);
+        mChart.setTransparentCircleAlpha(110);
+
+        mChart.setHoleRadius(58f);
+        mChart.setTransparentCircleRadius(61f);
+
+        mChart.setDrawCenterText(true);
+
+        mChart.setRotationAngle(0);
+        // enable rotation of the chart by touch
+        mChart.setRotationEnabled(true);
+        mChart.setHighlightPerTapEnabled(true);
+
+        // mChart.setUnit(" €");
+        // mChart.setDrawUnitsInChart(true);
+
+        // add a selection listener
+        //mChart.setOnChartValueSelectedListener(this);
+
+        setData(2, 100);
+
+        mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+
+        mChart.setEntryLabelColor(Color.WHITE);
+        //mChart.setEntryLabelTypeface(mTfRegular);
+        mChart.setEntryLabelTextSize(12f);
+       /* ArrayList<PieEntry> entries;
+        ArrayList<String> PieEntryLabels;
+        PieDataSet pieDataSet;
+        PieData pieData;
+
+
+        entries = new ArrayList<>();
+
+        PieEntryLabels = new ArrayList<String>();
+
+        entries.add(new PieEntry(2f, 0));
+        entries.add(new PieEntry(4f, 1));
+        entries.add(new PieEntry(6f, 2));
+        entries.add(new PieEntry(8f, 3));
+        entries.add(new PieEntry(7f, 4));
+        entries.add(new PieEntry(3f, 5));
+
+        PieEntryLabels.add("January");
+        PieEntryLabels.add("February");
+        PieEntryLabels.add("March");
+        PieEntryLabels.add("April");
+        PieEntryLabels.add("May");
+        PieEntryLabels.add("June");
+
+        pieDataSet = new PieDataSet(entries, "");
+
+        pieData = new PieData(pieDataSet);
+
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        pieChart.setData(pieData);
+*/
+        //pieChart.animateY(3000);
+    
+        
+        //int[] dataObjects = {};
+
+        /*List<PieEntry> entries = new ArrayList<PieEntry>();
+        List<String> labels = new ArrayList<String>();
+        entries.add(new PieEntry(1, 0));
+        entries.add(new PieEntry(8, 1));
+        entries.add(new PieEntry(6, 2));
+        entries.add(new PieEntry(12, 3));
+        entries.add(new PieEntry(18, 4));
+        entries.add(new PieEntry(9, 5));
+
+        labels.add("One");
+        labels.add("Two");
+        labels.add("Three");
+        labels.add("Four");
+        labels.add("Five");
+        labels.add("Six");
+
+*//*        for (int data : dataObjects) {
+
+            // turn your data into Entry objects
+            entries.add(new Entry(data.getValueX(), data.getValueY()));
+        }*//*
+        PieDataSet dataset = new PieDataSet(entries, "Entries");
+        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
+
+
+        PieData piedata = new PieData(dataset);
+        //chart.animateY(5000);
+        chart.setData(piedata);*/
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -104,5 +198,55 @@ public class CourseGPA extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    private void setData(int count, float range) {
+
+        float mult = range;
+
+        ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
+
+        // NOTE: The order of the entries when being added to the entries array determines their position around the center of
+        // the chart.
+/*        for (int i = 0; i < count ; i++) {
+            entries.add(new PieEntry(2, getResources().getDrawable(R.drawable.ic_menu_send),
+                    (float) ((Math.random() * mult) + mult / 5)));
+        }*/
+
+        entries.add(new PieEntry(2, getResources().getDrawable(R.drawable.ic_menu_send),65.5));
+        entries.add(new PieEntry(2, getResources().getDrawable(R.drawable.ic_menu_send),34.5));
+
+        PieDataSet dataSet = new PieDataSet(entries, "GPA");
+
+        dataSet.setDrawIcons(false);
+
+        dataSet.setSliceSpace(3f);
+        dataSet.setIconsOffset(new MPPointF(0, 40));
+        dataSet.setSelectionShift(5f);
+
+        // add a lot of colors
+
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+
+        colors.add(ColorTemplate.getHoloBlue());
+
+        dataSet.setColors(colors);
+        //dataSet.setSelectionShift(0f);
+
+        PieData data = new PieData(dataSet);
+        data.setValueFormatter(new PercentFormatter());
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.WHITE);
+        //data.setValueTypeface(mTfLight);
+        mChart.setData(data);
+
+        // undo all highlights
+        mChart.highlightValues(null);
+
+        mChart.invalidate();
     }
 }

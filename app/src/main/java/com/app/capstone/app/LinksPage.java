@@ -47,10 +47,21 @@ public class LinksPage extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fragment fragment = null;
+        Class fragmentClass = LinkContacts.class;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.linkContent, fragment).commit();
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         final View view = inflater.inflate(R.layout.fragment_links_page, container, false);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.link_bottom_navigation);

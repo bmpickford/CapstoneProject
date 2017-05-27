@@ -4,9 +4,64 @@
     android:layout_height="match_parent"
     tools:context="com.app.capstone.app.Links.LinkContacts">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Contacts" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/contactLink1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/list_m_bottom"
+            android:layout_marginStart="@dimen/list_m_left"
+            android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginTop="@dimen/list_m_top"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:elevation="@dimen/list_elevation"
+            android:paddingBottom="@dimen/list_p_bottom"
+            android:paddingLeft="@dimen/list_m_left"
+            android:paddingEnd="@dimen/list_p_right"
+            android:paddingTop="@dimen/list_p_top"
+            android:text="@string/contactLink1"
+            android:textColorLink="@android:color/black"/>
+        <TextView
+            android:id="@+id/contactLink2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/list_m_bottom"
+            android:layout_marginStart="@dimen/list_m_left"
+            android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginTop="@dimen/list_m_top"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:elevation="@dimen/list_elevation"
+            android:paddingBottom="@dimen/list_p_bottom"
+            android:paddingLeft="@dimen/list_m_left"
+            android:paddingEnd="@dimen/list_p_right"
+            android:paddingTop="@dimen/list_p_top"
+            android:text="@string/contactLink2"
+            android:textColorLink="@android:color/black"/>
+        <TextView
+            android:id="@+id/contactLink3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/list_m_bottom"
+            android:layout_marginStart="@dimen/list_m_left"
+            android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginTop="@dimen/list_m_top"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:elevation="@dimen/list_elevation"
+            android:paddingBottom="@dimen/list_p_bottom"
+            android:paddingLeft="@dimen/list_m_left"
+            android:paddingEnd="@dimen/list_p_right"
+            android:paddingTop="@dimen/list_p_top"
+            android:text="@string/contactLink3"
+            android:textColorLink="@android:color/black"/>
+    </LinearLayout>
 
 </FrameLayout>

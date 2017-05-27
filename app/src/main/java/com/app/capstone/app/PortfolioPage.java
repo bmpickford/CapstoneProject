@@ -1,65 +1,72 @@
 package com.app.capstone.app;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link GoalsPage.OnFragmentInteractionListener} interface
+ * {@link PortfolioPage.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link GoalsPage#newInstance} factory method to
+ * Use the {@link PortfolioPage#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GoalsPage extends Fragment {
+public class PortfolioPage extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public GoalsPage() {
+    public PortfolioPage() {
         // Required empty public constructor
     }
 
-    public static GoalsPage newInstance(String param1, String param2) {
-        GoalsPage fragment = new GoalsPage();
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment PortfolioPage.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static PortfolioPage newInstance(String param1, String param2) {
+        PortfolioPage fragment = new PortfolioPage();
         Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
-
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(com.app.capstone.app.R.layout.fragment_goals_page, container, false);
-        FloatingActionButton button = (FloatingActionButton) view.findViewById(com.app.capstone.app.R.id.addGoalButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                // TODO: Add button functionality for logout here - Changes page but left menu needs to update
-                System.out.println("Logout clicked");
-                Intent i= new Intent(getActivity(),NewGoalPage.class);
-                startActivity(i);
-            }
-
-        });
-
-        return view;
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_portfolio, container, false);
     }
 
+    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);

@@ -3,12 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_gpa"
+        android:icon="@drawable/ic_gpa_assessment_black_24dp"
         android:title="GPA" />
     <item
         android:id="@+id/action_units"
+        android:icon="@drawable/ic_units_assignment_black_24dp"
         android:title="Units" />
     <item
         android:id="@+id/action_badges"
+        android:icon="@drawable/ic_badgs_wb_incandescent_black_24dp"
         android:title="Badges" />
 
 </menu>

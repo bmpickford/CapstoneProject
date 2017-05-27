@@ -25,7 +25,7 @@
             android:paddingEnd="@dimen/list_p_right"
             android:paddingLeft="@dimen/list_m_left"
             android:paddingTop="@dimen/list_p_top"
-            android:text="@string/link1"
+            android:text="@string/studyLink1"
             android:textColorLink="@android:color/black" />
 
 
@@ -45,7 +45,7 @@
             android:paddingLeft="@dimen/list_m_left"
             android:paddingEnd="@dimen/list_p_right"
             android:paddingTop="@dimen/list_p_top"
-            android:text="@string/link2"
+            android:text="@string/studyLink2"
             android:textColorLink="@android:color/black"/>
 
         <TextView
@@ -64,8 +64,10 @@
             android:paddingLeft="@dimen/list_m_left"
             android:paddingEnd="@dimen/list_p_right"
             android:paddingTop="@dimen/list_p_top"
-            android:text="@string/link3"
+            android:text="@string/studyLink3"
             android:textColorLink="@android:color/black"/>
+
+
     </LinearLayout>
 
 </FrameLayout>

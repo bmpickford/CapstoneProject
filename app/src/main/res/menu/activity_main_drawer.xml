@@ -12,6 +12,9 @@
             android:id="@+id/nav_goals"
             android:title="Goals" />
         <item
+            android:id="@+id/nav_portfolio"
+            android:title="Portfolio" />
+        <item
             android:id="@+id/nav_links"
             android:title="Useful Links" />
         <item
