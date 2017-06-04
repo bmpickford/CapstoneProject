@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
-                android:hint="Goal Description"
+                android:hint="Goal Name"
                 android:inputType="textAutoComplete"
                 android:maxLines="1"
                 android:singleLine="true" />
@@ -40,13 +40,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
-                android:hint="Goal Name"
+                android:hint="Goal Description"
                 android:inputType="textMultiLine"
                 android:maxLines="10" />
 
         </android.support.design.widget.TextInputLayout>
-
-
 
         <EditText
             android:id="@+id/dueDate"
@@ -57,7 +55,6 @@
             android:layout_marginTop="15dp"
             android:ems="10"
             android:inputType="date"
-            android:singleLine="false"
             android:hint="Due Date" />
 
         <Button

@@ -1,12 +1,24 @@
 package com.app.capstone.app;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.MPPointF;
+
+import java.util.ArrayList;
 
 
 /**
@@ -18,6 +30,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class HomePage extends Fragment {
+
+    private PieChart mChart;
 
 
     private OnFragmentInteractionListener mListener;
@@ -43,10 +57,69 @@ public class HomePage extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(com.app.capstone.app.R.layout.fragment_home_page, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home_page, container, false);
+
+        mChart = (PieChart) view.findViewById(R.id.homechart);
+        mChart.setUsePercentValues(false);
+        mChart.getDescription().setEnabled(false);
+        mChart.setExtraOffsets(5, 10, 5, 5);
+
+        mChart.setDragDecelerationFrictionCoef(0.95f);
+
+
+        mChart.setDrawHoleEnabled(true);
+
+        mChart.setHoleColor(Color.WHITE);
+        mChart.setTransparentCircleColor(Color.WHITE);
+        mChart.setTransparentCircleAlpha(110);
+
+        mChart.setHoleRadius(58f);
+        mChart.setTransparentCircleRadius(61f);
+
+        mChart.setDrawCenterText(true);
+
+        mChart.setRotationAngle(0);
+        mChart.setRotationEnabled(false);
+        mChart.setHighlightPerTapEnabled(true);
+
+        setData(2, 100);
+
+        mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+        mChart.setMaxAngle(220f);
+        mChart.setEntryLabelColor(Color.WHITE);
+        mChart.setEntryLabelTextSize(12f);
+
+        return view;
+    }
+
+    private void setData(int count, float range) {
+
+        ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
+
+        double gpa = 5.01;
+        double honors = 5.5;
+
+        entries.add(new PieEntry((float) gpa, "Your GPA"));
+        entries.add(new PieEntry((float) (honors - gpa), "Honors Level"));
+
+
+        PieDataSet dataSet = new PieDataSet(entries, "");
+
+        dataSet.setDrawIcons(false);
+        dataSet.setSliceSpace(3f);
+        dataSet.setIconsOffset(new MPPointF(0, 40));
+        dataSet.setSelectionShift(5f);
+
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+
+        PieData data = new PieData(dataSet);
+        //data.setValueFormatter(new PercentFormatter());
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.WHITE);
+        mChart.setData(data);
+        mChart.highlightValues(null);
+        mChart.invalidate();
     }
 
     public void onButtonPressed(Uri uri) {
