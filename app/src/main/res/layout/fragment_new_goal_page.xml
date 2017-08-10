@@ -1,18 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.app.capstone.app.NewGoalPage"
-    android:id="@+id/goalWrapper">
+    tools:context="com.app.capstone.app.NewGoalPage">
+
+    <TextView
+        android:id="@+id/newGoalTest"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="13dp">
+        tools:layout_editor_absoluteY="13dp"
+        android:id="@+id/newGoal">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -69,5 +72,6 @@
             android:text="Submit" />
 
     </LinearLayout>
+
 
 </FrameLayout>

@@ -2,70 +2,98 @@ package com.app.capstone.app;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.LinearLayout;
+import android.widget.EditText;
 import android.widget.TextView;
 
-import com.app.capstone.app.Course.CourseGPA;
-
-import org.w3c.dom.Text;
-
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class NewGoalPage extends AppCompatActivity implements GoalsPage.OnFragmentInteractionListener {
+
+public class NewGoalPage extends Fragment {
+    private Button button;
+    private TextView edittext;
+
+    private static String title;
+    private static String description;
+    private static String due_date;
+
+
+    private OnFragmentInteractionListener mListener;
+
+    public NewGoalPage() {
+        // Required empty public constructor
+    }
+
+
+    public static NewGoalPage newInstance() {
+        NewGoalPage fragment = new NewGoalPage();
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_goal_page);
 
-        Button button = (Button) findViewById(R.id.goalSubmitButton);
-        final TextView edittext = (TextView) findViewById(R.id.dueDate);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        final View view = inflater.inflate(com.app.capstone.app.R.layout.fragment_new_goal_page, container, false);
+
+        Button button = (Button) view.findViewById(R.id.goalSubmitButton);
+        final EditText edittext = (EditText) view.findViewById(R.id.dueDate);
+        final AutoCompleteTextView t = (AutoCompleteTextView) view.findViewById(R.id.goalName);
+        final AutoCompleteTextView desc = (AutoCompleteTextView) view.findViewById(R.id.goalDescription);
 
         button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                int goal = R.layout.activity_new_goal_page;
-                Goal g = new Goal("test", "test", new Date(), getApplicationContext());
-                final LayoutInflater factory = getLayoutInflater();
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                //String d = edittext.getText().toString();
+                due_date = edittext.getText().toString();
+                title = t.getText().toString();
+                description = desc.getText().toString();
+/*                Date d = null;
+                try {
+                    d = formatter.parse(due_date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
-                final View goalView = factory.inflate(R.layout.fragment_goals_page, null);
+                Goal g = new Goal(title, description, d, getActivity());*/
 
-                final LinearLayout l = (LinearLayout) goalView.findViewById(R.id.goals_views);
-                final LinearLayout l1 = (LinearLayout) findViewById(R.id.goals_views);
-                View view = g.getView();
-                System.out.println("Got View");
-                l.addView(view);
-                Fragment fragment = null;
-                Class fragmentClass = null;
+                bundle.putString("title", title);
+                bundle.putString("description", description);
+                bundle.putString("due_date", due_date);
 
-                fragmentClass = GoalsPage.class;
 
+                Fragment fragment;
+                Class fragmentClass = GoalsPage.class;
                 try {
                     fragment = (Fragment) fragmentClass.newInstance();
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.goalWrapper, fragment).commit();
+                    fragment.setArguments(bundle);
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
                 } catch (Exception e) {
                     System.out.println(e);
                     e.printStackTrace();
                 }
 
-                //Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                //startActivity(i);
             }
         });
 
@@ -97,15 +125,32 @@ public class NewGoalPage extends AppCompatActivity implements GoalsPage.OnFragme
 
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(NewGoalPage.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(getActivity(), date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
+        return view;
+    }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(Uri uri);
     }
 }

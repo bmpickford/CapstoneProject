@@ -2,36 +2,58 @@ package com.app.capstone.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
+import android.net.ParseException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link GoalsPage.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link GoalsPage#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class GoalsPage extends Fragment {
+    ExpandableListAdapter listAdapter;
+    ExpandableListView expListView;
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listDataChild;
+
+    // Initialisation of empty array for all goal object
+    private List<Goal> goals = getGoals();
 
     private OnFragmentInteractionListener mListener;
+
+    private ArrayList<Goal> getGoals(){
+        ArrayList<Goal> goals = new ArrayList<Goal>();
+        Goal goal = new Goal("First Goal", "This is my first goal", new Date(), getActivity());
+        Goal goal2 = new Goal("Complete IFB399", "Finish the subject", new Date(), getActivity());
+        Goal goal3 = new Goal("Do Assignment", "Finish your assignment", new Date(), getActivity());
+        goals.add(goal);
+        goals.add(goal2);
+        goals.add(goal3);
+
+        return goals;
+    }
 
     public GoalsPage() {
         // Required empty public constructor
     }
 
-    public static GoalsPage newInstance(String param1, String param2) {
+    public static GoalsPage newInstance(String one, String two, String three) {
         GoalsPage fragment = new GoalsPage();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
 
         return fragment;
     }
@@ -39,19 +61,74 @@ public class GoalsPage extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Bundle item = getArguments();
+        if(item != null && item.getString("title") != null) {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            String title = item.getString("title");
+            String description = item.getString("description");
+            Date d = new Date();
+            try {
+                d = formatter.parse(item.getString("due_date"));
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
+            }
+
+            Goal g = new Goal(title, description, d, getActivity());
+            goals.add(g);
+        }
         final View view = inflater.inflate(com.app.capstone.app.R.layout.fragment_goals_page, container, false);
+
+        expListView = (ExpandableListView) view.findViewById(R.id.lvExp);
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
+
+
+        prepareListData();
+
+
+        listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
+
+        // setting list adapter
+        expListView.setAdapter(listAdapter);
+
+
         FloatingActionButton button = (FloatingActionButton) view.findViewById(com.app.capstone.app.R.id.addGoalButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                // TODO: Add button functionality for logout here - Changes page but left menu needs to update
-                System.out.println("Logout clicked");
-                Intent i= new Intent(getActivity(),NewGoalPage.class);
-                startActivity(i);
+                // TODO: Add button functionality for new goal here - Changes page but left menu needs to update
+                System.out.println("New Goal clicked");
+                //TextView textView = new TextView(getActivity());
+                //textView.setText("testing");
+
+                //Goal goal = new Goal("Clicked", "test", new Date(), getActivity());
+                //View gView = goal.getView();
+
+                //LinearLayout l = (LinearLayout) view.findViewById(R.id.goals_views);
+
+                //l.addView(gView);
+
+                Fragment fragment;
+                Class fragmentClass = NewGoalPage.class;
+
+                try {
+                    fragment = (Fragment) fragmentClass.newInstance();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+                } catch (Exception e) {
+                    System.out.println(e);
+                    e.printStackTrace();
+                }
+                //
+                //View g = goal.getView();
+                //Intent i= new Intent(getActivity(),NewGoalPageDup.class);
+                //startActivity(i);
             }
 
         });
@@ -83,18 +160,30 @@ public class GoalsPage extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    private void prepareListData() {
+
+        int i = 0;
+        for (Goal goal: goals) {
+            List<String> s = new ArrayList<String>();
+            String header;
+            if(new Date().after(goal.getEnd_date())){
+                header = goal.getName() + "  - OVERDUE";
+            } else {
+                header = goal.getName();
+            }
+
+            listDataHeader.add(header);
+            s.add(goal.getDescription() + " - DUE: " + goal.getEnd_date().toString());
+            listDataChild.put(listDataHeader.get(i), s);
+            i++;
+        }
+
+
+    }
+
+
 }

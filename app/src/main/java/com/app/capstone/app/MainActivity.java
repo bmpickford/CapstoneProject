@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity
         CoursePage.OnFragmentInteractionListener, LinksPage.OnFragmentInteractionListener, SettingsPage.OnFragmentInteractionListener,
         GoalsPage.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, CourseUnits.OnFragmentInteractionListener,
         CourseBadges.OnFragmentInteractionListener, LinkStudy.OnFragmentInteractionListener, LinkContacts.OnFragmentInteractionListener,
-        LinkHealth.OnFragmentInteractionListener, PortfolioPage.OnFragmentInteractionListener {
+        LinkHealth.OnFragmentInteractionListener, PortfolioPage.OnFragmentInteractionListener, NewGoalPage.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -35,7 +35,6 @@ public class Goal {
 
     Context context;
 
-
     public Goal(String name, String description, Date date, Context context){
         this.name = name;
         this.description = description;
@@ -81,7 +80,9 @@ public class Goal {
         this.completed = complete;
     }
 
-    private void updateAPI() throws JSONException, IOException {
+    private void setGoalId(int id) { this.id = id; }
+
+    private void updateGoal() throws JSONException, IOException {
         String data = getData();
         sendRequest(((String.format("/goal/%s", this.id))), "PUT", data);
     }
