@@ -6,17 +6,26 @@ import android.icu.text.SimpleDateFormat;
 import android.net.ParseException;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.app.capstone.app.Course.CourseBadges;
+import com.app.capstone.app.Course.CourseGPA;
+import com.app.capstone.app.Course.CourseUnits;
+import com.app.capstone.app.Goals.CurrentGoals;
+import com.app.capstone.app.Goals.PastGoals;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -67,7 +76,65 @@ public class GoalsPage extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Bundle item = getArguments();
+        final View view = inflater.inflate(R.layout.fragment_goals_page, container, false);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment = null;
+                Class fragmentClass = null;
+                switch (item.getItemId()) {
+
+                    case R.id.goal_present:
+                        fragmentClass = CurrentGoals.class;
+                        System.out.println("You clicked Current goals");
+                        break;
+                    case R.id.goal_past:
+                        fragmentClass = PastGoals.class;
+                        System.out.println("You clicked Past goals");
+                        break;
+                }
+                try {
+                    fragment = (Fragment) fragmentClass.newInstance();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.goalsContent, fragment).commit();
+                } catch (Exception e) {
+                    System.out.println(e);
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        });
+
+        FloatingActionButton button = (FloatingActionButton) view.findViewById(com.app.capstone.app.R.id.addGoalButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                System.out.println("New Goal clicked");
+
+                Fragment fragment;
+                Class fragmentClass = NewGoalPage.class;
+
+                try {
+                    fragment = (Fragment) fragmentClass.newInstance();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+                } catch (Exception e) {
+                    System.out.println(e);
+                    e.printStackTrace();
+                }
+            }
+
+        });
+
+
+
+
+
+
+
+        /*Bundle item = getArguments();
         if(item != null && item.getString("title") != null) {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             String title = item.getString("title");
@@ -82,7 +149,6 @@ public class GoalsPage extends Fragment {
             Goal g = new Goal(title, description, d, getActivity());
             goals.add(g);
         }
-        final View view = inflater.inflate(com.app.capstone.app.R.layout.fragment_goals_page, container, false);
 
         expListView = (ExpandableListView) view.findViewById(R.id.lvExp);
         listDataHeader = new ArrayList<String>();
@@ -132,7 +198,7 @@ public class GoalsPage extends Fragment {
             }
 
         });
-
+*/
         return view;
 
     }

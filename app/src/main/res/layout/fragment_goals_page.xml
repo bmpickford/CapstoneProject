@@ -5,17 +5,19 @@
     android:layout_height="match_parent"
     tools:context="com.app.capstone.app.GoalsPage">
 
-    <ExpandableListView
-        android:id="@+id/lvExp"
+    <LinearLayout
+        android:id="@+id/goalsContent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"/>
+        android:orientation="vertical">
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addGoalButton"
         android:layout_width="55dp"
         android:layout_height="62dp"
         android:layout_gravity="bottom|right"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="65dp"
         android:layout_marginEnd="12dp"
         android:clickable="true"
         android:tint="@color/colorWhite"
@@ -24,5 +26,16 @@
         app:fabSize="mini"
         app:rippleColor="@color/colorWhite"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/colorWhite"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:menu="@menu/goals_menu" />
 
 </FrameLayout>
