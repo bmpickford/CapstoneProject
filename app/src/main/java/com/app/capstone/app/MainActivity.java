@@ -13,22 +13,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.capstone.app.Course.CourseBadges;
 import com.app.capstone.app.Course.CourseGPA;
 import com.app.capstone.app.Course.CourseUnits;
+import com.app.capstone.app.Goals.CurrentGoals;
+import com.app.capstone.app.Goals.PastGoals;
 import com.app.capstone.app.Links.LinkContacts;
 import com.app.capstone.app.Links.LinkHealth;
 import com.app.capstone.app.Links.LinkStudy;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity
         implements CourseGPA.OnFragmentInteractionListener, ProfilePage.OnFragmentInteractionListener, HomePage.OnFragmentInteractionListener,
         CoursePage.OnFragmentInteractionListener, LinksPage.OnFragmentInteractionListener, SettingsPage.OnFragmentInteractionListener,
         GoalsPage.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, CourseUnits.OnFragmentInteractionListener,
         CourseBadges.OnFragmentInteractionListener, LinkStudy.OnFragmentInteractionListener, LinkContacts.OnFragmentInteractionListener,
-        LinkHealth.OnFragmentInteractionListener, PortfolioPage.OnFragmentInteractionListener, NewGoalPage.OnFragmentInteractionListener {
+        LinkHealth.OnFragmentInteractionListener, PortfolioPage.OnFragmentInteractionListener, NewGoalPage.OnFragmentInteractionListener,
+        CurrentGoals.OnFragmentInteractionListener, PastGoals.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,4 +200,15 @@ public class MainActivity extends AppCompatActivity
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
+
+    public void deleteGoal(View view) throws IllegalAccessException, InstantiationException, IOException {
+        CurrentGoals cg = new CurrentGoals();
+        cg.deleteGoal(view);
+    }
+
+    public void updateGoal(View view) throws IllegalAccessException, InstantiationException {
+        CurrentGoals cg = new CurrentGoals();
+        PastGoals pg = new PastGoals();
+    }
+
 }

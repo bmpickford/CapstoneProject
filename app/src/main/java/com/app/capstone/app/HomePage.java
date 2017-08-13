@@ -83,10 +83,10 @@ public class HomePage extends Fragment {
         mChart.setRotationEnabled(false);
         mChart.setHighlightPerTapEnabled(true);
 
-        setData(2, 100);
+        setData(2, 7);
 
         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-        mChart.setMaxAngle(220f);
+        //mChart.setMaxAngle(220f);
         mChart.setEntryLabelColor(Color.WHITE);
         mChart.setEntryLabelTextSize(12f);
 
@@ -100,8 +100,10 @@ public class HomePage extends Fragment {
         double gpa = 5.01;
         double honors = 5.5;
 
+
         entries.add(new PieEntry((float) gpa, "Your GPA"));
         entries.add(new PieEntry((float) (honors - gpa), "Honors Level"));
+        entries.add(new PieEntry((float) (range - (gpa+(honors - gpa))), ""));
 
 
         PieDataSet dataSet = new PieDataSet(entries, "");

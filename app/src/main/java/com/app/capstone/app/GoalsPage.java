@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,7 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class GoalsPage extends Fragment {
+public class GoalsPage extends Fragment implements CurrentGoals.OnFragmentInteractionListener, PastGoals.OnFragmentInteractionListener {
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
@@ -55,6 +56,29 @@ public class GoalsPage extends Fragment {
         goals.add(goal3);
 
         return goals;
+
+        /*String u = this.url + /goals/present;
+        URL url = new URL(u);
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        try {
+            urlConnection.setDoOutput(true);
+            urlConnection.setChunkedStreamingMode(0);
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+            urlConnection.setRequestProperty("charset", "utf-8");
+            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
+
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+            //TODO: change this to suit output
+            for (int c; (c = in.read()) >= 0;)
+                System.out.print((char)c);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            urlConnection.disconnect();
+        }*/
     }
 
     public GoalsPage() {
@@ -69,6 +93,17 @@ public class GoalsPage extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Fragment fragment = null;
+        Class fragmentClass = CurrentGoals.class;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.goalsContent, fragment).commit();
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+
         super.onCreate(savedInstanceState);
 
 
@@ -79,11 +114,37 @@ public class GoalsPage extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_goals_page, container, false);
         BottomNavigationView bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation);
 
+        Bundle item = getArguments();
+        if(item != null && item.getString("title") != null) {
+            Fragment fragment = null;
+            Class fragmentClass = CurrentGoals.class;
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+                fragment.setArguments(item);
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.goalsContent, fragment).commit();
+            } catch (Exception e) {
+                System.out.println(e);
+                e.printStackTrace();
+            }
+        }
+
+
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment fragment = null;
                 Class fragmentClass = null;
+
+                try {
+                    fragment = (Fragment) fragmentClass.newInstance();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.goalsContent, fragment).commit();
+                } catch (Exception e) {
+                    System.out.println(e);
+                    e.printStackTrace();
+                }
                 switch (item.getItemId()) {
 
                     case R.id.goal_present:
@@ -226,30 +287,13 @@ public class GoalsPage extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
-
-    private void prepareListData() {
-
-        int i = 0;
-        for (Goal goal: goals) {
-            List<String> s = new ArrayList<String>();
-            String header;
-            if(new Date().after(goal.getEnd_date())){
-                header = goal.getName() + "  - OVERDUE";
-            } else {
-                header = goal.getName();
-            }
-
-            listDataHeader.add(header);
-            s.add(goal.getDescription() + " - DUE: " + goal.getEnd_date().toString());
-            listDataChild.put(listDataHeader.get(i), s);
-            i++;
-        }
-
-
-    }
-
 
 }

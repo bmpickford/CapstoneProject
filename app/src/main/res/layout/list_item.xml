@@ -24,7 +24,7 @@
         android:padding="10dp">
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/completeGoal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -32,7 +32,7 @@
             android:text="Completed" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/deleteGoalBtn"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,7 +42,8 @@
             android:background="@android:color/holo_red_dark"
             android:elevation="5dp"
             android:text="Delete"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:onClick="deleteGoal"/>
     </LinearLayout>
 
 </LinearLayout>

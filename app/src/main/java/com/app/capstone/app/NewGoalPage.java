@@ -16,6 +16,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.app.capstone.app.Goals.CurrentGoals;
+
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
