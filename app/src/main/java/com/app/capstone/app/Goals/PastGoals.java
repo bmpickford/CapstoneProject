@@ -19,7 +19,16 @@ import com.app.capstone.app.R;
 
 import org.json.JSONException;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PastGoals extends Fragment {
-
+    final String url = "http://www.schemefactory:5000/";
 
     ExpandableListAdapterPast listAdapter;
     ExpandableListView expListView;
@@ -40,38 +49,50 @@ public class PastGoals extends Fragment {
     // Initialisation of empty array for all goal object
     private HashMap<Integer, Goal> goalsMap = getGoals();
 
-    private CurrentGoals.OnFragmentInteractionListener mListener;
+    private PastGoals.OnFragmentInteractionListener mListener;
 
-    private HashMap<Integer, Goal> getGoals(){
+    private HashMap<Integer, Goal> getGoals() throws IOException {
         HashMap<Integer, Goal> goals = new HashMap<>();
         Goal goal = new Goal("Completed goals", "This was my first goal", new Date(), getActivity(), 1);
         goals.put(goal.getId(), goal);
 
-
-        return goals;
-
-                      /*String u = this.url + /goals/past;
-        URL url = new URL(u);
+        String u = this.url; // + "/goals/past";
+        URL url = new URL(this.url);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        try {
-            urlConnection.setDoOutput(true);
-            urlConnection.setChunkedStreamingMode(0);
-            urlConnection.setRequestMethod("GET");
-            urlConnection.setRequestProperty("Content-Type", "application/json");
-            urlConnection.setRequestProperty("charset", "utf-8");
-            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
 
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+        urlConnection.setRequestProperty("Content-Type", "application/json");
+        urlConnection.setRequestProperty("charset", "utf-8");
+        urlConnection.setDoOutput(true);
+        urlConnection.setDoInput(true);
+        try {
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(urlConnection.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            //print result
+            System.out.println(response.toString());
+
+            //OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
+
+            //InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            //InputStream error = ((HttpURLConnection) urlConnection).getErrorStream();
+            //InputStream response = urlConnection.getInputStream();
+
 
             //TODO: change this to suit output
-            for (int c; (c = in.read()) >= 0;)
-                System.out.print((char)c);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+/*            for (int c; (c = in.read()) >= 0;)
+                System.out.print((char)c);*/
         } finally {
             urlConnection.disconnect();
-        }*/
+            return goals;
+        }
+
     }
 
     public void uncompleteGoal(View view) throws IOException, JSONException {
@@ -87,7 +108,7 @@ public class PastGoals extends Fragment {
         //refreshUI();
     }
 
-    private void refreshUI(){
+    private void refreshUI() throws IOException {
         goalsMap.clear();
         goalsMap = getGoals();
 
@@ -101,12 +122,12 @@ public class PastGoals extends Fragment {
 
 
 
-    public PastGoals() {
+    public PastGoals() throws IOException {
         // Required empty public constructor
     }
 
 
-    public static PastGoals newInstance() {
+    public static PastGoals newInstance() throws IOException {
         PastGoals fragment = new PastGoals();
         return fragment;
 
@@ -180,8 +201,8 @@ public class PastGoals extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof CurrentGoals.OnFragmentInteractionListener) {
-            mListener = (CurrentGoals.OnFragmentInteractionListener) context;
+        if (context instanceof PastGoals.OnFragmentInteractionListener) {
+            mListener = (PastGoals.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");

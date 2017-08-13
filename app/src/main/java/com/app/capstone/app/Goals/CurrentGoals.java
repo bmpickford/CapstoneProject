@@ -1,5 +1,6 @@
 package com.app.capstone.app.Goals;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.icu.text.SimpleDateFormat;
@@ -35,6 +36,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 
 public class CurrentGoals extends Fragment {
 
@@ -44,17 +49,25 @@ public class CurrentGoals extends Fragment {
     HashMap<String, List<String>> listDataChild;
     private int lastExpandedPosition = -1;
 
+
+    final String url = "http://www.schemefactory:5000/";
+
+
     private HashMap<Integer, Goal> goalsMap = getGoals();
     private OnFragmentInteractionListener mListener;
 
-    private HashMap<Integer, Goal> getGoals(){
+    private HashMap<Integer, Goal> getGoals() throws IOException {
         HashMap<Integer, Goal> g = new HashMap<>();
         g.put(1, new Goal("First Goal", "This is my first goal", new Date(), getActivity(), 1));
         g.put(2, new Goal("2ns Goal", "This is my 2nd goal", new Date(), getActivity(), 2));
         g.put(3, new Goal("3rd Goal", "This is my 3rd goal", new Date(), getActivity(), 3));
 
-        return g;
+       // System.out.println(run(this.url));
+            //return response.body().string();
 
+        //new NetworkRunner().execute(url);
+
+        return g;
         /*String u = this.url + /goals/present;
         URL url = new URL(u);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -84,7 +97,8 @@ public class CurrentGoals extends Fragment {
 
 
 
-    public CurrentGoals() {
+
+    public CurrentGoals() throws IOException {
         // Required empty public constructor
     }
 
@@ -139,7 +153,7 @@ public class CurrentGoals extends Fragment {
         //refreshUI();
     }
 
-    private void refreshUI(){
+    private void refreshUI() throws IOException {
         goalsMap.clear();
         goalsMap = getGoals();
 
@@ -152,7 +166,7 @@ public class CurrentGoals extends Fragment {
     }
 
 
-    public static CurrentGoals newInstance() {
+    public static CurrentGoals newInstance() throws IOException {
         CurrentGoals fragment = new CurrentGoals();
         return fragment;
     }
