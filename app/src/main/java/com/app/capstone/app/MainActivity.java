@@ -26,6 +26,8 @@ import com.app.capstone.app.Links.LinkContacts;
 import com.app.capstone.app.Links.LinkHealth;
 import com.app.capstone.app.Links.LinkStudy;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity
@@ -206,9 +208,14 @@ public class MainActivity extends AppCompatActivity
         cg.deleteGoal(view);
     }
 
-    public void updateGoal(View view) throws IllegalAccessException, InstantiationException {
+    public void completeGoal(View view) throws IllegalAccessException, InstantiationException, IOException, JSONException {
         CurrentGoals cg = new CurrentGoals();
+        cg.updateGoal(view);
+    }
+
+    public void uncompleteGoal(View view) throws IOException, JSONException {
         PastGoals pg = new PastGoals();
+        pg.uncompleteGoal(view);
     }
 
 }

@@ -130,7 +130,7 @@ public class GoalsPage extends Fragment implements CurrentGoals.OnFragmentIntera
         }
 
 
-
+        final FloatingActionButton button = (FloatingActionButton) view.findViewById(com.app.capstone.app.R.id.addGoalButton);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -150,10 +150,12 @@ public class GoalsPage extends Fragment implements CurrentGoals.OnFragmentIntera
                     case R.id.goal_present:
                         fragmentClass = CurrentGoals.class;
                         System.out.println("You clicked Current goals");
+                        button.setVisibility(view.VISIBLE);
                         break;
                     case R.id.goal_past:
                         fragmentClass = PastGoals.class;
                         System.out.println("You clicked Past goals");
+                        button.setVisibility(view.INVISIBLE);
                         break;
                 }
                 try {
@@ -168,7 +170,7 @@ public class GoalsPage extends Fragment implements CurrentGoals.OnFragmentIntera
             }
         });
 
-        FloatingActionButton button = (FloatingActionButton) view.findViewById(com.app.capstone.app.R.id.addGoalButton);
+
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 

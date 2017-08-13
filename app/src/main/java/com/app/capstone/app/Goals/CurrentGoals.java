@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -134,13 +135,20 @@ public class CurrentGoals extends Fragment {
         int id = Integer.parseInt(idStr);
         final Goal g = goalsMap.get(id);
         g.setCompleted(true);
-        g.update();
-        refreshUI();
+        //g.update();
+        //refreshUI();
     }
 
     private void refreshUI(){
         goalsMap.clear();
         goalsMap = getGoals();
+
+        Fragment frg = null;
+        frg = getFragmentManager().findFragmentByTag("CurrentGoals");
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
     }
 
 

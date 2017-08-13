@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:elevation="1dp"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:divider="@color/colorWhite"
+    android:dividerHeight="0dp">
+
+    <TextView
+        android:id="@+id/lblListHeaderPast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:textColor="#000000"
+        android:textSize="17dp" />
+
+
+</LinearLayout>

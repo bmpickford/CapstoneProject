@@ -5,44 +5,52 @@ import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.app.capstone.app.ExpandableListAdapter;
+import com.app.capstone.app.ExpandableListAdapterPast;
 import com.app.capstone.app.Goal;
 import com.app.capstone.app.R;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class PastGoals extends Fragment {
 
 
-    ExpandableListAdapter listAdapter;
+    ExpandableListAdapterPast listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
     private int lastExpandedPosition = -1;
 
     // Initialisation of empty array for all goal object
-    private List<Goal> goals = getGoals();
+    private HashMap<Integer, Goal> goalsMap = getGoals();
 
     private CurrentGoals.OnFragmentInteractionListener mListener;
 
-    private ArrayList<Goal> getGoals(){
-        ArrayList<Goal> goals = new ArrayList<Goal>();
-        Goal goal = new Goal("Completed goals", "This was my first goal", new Date(), getActivity());
-        goals.add(goal);
+    private HashMap<Integer, Goal> getGoals(){
+        HashMap<Integer, Goal> goals = new HashMap<>();
+        Goal goal = new Goal("Completed goals", "This was my first goal", new Date(), getActivity(), 1);
+        goals.put(goal.getId(), goal);
 
 
         return goals;
 
-                      /*String u = this.url + /goals/present;
+                      /*String u = this.url + /goals/past;
         URL url = new URL(u);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
@@ -65,6 +73,33 @@ public class PastGoals extends Fragment {
             urlConnection.disconnect();
         }*/
     }
+
+    public void uncompleteGoal(View view) throws IOException, JSONException {
+        View parent = (View) view.getParent().getParent().getParent();
+        TextView taskTextViewItem = (TextView) parent.findViewById(R.id.lblListItemPast);
+        String b = String.valueOf(taskTextViewItem.getText());
+        String[] splitStr = b.split("-");
+        String idStr = splitStr[0].replace(" ", "");
+        int id = Integer.parseInt(idStr);
+        final Goal g = goalsMap.get(id);
+        g.setCompleted(false);
+        //g.update();
+        //refreshUI();
+    }
+
+    private void refreshUI(){
+        goalsMap.clear();
+        goalsMap = getGoals();
+
+        Fragment frg = null;
+        frg = getFragmentManager().findFragmentByTag("PastGoals");
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
+    }
+
+
 
     public PastGoals() {
         // Required empty public constructor
@@ -103,7 +138,7 @@ public class PastGoals extends Fragment {
             }
 
             Goal g = new Goal(title, description, d, getActivity());
-            goals.add(g);
+            goalsMap.put(g.getId(), g);
         }
 
         expListView = (ExpandableListView) view.findViewById(R.id.lvExpPast);
@@ -114,7 +149,7 @@ public class PastGoals extends Fragment {
         prepareListData();
 
 
-        listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
+        listAdapter = new ExpandableListAdapterPast(getActivity(), listDataHeader, listDataChild);
 
         // setting list adapter
         expListView.setAdapter(listAdapter);
@@ -167,9 +202,12 @@ public class PastGoals extends Fragment {
     private void prepareListData() {
 
         int i = 0;
-        for (Goal goal: goals) {
+        Iterator it = goalsMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
             List<String> s = new ArrayList<String>();
             String header;
+            Goal goal = (Goal) pair.getValue();
 
             Calendar cal1 = Calendar.getInstance();
             Calendar cal2 = Calendar.getInstance();
@@ -187,9 +225,12 @@ public class PastGoals extends Fragment {
             }
 
             listDataHeader.add(header);
-            s.add(goal.getDescription() + " - DUE: " + goal.getEnd_dateStr());
+            s.add(goal.getId() + " - " +goal.getDescription() + " - DUE: " + goal.getEnd_dateStr());
             listDataChild.put(listDataHeader.get(i), s);
             i++;
+
+
+            it.remove(); // avoids a ConcurrentModificationException
         }
 
 
