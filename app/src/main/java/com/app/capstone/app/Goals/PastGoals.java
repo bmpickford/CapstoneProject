@@ -144,6 +144,11 @@ public class PastGoals extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        try {
+            refreshUI();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         super.onCreate(savedInstanceState);
 
     }

@@ -27,6 +27,7 @@ import com.app.capstone.app.Course.CourseGPA;
 import com.app.capstone.app.Course.CourseUnits;
 import com.app.capstone.app.Goals.CurrentGoals;
 import com.app.capstone.app.Goals.PastGoals;
+import com.app.capstone.app.Goals.ProgressGoals;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class GoalsPage extends Fragment implements CurrentGoals.OnFragmentInteractionListener, PastGoals.OnFragmentInteractionListener {
+public class GoalsPage extends Fragment implements CurrentGoals.OnFragmentInteractionListener, PastGoals.OnFragmentInteractionListener,
+        ProgressGoals.OnFragmentInteractionListener {
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
@@ -156,6 +158,11 @@ public class GoalsPage extends Fragment implements CurrentGoals.OnFragmentIntera
                         fragmentClass = PastGoals.class;
                         System.out.println("You clicked Past goals");
                         button.setVisibility(view.INVISIBLE);
+                        break;
+                    case R.id.goal_progress:
+                        fragmentClass = ProgressGoals.class;
+                        System.out.println("You clicked Progress goals");
+                        button.setVisibility(view.VISIBLE);
                         break;
                 }
                 try {

@@ -161,6 +161,7 @@ public class CurrentGoals extends Fragment {
     }
 
     private void refreshUI() throws IOException {
+        System.out.println("Networking running");
         new NetworkRunner(url + "/api/goals/present", "GET", "CurrentGoals", "{id: 1}").execute(url, "test");
         if(goalsMap != null){
             goalsMap.clear();
@@ -190,6 +191,12 @@ public class CurrentGoals extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        try {
+            refreshUI();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         super.onCreate(savedInstanceState);
 
     }
@@ -197,11 +204,6 @@ public class CurrentGoals extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        try {
-            refreshUI();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
         // Inflate the layout for this fragment

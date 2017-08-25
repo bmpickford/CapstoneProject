@@ -6,6 +6,10 @@
         android:icon="@drawable/ic_goal_present"
         android:title="Present" />
     <item
+        android:id="@+id/goal_progress"
+        android:icon="@drawable/ic_goals_progress"
+        android:title="Progress" />
+    <item
         android:id="@+id/goal_past"
         android:icon="@drawable/ic_goal_past_24dp"
         android:title="Past" />

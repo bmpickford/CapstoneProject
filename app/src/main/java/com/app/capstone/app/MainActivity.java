@@ -22,6 +22,7 @@ import com.app.capstone.app.Course.CourseGPA;
 import com.app.capstone.app.Course.CourseUnits;
 import com.app.capstone.app.Goals.CurrentGoals;
 import com.app.capstone.app.Goals.PastGoals;
+import com.app.capstone.app.Goals.ProgressGoals;
 import com.app.capstone.app.Links.LinkContacts;
 import com.app.capstone.app.Links.LinkHealth;
 import com.app.capstone.app.Links.LinkStudy;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity
         GoalsPage.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, CourseUnits.OnFragmentInteractionListener,
         CourseBadges.OnFragmentInteractionListener, LinkStudy.OnFragmentInteractionListener, LinkContacts.OnFragmentInteractionListener,
         LinkHealth.OnFragmentInteractionListener, PortfolioPage.OnFragmentInteractionListener, NewGoalPage.OnFragmentInteractionListener,
-        CurrentGoals.OnFragmentInteractionListener, PastGoals.OnFragmentInteractionListener {
+        CurrentGoals.OnFragmentInteractionListener, PastGoals.OnFragmentInteractionListener, ProgressGoals.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
