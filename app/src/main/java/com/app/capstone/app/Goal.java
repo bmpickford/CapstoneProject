@@ -110,16 +110,16 @@ public class Goal {
 
     public void updateGoal() throws JSONException, IOException {
         String data = getData();
-        sendRequest(((String.format("/goal/%s", this.id))), "PUT", data);
+        sendRequest(((String.format("/api/goal/%s", this.id))), "PUT", data);
     }
 
     private void createGoal() throws JSONException, IOException {
         String data = getData();
-        sendRequest("/goal", "POST", data);
+        sendRequest("/api/goal", "POST", data);
     }
 
     private void deleteGoal() throws IOException {
-        sendRequest(((String.format("/goal/%s", this.id))), "DELETE", "");
+        sendRequest(((String.format("/api/goal/%s", this.id))), "DELETE", "");
     }
 
     private String getData() throws JSONException{
@@ -134,28 +134,6 @@ public class Goal {
 
     private void sendRequest(String endpoint, String method, String data) throws IOException {
         String u = this.url + endpoint;
-        URL url = new URL(u);
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        try {
-            urlConnection.setDoOutput(true);
-            urlConnection.setChunkedStreamingMode(0);
-            urlConnection.setRequestMethod(method.toUpperCase());
-            urlConnection.setRequestProperty("Content-Type", "application/json");
-            urlConnection.setRequestProperty("charset", "utf-8");
-            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-            out.write(data.getBytes());
-
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-
-            //TODO: change this to suit output
-            for (int c; (c = in.read()) >= 0;)
-                System.out.print((char)c);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            urlConnection.disconnect();
-        }
-
+        new NetworkRunner(u, method, "CurrentGoals", data).execute(url, "test");
     }
 }

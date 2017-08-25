@@ -86,7 +86,7 @@ public class HomePage extends Fragment {
         setData(2, 7);
 
         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-        //mChart.setMaxAngle(220f);
+        mChart.setMaxAngle(220f);
         mChart.setEntryLabelColor(Color.WHITE);
         mChart.setEntryLabelTextSize(12f);
 
@@ -103,7 +103,7 @@ public class HomePage extends Fragment {
 
         entries.add(new PieEntry((float) gpa, "Your GPA"));
         entries.add(new PieEntry((float) (honors - gpa), "Honors Level"));
-        entries.add(new PieEntry((float) (range - (gpa+(honors - gpa))), ""));
+        //entries.add(new PieEntry((float) (range - (gpa+(honors - gpa))), ""));
 
 
         PieDataSet dataSet = new PieDataSet(entries, "");

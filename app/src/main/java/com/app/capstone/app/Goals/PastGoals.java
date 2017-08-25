@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.app.capstone.app.ExpandableListAdapter;
 import com.app.capstone.app.ExpandableListAdapterPast;
 import com.app.capstone.app.Goal;
+import com.app.capstone.app.NetworkRunner;
 import com.app.capstone.app.R;
 
 import org.json.JSONException;
@@ -47,11 +48,11 @@ public class PastGoals extends Fragment {
     private int lastExpandedPosition = -1;
 
     // Initialisation of empty array for all goal object
-    private HashMap<Integer, Goal> goalsMap = getGoals();
+    private HashMap<Integer, Goal> goalsMap = new HashMap<>();
 
     private PastGoals.OnFragmentInteractionListener mListener;
 
-    private HashMap<Integer, Goal> getGoals() throws IOException {
+    /*private HashMap<Integer, Goal> getGoals() throws IOException {
         HashMap<Integer, Goal> goals = new HashMap<>();
         Goal goal = new Goal("Completed goals", "This was my first goal", new Date(), getActivity(), 1);
         goals.put(goal.getId(), goal);
@@ -86,13 +87,17 @@ public class PastGoals extends Fragment {
 
 
             //TODO: change this to suit output
-/*            for (int c; (c = in.read()) >= 0;)
-                System.out.print((char)c);*/
+*//*            for (int c; (c = in.read()) >= 0;)
+                System.out.print((char)c);*//*
         } finally {
             urlConnection.disconnect();
             return goals;
         }
 
+    }*/
+
+    public void getGoals(String data){
+        System.out.println(data);
     }
 
     public void uncompleteGoal(View view) throws IOException, JSONException {
@@ -109,15 +114,18 @@ public class PastGoals extends Fragment {
     }
 
     private void refreshUI() throws IOException {
-        goalsMap.clear();
-        goalsMap = getGoals();
+        new NetworkRunner(url + "/api/goals/past", "GET", "CurrentGoals", "{id: 1}").execute(url, "test");
+        if(goalsMap != null){
+            goalsMap.clear();
+        }
 
-        Fragment frg = null;
-        frg = getFragmentManager().findFragmentByTag("PastGoals");
-        final FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(frg);
-        ft.attach(frg);
-        ft.commit();
+
+        try {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(this).attach(this).commit();
+        } catch(Exception e){
+
+        }
     }
 
 

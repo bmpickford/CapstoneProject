@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,13 +55,13 @@ public class CurrentGoals extends Fragment {
     final String url = "http://www.schemefactory:5000/";
 
 
-    private HashMap<Integer, Goal> goalsMap;// = getGoals();
+    private HashMap<Integer, Goal> goalsMap = new HashMap<>();// = getGoals();
     private OnFragmentInteractionListener mListener;
 
 
 
     public void getGoals(String data){
-        System.out.println("Getting goals");
+        System.out.println(data);
     }
 
 /*    public HashMap<Integer, Goal> getGoals() throws IOException {
@@ -160,15 +161,25 @@ public class CurrentGoals extends Fragment {
     }
 
     private void refreshUI() throws IOException {
-        new NetworkRunner().execute(url);
-        goalsMap.clear();
+        new NetworkRunner(url + "/api/goals/present", "GET", "CurrentGoals", "{id: 1}").execute(url, "test");
+        if(goalsMap != null){
+            goalsMap.clear();
+        }
 
-        Fragment frg = null;
+
+        try {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(this).attach(this).commit();
+        } catch(Exception e){
+
+        }
+
+/*        Fragment frg = null;
         frg = getFragmentManager().findFragmentByTag("CurrentGoals");
         final FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(frg);
         ft.attach(frg);
-        ft.commit();
+        ft.commit();*/
     }
 
 
@@ -191,6 +202,8 @@ public class CurrentGoals extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_current_goals, container, false);
 

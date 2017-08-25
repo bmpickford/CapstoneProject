@@ -39,6 +39,10 @@ public class CourseGPA extends Fragment {
         // Required empty public constructor
     }
 
+    public void getGPA(String data){
+
+    }
+
 
     public static CourseGPA newInstance(String param1, String param2) {
         CourseGPA fragment = new CourseGPA();
