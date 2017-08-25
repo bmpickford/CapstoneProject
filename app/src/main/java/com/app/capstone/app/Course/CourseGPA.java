@@ -82,7 +82,6 @@ public class CourseGPA extends Fragment {
         setData(2, 100);
 
         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-        mChart.setMaxAngle(220f);
         mChart.setEntryLabelColor(Color.WHITE);
         mChart.setEntryLabelTextSize(12f);
 
@@ -112,16 +111,6 @@ public class CourseGPA extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }

@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.app.capstone.app.ExpandableListAdapter;
 import com.app.capstone.app.Goal;
+import com.app.capstone.app.NetworkRunner;
 import com.app.capstone.app.NewGoalPage;
 import com.app.capstone.app.R;
 
@@ -53,10 +54,16 @@ public class CurrentGoals extends Fragment {
     final String url = "http://www.schemefactory:5000/";
 
 
-    private HashMap<Integer, Goal> goalsMap = getGoals();
+    private HashMap<Integer, Goal> goalsMap;// = getGoals();
     private OnFragmentInteractionListener mListener;
 
-    private HashMap<Integer, Goal> getGoals() throws IOException {
+
+
+    public void getGoals(String data){
+        System.out.println("Getting goals");
+    }
+
+/*    public HashMap<Integer, Goal> getGoals() throws IOException {
         HashMap<Integer, Goal> g = new HashMap<>();
         g.put(1, new Goal("First Goal", "This is my first goal", new Date(), getActivity(), 1));
         g.put(2, new Goal("2ns Goal", "This is my 2nd goal", new Date(), getActivity(), 2));
@@ -68,7 +75,7 @@ public class CurrentGoals extends Fragment {
         //new NetworkRunner().execute(url);
 
         return g;
-        /*String u = this.url + /goals/present;
+        *//*String u = this.url + /goals/present;
         URL url = new URL(u);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
@@ -89,8 +96,8 @@ public class CurrentGoals extends Fragment {
             e.printStackTrace();
         } finally {
             urlConnection.disconnect();
-        }*/
-    }
+        }*//*
+    }*/
 
 
 
@@ -135,7 +142,6 @@ public class CurrentGoals extends Fragment {
                         // do nothing
                     }
                 })
-                .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
 
     }
@@ -154,8 +160,8 @@ public class CurrentGoals extends Fragment {
     }
 
     private void refreshUI() throws IOException {
+        new NetworkRunner().execute(url);
         goalsMap.clear();
-        goalsMap = getGoals();
 
         Fragment frg = null;
         frg = getFragmentManager().findFragmentByTag("CurrentGoals");
@@ -180,6 +186,11 @@ public class CurrentGoals extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        try {
+            refreshUI();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_current_goals, container, false);
 
