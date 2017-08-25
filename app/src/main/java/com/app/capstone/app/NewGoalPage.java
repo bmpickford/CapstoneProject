@@ -25,8 +25,8 @@ import java.util.Locale;
 
 
 public class NewGoalPage extends Fragment {
-    private Button button;
-    private TextView edittext;
+    private Calendar myCalendar = Calendar.getInstance();
+
 
     private static String title;
     private static String description;
@@ -61,23 +61,39 @@ public class NewGoalPage extends Fragment {
         final AutoCompleteTextView t = (AutoCompleteTextView) view.findViewById(R.id.goalName);
         final AutoCompleteTextView desc = (AutoCompleteTextView) view.findViewById(R.id.goalDescription);
 
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker datePicker, int y, int m, int d) {
+                myCalendar.set(Calendar.YEAR, y);
+                myCalendar.set(Calendar.MONTH, m);
+                myCalendar.set(Calendar.DAY_OF_MONTH, d);
+                updateLabel(edittext, myCalendar);
+            }
+
+        };
+
+        edittext.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(getContext(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                //String d = edittext.getText().toString();
+
                 due_date = edittext.getText().toString();
                 title = t.getText().toString();
                 description = desc.getText().toString();
-/*                Date d = null;
-                try {
-                    d = formatter.parse(due_date);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                Goal g = new Goal(title, description, d, getActivity());*/
 
                 bundle.putString("title", title);
                 bundle.putString("description", description);
@@ -99,39 +115,24 @@ public class NewGoalPage extends Fragment {
             }
         });
 
-        final Calendar myCalendar = Calendar.getInstance();
 
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel(edittext, myCalendar);
-            }
-
-            private void updateLabel(TextView edittext, Calendar myCalendar) {
-
-                String myFormat = "MM/dd/yy"; //In which you need put here
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
-
-                edittext.setText(sdf.format(myCalendar.getTime()));
-
-            }
-
-        };
-
+/*
         edittext.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(getActivity(), date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
-        });
+        });*/
 
         return view;
+    }
+
+    private void updateLabel(EditText edittext, Calendar myCalendar) {
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
+
+        edittext.setText(sdf.format(myCalendar.getTime()));
     }
 
 
