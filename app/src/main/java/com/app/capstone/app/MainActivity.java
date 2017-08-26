@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.capstone.app.Course.CourseBadges;
+import com.app.capstone.app.Course.CourseCalculator;
 import com.app.capstone.app.Course.CourseGPA;
 import com.app.capstone.app.Course.CourseUnits;
 import com.app.capstone.app.Goals.CurrentGoals;
@@ -37,7 +38,8 @@ public class MainActivity extends AppCompatActivity
         GoalsPage.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, CourseUnits.OnFragmentInteractionListener,
         CourseBadges.OnFragmentInteractionListener, LinkStudy.OnFragmentInteractionListener, LinkContacts.OnFragmentInteractionListener,
         LinkHealth.OnFragmentInteractionListener, PortfolioPage.OnFragmentInteractionListener, NewGoalPage.OnFragmentInteractionListener,
-        CurrentGoals.OnFragmentInteractionListener, PastGoals.OnFragmentInteractionListener, ProgressGoals.OnFragmentInteractionListener {
+        CurrentGoals.OnFragmentInteractionListener, PastGoals.OnFragmentInteractionListener, ProgressGoals.OnFragmentInteractionListener,
+        CourseCalculator.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -6,6 +6,10 @@
         android:icon="@drawable/ic_gpa_assessment_black_24dp"
         android:title="GPA" />
     <item
+        android:id="@+id/action_calculator"
+        android:icon="@drawable/ic_gpa_calc"
+        android:title="Calculator" />
+    <item
         android:id="@+id/action_units"
         android:icon="@drawable/ic_units_assignment_black_24dp"
         android:title="Units" />

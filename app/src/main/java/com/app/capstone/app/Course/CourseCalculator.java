@@ -11,25 +11,18 @@ import android.view.ViewGroup;
 import com.app.capstone.app.R;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CourseBadges.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CourseBadges#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class CourseBadges extends Fragment {
+public class CourseCalculator extends Fragment {
+
 
     private OnFragmentInteractionListener mListener;
 
-    public CourseBadges() {
+    public CourseCalculator() {
         // Required empty public constructor
     }
 
 
-    public static CourseBadges newInstance(String param1, String param2) {
-        CourseBadges fragment = new CourseBadges();
+    public static CourseCalculator newInstance(String param1, String param2) {
+        CourseCalculator fragment = new CourseCalculator();
         return fragment;
     }
 
@@ -41,16 +34,9 @@ public class CourseBadges extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_course_badges, container, false);
+        return inflater.inflate(R.layout.fragment_course_calculator, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -70,7 +56,6 @@ public class CourseBadges extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

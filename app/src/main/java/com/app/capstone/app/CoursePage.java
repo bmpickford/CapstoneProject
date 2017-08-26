@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.app.capstone.app.Course.CourseBadges;
+import com.app.capstone.app.Course.CourseCalculator;
 import com.app.capstone.app.Course.CourseGPA;
 import com.app.capstone.app.Course.CourseUnits;
 
@@ -25,7 +26,7 @@ import com.app.capstone.app.Course.CourseUnits;
  * Use the {@link CoursePage#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CoursePage extends Fragment implements CourseGPA.OnFragmentInteractionListener, CourseUnits.OnFragmentInteractionListener, CourseBadges.OnFragmentInteractionListener {
+public class CoursePage extends Fragment implements CourseGPA.OnFragmentInteractionListener, CourseUnits.OnFragmentInteractionListener, CourseBadges.OnFragmentInteractionListener, CourseCalculator.OnFragmentInteractionListener {
 
     private OnFragmentInteractionListener mListener;
 
@@ -62,6 +63,7 @@ public class CoursePage extends Fragment implements CourseGPA.OnFragmentInteract
         final View view = inflater.inflate(R.layout.fragment_course_page, container, false);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation);
+        BottomNavigationHelper.disableShiftMode(bottomNavigationView);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -72,6 +74,10 @@ public class CoursePage extends Fragment implements CourseGPA.OnFragmentInteract
 
                     case R.id.action_gpa:
                         fragmentClass = CourseGPA.class;
+                        System.out.println("You clicked GPA");
+                        break;
+                    case R.id.action_calculator:
+                        fragmentClass = CourseCalculator.class;
                         System.out.println("You clicked GPA");
                         break;
                     case R.id.action_units:
