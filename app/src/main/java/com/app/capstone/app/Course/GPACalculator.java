@@ -31,4 +31,8 @@ public class GPACalculator {
         this.unitsDone = cpDone / 12;
         this.unitsTotal = this.unitsLeft + this.unitsDone;
     }
+
+    public double getGoalGPA(){
+        return goalGPA;
+    }
 }

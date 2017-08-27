@@ -78,7 +78,7 @@ public class CourseGPA extends Fragment {
         String endpoint = "api/gpa/";
 
         String uri = url + endpoint;
-        uri = "http://www.google.com";
+        uri = "https://jsonplaceholder.typicode.com/posts/1";
 
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
