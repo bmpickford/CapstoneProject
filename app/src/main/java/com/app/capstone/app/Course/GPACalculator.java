@@ -1,7 +1,9 @@
 package com.app.capstone.app.Course;
 
+import java.text.DecimalFormat;
+
 /**
- * Created by root on 27/08/17.
+ * Created by benjamin on 27/08/17.
  */
 
 public class GPACalculator {
@@ -23,7 +25,9 @@ public class GPACalculator {
 
     public double calculate(){
         double g = ((goalGPA * unitsTotal) - (curGPA * unitsDone)) / unitsLeft;
-        return g;
+        DecimalFormat df = new DecimalFormat("#.00");
+
+        return Double.parseDouble(df.format(g));
     }
 
     private void calculateUnits(){

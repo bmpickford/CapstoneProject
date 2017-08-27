@@ -7,28 +7,31 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.capstone.app.R;
+import com.app.capstone.app.Requester;
+
+import org.json.JSONObject;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CourseBadges.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CourseBadges#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CourseBadges extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    final String url = "http://www.schemefactory:5000/";
 
     public CourseBadges() {
         // Required empty public constructor
     }
 
 
-    public static CourseBadges newInstance(String param1, String param2) {
+    public static CourseBadges newInstance() {
         CourseBadges fragment = new CourseBadges();
         return fragment;
     }
@@ -42,14 +45,40 @@ public class CourseBadges extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_course_badges, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_course_badges, container, false);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        final LinearLayout content = (LinearLayout) view.findViewById(R.id.badges_content);
+        final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.badges_spinner);
+
+        spinner.setVisibility(View.VISIBLE);
+        content.setVisibility(View.INVISIBLE);
+
+        String endpoint = "api/badges/";
+
+        String uri = url + endpoint;
+        uri = "https://jsonplaceholder.typicode.com/posts/1";
+
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, uri, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //TODO: Add badges dynamically
+                        spinner.setVisibility(View.INVISIBLE);
+                        content.setVisibility(View.VISIBLE);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        spinner.setVisibility(View.INVISIBLE);
+                        content.setVisibility(View.VISIBLE);
+                    }
+                });
+        Requester.getInstance(getContext()).addToRequestQueue(jsObjRequest);
+
+
+        return view;
     }
 
     @Override
@@ -70,7 +99,6 @@ public class CourseBadges extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

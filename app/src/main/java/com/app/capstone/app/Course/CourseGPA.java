@@ -74,7 +74,6 @@ public class CourseGPA extends Fragment {
         final LinearLayout gpaContent = (LinearLayout) view.findViewById(R.id.gpa_content);
         final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.gpa_spinner);
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
         String endpoint = "api/gpa/";
 
         String uri = url + endpoint;

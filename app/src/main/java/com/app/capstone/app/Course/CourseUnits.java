@@ -7,21 +7,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.capstone.app.R;
+import com.app.capstone.app.Requester;
+
+import org.json.JSONObject;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CourseUnits.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CourseUnits#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CourseUnits extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    final String url = "http://www.schemefactory:5000/";
 
     public CourseUnits() {
         // Required empty public constructor
@@ -40,7 +43,39 @@ public class CourseUnits extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_course_units, container, false);
+        View view = inflater.inflate(R.layout.fragment_course_units, container, false);
+
+        final ScrollView content = (ScrollView) view.findViewById(R.id.units_content);
+        final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.units_spinner);
+
+        spinner.setVisibility(View.VISIBLE);
+        content.setVisibility(View.INVISIBLE);
+
+        String endpoint = "api/units/";
+
+        String uri = url + endpoint;
+        uri = "https://jsonplaceholder.typicode.com/posts/1";
+
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, uri, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //TODO: Put units into view
+                        spinner.setVisibility(View.INVISIBLE);
+                        content.setVisibility(View.VISIBLE);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        spinner.setVisibility(View.INVISIBLE);
+                        content.setVisibility(View.VISIBLE);
+                    }
+                });
+        Requester.getInstance(getContext()).addToRequestQueue(jsObjRequest);
+
+        return view;
     }
 
     public void onButtonPressed(Uri uri) {
@@ -67,7 +102,6 @@ public class CourseUnits extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
