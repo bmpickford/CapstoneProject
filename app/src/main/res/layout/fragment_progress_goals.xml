@@ -2,7 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.app.capstone.app.Goals.ProgressGoals">
+    tools:context="com.app.capstone.app.Goals.ProgressGoals"
+    android:id="@+id/goalProgressContent">
+
+    <ProgressBar
+        android:id="@+id/progressGoalSpinner"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:visibility="invisible" />
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/progress_chart"

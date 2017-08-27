@@ -18,14 +18,6 @@ import com.app.capstone.app.Course.CourseGPA;
 import com.app.capstone.app.Course.CourseUnits;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CoursePage.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CoursePage#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CoursePage extends Fragment implements CourseGPA.OnFragmentInteractionListener, CourseUnits.OnFragmentInteractionListener, CourseBadges.OnFragmentInteractionListener, CourseCalculator.OnFragmentInteractionListener {
 
     private OnFragmentInteractionListener mListener;

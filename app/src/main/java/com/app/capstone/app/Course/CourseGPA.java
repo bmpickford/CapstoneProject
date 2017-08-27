@@ -17,6 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.capstone.app.R;
@@ -28,6 +29,8 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -74,10 +77,15 @@ public class CourseGPA extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String endpoint = "api/gpa/";
 
-        StringRequest goalGPARequest = new StringRequest(Request.Method.GET, "http://www.google.com",
-                new Response.Listener<String>() {
+        String uri = url + endpoint;
+        uri = "http://www.google.com";
+
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, uri, null, new Response.Listener<JSONObject>() {
+
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
                         gpaContent.setVisibility(View.VISIBLE);
                         spinner.setVisibility(View.INVISIBLE);
 
@@ -127,7 +135,7 @@ public class CourseGPA extends Fragment {
             }
         });
 
-        Requester.getInstance(getContext()).addToRequestQueue(goalGPARequest);
+        Requester.getInstance(getContext()).addToRequestQueue(jsObjRequest);
 
 
         return view;

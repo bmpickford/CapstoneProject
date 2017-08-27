@@ -52,49 +52,6 @@ public class PastGoals extends Fragment {
 
     private PastGoals.OnFragmentInteractionListener mListener;
 
-    /*private HashMap<Integer, Goal> getGoals() throws IOException {
-        HashMap<Integer, Goal> goals = new HashMap<>();
-        Goal goal = new Goal("Completed goals", "This was my first goal", new Date(), getActivity(), 1);
-        goals.put(goal.getId(), goal);
-
-        String u = this.url; // + "/goals/past";
-        URL url = new URL(this.url);
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-        urlConnection.setRequestProperty("Content-Type", "application/json");
-        urlConnection.setRequestProperty("charset", "utf-8");
-        urlConnection.setDoOutput(true);
-        urlConnection.setDoInput(true);
-        try {
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(urlConnection.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            //print result
-            System.out.println(response.toString());
-
-            //OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-
-            //InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            //InputStream error = ((HttpURLConnection) urlConnection).getErrorStream();
-            //InputStream response = urlConnection.getInputStream();
-
-
-            //TODO: change this to suit output
-*//*            for (int c; (c = in.read()) >= 0;)
-                System.out.print((char)c);*//*
-        } finally {
-            urlConnection.disconnect();
-            return goals;
-        }
-
-    }*/
 
     public void getGoals(String data){
         System.out.println(data);
