@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.app.capstone.app.ExpandableListAdapter;
 import com.app.capstone.app.Goal;
+import com.app.capstone.app.MainActivity;
 import com.app.capstone.app.NetworkRunner;
 import com.app.capstone.app.NewGoalPage;
 import com.app.capstone.app.R;
@@ -51,6 +52,7 @@ public class CurrentGoals extends Fragment {
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
     private int lastExpandedPosition = -1;
+    private String id;
 
 
     final String url = "http://www.schemefactory:5000/";
@@ -163,7 +165,7 @@ public class CurrentGoals extends Fragment {
 
     private void refreshUI() throws IOException {
         System.out.println("Networking running");
-        new NetworkRunner(url + "/api/goals/present", "GET", "CurrentGoals", "{id: 1}").execute(url, "test");
+        new NetworkRunner(url + "goals/present/" + id, "GET", "CurrentGoals", "{id: 1}").execute(url, "test");
         if(goalsMap != null){
             goalsMap.clear();
         }
@@ -192,6 +194,7 @@ public class CurrentGoals extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        id = ((MainActivity)getActivity()).getStudentNumber();
         try {
             refreshUI();
         } catch (IOException e) {

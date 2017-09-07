@@ -117,6 +117,7 @@ public class GoalsPage extends Fragment implements CurrentGoals.OnFragmentIntera
         BottomNavigationView bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation);
 
         Bundle item = getArguments();
+        System.out.println(item);
         if(item != null && item.getString("title") != null) {
             Fragment fragment = null;
             Class fragmentClass = CurrentGoals.class;

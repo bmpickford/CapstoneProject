@@ -50,4 +50,6 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
 
+    <string name="due_date">Due Date</string>
+
 </resources>

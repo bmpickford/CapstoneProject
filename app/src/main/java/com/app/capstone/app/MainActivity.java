@@ -41,8 +41,28 @@ public class MainActivity extends AppCompatActivity
         CurrentGoals.OnFragmentInteractionListener, PastGoals.OnFragmentInteractionListener, ProgressGoals.OnFragmentInteractionListener,
         CourseCalculator.OnFragmentInteractionListener {
 
+    public String s_no = "n8847762";
+
+    public String getStudentNumber(){
+        return s_no;
+    }
+
+    public void setStudentNumber(String n){
+        this.s_no = n;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("creating");
+        Bundle b = getIntent().getExtras();
+
+        System.out.println(b);
+        if(b.getString("s_no") != null){
+            setStudentNumber(b.getString("s_no"));
+        } else {
+            setStudentNumber("n8847762");
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(com.app.capstone.app.R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(com.app.capstone.app.R.id.toolbar);

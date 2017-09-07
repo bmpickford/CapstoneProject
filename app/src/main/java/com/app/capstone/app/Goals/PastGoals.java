@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.app.capstone.app.ExpandableListAdapter;
 import com.app.capstone.app.ExpandableListAdapterPast;
 import com.app.capstone.app.Goal;
+import com.app.capstone.app.MainActivity;
 import com.app.capstone.app.NetworkRunner;
 import com.app.capstone.app.R;
 
@@ -47,6 +48,8 @@ public class PastGoals extends Fragment {
     HashMap<String, List<String>> listDataChild;
     private int lastExpandedPosition = -1;
 
+    private String id;
+
     // Initialisation of empty array for all goal object
     private HashMap<Integer, Goal> goalsMap = new HashMap<>();
 
@@ -71,7 +74,7 @@ public class PastGoals extends Fragment {
     }
 
     private void refreshUI() throws IOException {
-        new NetworkRunner(url + "/api/goals/past", "GET", "CurrentGoals", "{id: 1}").execute(url, "test");
+        new NetworkRunner(url + "goals/past/" + id, "GET", "CurrentGoals", "{id: 1}").execute(url, "test");
         if(goalsMap != null){
             goalsMap.clear();
         }
@@ -101,6 +104,7 @@ public class PastGoals extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        id = ((MainActivity)getActivity()).getStudentNumber();
         try {
             refreshUI();
         } catch (IOException e) {

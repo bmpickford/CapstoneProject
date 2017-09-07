@@ -6,4 +6,7 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorBackground">#EAEAEA</color>
     <color name="colorConfirm">#00c500</color>
+    <color name="c_red">#cc0000</color>
+    <color name="c_orange">#FFA500</color>
+    <color name="c_green">#00c500</color>
 </resources>

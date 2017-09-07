@@ -168,17 +168,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             cancel = true;
         }*/
 
-        // Check for a valid email address.
-        // TODO: uncomment after testing login
-/*        if (TextUtils.isEmpty(email)) {
+        // Check for a number
+        if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
+        } else if (!isValidSNo(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
-        }*/
+        }
 
         if (cancel) {
             System.out.println("login Cancelled");
@@ -189,13 +188,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //mAuthTask = new UserLoginTask(email, password);
             //mAuthTask.execute((Void) null);
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            Bundle b = new Bundle();
+            b.putString("s_no", email);
+            System.out.println(email);
+            intent.putExtras(b);
             startActivity(intent);
         }
     }
 
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+    private boolean isValidSNo(String n) {
+        return n.contains("n") || n.contains("N");
     }
 
     private boolean isPasswordValid(String password) {

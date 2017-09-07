@@ -17,6 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.app.capstone.app.MainActivity;
 import com.app.capstone.app.R;
 import com.app.capstone.app.Requester;
 import com.github.mikephil.charting.animation.Easing;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 public class ProgressGoals extends Fragment {
     private PieChart mChart;
     final String url = "http://www.schemefactory:5000/";
+    private String id;
 
     private OnFragmentInteractionListener mListener;
 
@@ -50,6 +52,7 @@ public class ProgressGoals extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        id = ((MainActivity)getActivity()).getStudentNumber();
         super.onCreate(savedInstanceState);
 
     }
@@ -66,7 +69,7 @@ public class ProgressGoals extends Fragment {
         mChart = (PieChart) view.findViewById(R.id.progress_chart);
 
 
-        String endpoint = "api/goal/progress";
+        String endpoint = "goals/progress/" + id;
         String uri = url + endpoint;
 
         uri = "http://www.google.com";

@@ -27,26 +27,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
-                android:hint="Goal Name"
+                android:hint="What do you want to complete"
                 android:inputType="textAutoComplete"
-                android:maxLines="1"
-                android:singleLine="true" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <AutoCompleteTextView
-                android:id="@+id/goalDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
-                android:hint="Goal Description"
-                android:inputType="textMultiLine"
-                android:maxLines="10" />
+                android:maxLines="1" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -61,7 +44,129 @@
             android:inputType="date"
             android:clickable="true"
             android:focusable="false"
-            android:hint="Due Date" />
+            android:hint="@string/due_date" />
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="10dp"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
+            android:text="Priority" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/low_priority"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:elevation="5dp"
+                android:text="Low" />
+
+            <Button
+                android:id="@+id/medium_priority"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:text="Medium" />
+
+            <Button
+                android:id="@+id/high_priority"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:text="High" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/priority_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
+            android:text="Type" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/personal_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:elevation="5dp"
+                android:background="@color/colorWhite"
+                android:text="Personal" />
+
+            <Button
+                android:id="@+id/career_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:text="Career" />
+
+            <Button
+                android:id="@+id/academic_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:text="Academic" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/link_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Links"
+            android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:id="@+id/linked_ids"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:hint="Linked student no's"
+                android:inputType="textAutoComplete"
+                android:maxLines="1" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/goalSubmitButton"
@@ -72,6 +177,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="Submit" />
+
 
     </LinearLayout>
 
