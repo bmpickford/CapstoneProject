@@ -176,11 +176,13 @@ public class CurrentGoals extends Fragment {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         System.out.println("Deleting");
-                       /* try {
+                        try {
                             g.delete();
                         } catch (IOException e) {
                             e.printStackTrace();
-                        }*/
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -201,8 +203,7 @@ public class CurrentGoals extends Fragment {
         int id = Integer.parseInt(idStr);
         final Goal g = goalsMap.get(id);
         g.setCompleted(true);
-        //g.update();
-        //refreshUI();
+        g.update();
     }
 
     private void refreshUI() throws IOException {
@@ -237,12 +238,6 @@ public class CurrentGoals extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         id = ((MainActivity)getActivity()).getStudentNumber();
-        /*try {
-            refreshUI();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
         super.onCreate(savedInstanceState);
 
     }
@@ -254,29 +249,6 @@ public class CurrentGoals extends Fragment {
 
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_current_goals, container, false);
-
-/*        Bundle item = getArguments();
-        String data = item.getString("data");
-        try {
-            getGoals(data);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-/*        if(item != null && item.getString("title") != null) {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            String title = item.getString("title");
-            int priority = item.getInt("priority");
-            int type = item.getInt("type");
-            Date d = new Date();
-            try {
-                d = formatter.parse(item.getString("due_date"));
-            } catch (java.text.ParseException e) {
-                e.printStackTrace();
-            }
-
-            Goal g = new Goal(title, priority, type, d, getActivity());
-            goalsMap.put(g.getId(), g);
-        }*/
 
         String endpoint = "goals/present/" + id;
         String uri = url + endpoint;

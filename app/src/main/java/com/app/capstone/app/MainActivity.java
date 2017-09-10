@@ -21,6 +21,7 @@ import com.app.capstone.app.Course.CourseBadges;
 import com.app.capstone.app.Course.CourseCalculator;
 import com.app.capstone.app.Course.CourseGPA;
 import com.app.capstone.app.Course.CourseUnits;
+import com.app.capstone.app.Course.UnitDetailPage;
 import com.app.capstone.app.Goals.CurrentGoals;
 import com.app.capstone.app.Goals.PastGoals;
 import com.app.capstone.app.Goals.ProgressGoals;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity
         CourseBadges.OnFragmentInteractionListener, LinkStudy.OnFragmentInteractionListener, LinkContacts.OnFragmentInteractionListener,
         LinkHealth.OnFragmentInteractionListener, PortfolioPage.OnFragmentInteractionListener, NewGoalPage.OnFragmentInteractionListener,
         CurrentGoals.OnFragmentInteractionListener, PastGoals.OnFragmentInteractionListener, ProgressGoals.OnFragmentInteractionListener,
-        CourseCalculator.OnFragmentInteractionListener {
+        CourseCalculator.OnFragmentInteractionListener, UnitDetailPage.OnFragmentInteractionListener {
 
     public String s_no = "n8847762";
 
@@ -137,9 +138,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == com.app.capstone.app.R.id.nav_goals) {
             fragmentClass = GoalsPage.class;
             System.out.println("Goals clicked");
-        } else if (id == com.app.capstone.app.R.id.nav_portfolio) {
-            fragmentClass = PortfolioPage.class;
-            System.out.println("Portfolio clicked");
         } else if (id == com.app.capstone.app.R.id.nav_links) {
             fragmentClass = LinksPage.class;
             System.out.println("Links clicked");
