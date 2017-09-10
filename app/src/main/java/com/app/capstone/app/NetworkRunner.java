@@ -2,10 +2,13 @@ package com.app.capstone.app;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Bundle;
 
 import com.app.capstone.app.Course.CourseGPA;
 import com.app.capstone.app.Goals.CurrentGoals;
 import com.app.capstone.app.Goals.PastGoals;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -114,15 +117,18 @@ public class NetworkRunner extends AsyncTask<String, Void, String> {
         // TODO: check this.exception
         switch (this.context){
             case "CurrentGoals":
+                Bundle b = new Bundle();
+                b.putString("data", res);
                 CurrentGoals cg = null;
                 try {
-                    cg = new CurrentGoals();
+                    cg = new CurrentGoals(res);
+                    //cg.getGoals(res);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                cg.getGoals(res);
+
                 break;
-            case "PastGoals":
+/*            case "PastGoals":
                 PastGoals pg = null;
                 try {
                     pg = new PastGoals();
@@ -134,7 +140,7 @@ public class NetworkRunner extends AsyncTask<String, Void, String> {
             case "CourseGPA":
                 CourseGPA gpa = new CourseGPA();
                 gpa.getGPA(res);
-                break;
+                break;*/
         }
         return;
     }

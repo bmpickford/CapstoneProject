@@ -29,6 +29,9 @@ import com.app.capstone.app.Goals.CurrentGoals;
 import com.app.capstone.app.Goals.PastGoals;
 import com.app.capstone.app.Goals.ProgressGoals;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,11 +51,11 @@ public class GoalsPage extends Fragment implements CurrentGoals.OnFragmentIntera
 
     private OnFragmentInteractionListener mListener;
 
-    private ArrayList<Goal> getGoals(){
+    private ArrayList<Goal> getGoals() throws IOException, JSONException {
         ArrayList<Goal> goals = new ArrayList<Goal>();
-        Goal goal = new Goal("First Goal", "This is my first goal", new Date(), getActivity());
-        Goal goal2 = new Goal("Complete IFB399", "Finish the subject", new Date(), getActivity());
-        Goal goal3 = new Goal("Do Assignment", "Finish your assignment", new Date(), getActivity());
+        Goal goal = new Goal("First Goal", 1, 2, new Date(), getActivity(), 1);
+        Goal goal2 = new Goal("Complete IFB399", 2, 3, new Date(), getActivity(), 2);
+        Goal goal3 = new Goal("Do Assignment", 2, 3, new Date(), getActivity(), 3);
         goals.add(goal);
         goals.add(goal2);
         goals.add(goal3);
@@ -83,11 +86,11 @@ public class GoalsPage extends Fragment implements CurrentGoals.OnFragmentIntera
         }*/
     }
 
-    public GoalsPage() {
+    public GoalsPage() throws IOException, JSONException {
         // Required empty public constructor
     }
 
-    public static GoalsPage newInstance(String one, String two, String three) {
+    public static GoalsPage newInstance(String one, String two, String three) throws IOException, JSONException {
         GoalsPage fragment = new GoalsPage();
 
         return fragment;

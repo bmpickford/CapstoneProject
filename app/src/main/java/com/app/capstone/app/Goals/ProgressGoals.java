@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 public class ProgressGoals extends Fragment {
     private PieChart mChart;
-    final String url = "http://www.schemefactory:5000/";
+    final String url = "http://www.schemefactory.com:5000/";
     private String id;
 
     private OnFragmentInteractionListener mListener;

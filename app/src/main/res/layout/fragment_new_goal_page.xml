@@ -15,6 +15,7 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="13dp"
+        android:background="@color/colorBackground"
         android:id="@+id/newGoal">
 
         <android.support.design.widget.TextInputLayout
@@ -64,14 +65,13 @@
 
             <Button
                 android:id="@+id/low_priority"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@color/colorWhite"
-                android:elevation="5dp"
+                android:background="@color/colorBackground"
+                style="?android:attr/borderlessButtonStyle"
                 android:text="Low" />
 
             <Button
@@ -81,7 +81,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@color/colorWhite"
+                android:background="@color/colorBackground"
+                style="?android:attr/borderlessButtonStyle"
                 android:text="Medium" />
 
             <Button
@@ -91,7 +92,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@color/colorWhite"
+                android:background="@color/colorBackground"
+                style="?android:attr/borderlessButtonStyle"
                 android:text="High" />
         </LinearLayout>
 
@@ -117,8 +119,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:elevation="5dp"
-                android:background="@color/colorWhite"
+                android:background="@color/colorBackground"
+                style="?android:attr/borderlessButtonStyle"
                 android:text="Personal" />
 
             <Button
@@ -128,7 +130,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@color/colorWhite"
+                android:background="@color/colorBackground"
+                style="?android:attr/borderlessButtonStyle"
                 android:text="Career" />
 
             <Button
@@ -138,7 +141,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@color/colorWhite"
+                android:background="@color/colorBackground"
+                style="?android:attr/borderlessButtonStyle"
                 android:text="Academic" />
         </LinearLayout>
 

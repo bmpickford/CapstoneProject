@@ -3,6 +3,7 @@ package com.app.capstone.app.Goals;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.telecom.Call;
 import android.view.LayoutInflater;
@@ -22,14 +24,23 @@ import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.capstone.app.ExpandableListAdapter;
 import com.app.capstone.app.Goal;
 import com.app.capstone.app.MainActivity;
 import com.app.capstone.app.NetworkRunner;
 import com.app.capstone.app.NewGoalPage;
 import com.app.capstone.app.R;
+import com.app.capstone.app.Requester;
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,6 +58,7 @@ import okhttp3.Response;
 
 public class CurrentGoals extends Fragment {
 
+    private String d = null;
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
@@ -55,7 +67,7 @@ public class CurrentGoals extends Fragment {
     private String id;
 
 
-    final String url = "http://www.schemefactory:5000/";
+    final String url = "http://www.schemefactory.com:5000/";
 
 
     private HashMap<Integer, Goal> goalsMap = new HashMap<>();// = getGoals();
@@ -63,54 +75,84 @@ public class CurrentGoals extends Fragment {
 
 
 
-    public void getGoals(String data){
-        System.out.println(data);
+    public void getGoals(JSONObject jo) throws JSONException {
+        //JSONObject jo = new JSONObject(data);
+
+        Iterator<String> it  =  jo.keys();
+
+        HashMap<String, ArrayList> map = new HashMap<>();
+        ArrayList<String> values = null;
+
+        while( it.hasNext() ){
+            String key = it.next();
+            Object value = jo.get(key);
+            JSONObject innerJo = new JSONObject(value.toString());
+
+            Iterator<String> innerit  =  innerJo.keys();
+
+            values = new ArrayList<String>();
+
+            while( innerit.hasNext() ){
+                String k = innerit.next();
+                Object v = innerJo.get(k);
+                values.add(v.toString());
+            }
+
+            map.put(key, values);
+
+        }
+
+        for(int i = 0; i < values.size(); i++){
+            int id = -1;
+            int type = -1;
+            int priority = 1;
+            String name = null;
+            Date d = null;
+            for (Map.Entry<String, ArrayList> entry : map.entrySet()) {
+                String key = entry.getKey();
+                ArrayList value = entry.getValue();
+                String v = value.get(i).toString();
+
+
+                switch(key){
+                    case "Exp_Date":
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
+                        try {
+                            d = formatter.parse(v);
+                        } catch (java.text.ParseException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "Goal_ID":
+                        id = Integer.parseInt(v);
+                        break;
+                    case "Description":
+                        name = v;
+                        break;
+                    case "Goal_Type":
+                        if(v == "Personal"){
+                            type = 1;
+                        } else if (v == "Career"){
+                            type = 2;
+                        } else {
+                            type = 3;
+                        }
+                }
+            }
+            System.out.println("NAME: " + name);
+            Goal g = new Goal(name, priority, type, d, getActivity(), id);
+            goalsMap.put(g.getId(), g);
+        }
+
     }
-
-/*    public HashMap<Integer, Goal> getGoals() throws IOException {
-        HashMap<Integer, Goal> g = new HashMap<>();
-        g.put(1, new Goal("First Goal", "This is my first goal", new Date(), getActivity(), 1));
-        g.put(2, new Goal("2ns Goal", "This is my 2nd goal", new Date(), getActivity(), 2));
-        g.put(3, new Goal("3rd Goal", "This is my 3rd goal", new Date(), getActivity(), 3));
-
-       // System.out.println(run(this.url));
-            //return response.body().string();
-
-        //new NetworkRunner().execute(url);
-
-        return g;
-        *//*String u = this.url + /goals/present;
-        URL url = new URL(u);
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        try {
-            urlConnection.setDoOutput(true);
-            urlConnection.setChunkedStreamingMode(0);
-            urlConnection.setRequestMethod("GET");
-            urlConnection.setRequestProperty("Content-Type", "application/json");
-            urlConnection.setRequestProperty("charset", "utf-8");
-            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-
-            //TODO: change this to suit output
-            for (int c; (c = in.read()) >= 0;)
-                System.out.print((char)c);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            urlConnection.disconnect();
-        }*//*
-    }*/
-
-
-
-
-
 
 
     public CurrentGoals() throws IOException {
         // Required empty public constructor
+    }
+
+    public CurrentGoals(String d) throws IOException {
+        this.d = d;
     }
 
     public void deleteGoal(View view) throws IOException {
@@ -195,11 +237,11 @@ public class CurrentGoals extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         id = ((MainActivity)getActivity()).getStudentNumber();
-        try {
+        /*try {
             refreshUI();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         super.onCreate(savedInstanceState);
 
@@ -211,13 +253,20 @@ public class CurrentGoals extends Fragment {
 
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_current_goals, container, false);
+        final View view = inflater.inflate(R.layout.fragment_current_goals, container, false);
 
-        Bundle item = getArguments();
-        if(item != null && item.getString("title") != null) {
+/*        Bundle item = getArguments();
+        String data = item.getString("data");
+        try {
+            getGoals(data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
+/*        if(item != null && item.getString("title") != null) {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             String title = item.getString("title");
-            String description = item.getString("description");
+            int priority = item.getInt("priority");
+            int type = item.getInt("type");
             Date d = new Date();
             try {
                 d = formatter.parse(item.getString("due_date"));
@@ -225,34 +274,59 @@ public class CurrentGoals extends Fragment {
                 e.printStackTrace();
             }
 
-            Goal g = new Goal(title, description, d, getActivity());
+            Goal g = new Goal(title, priority, type, d, getActivity());
             goalsMap.put(g.getId(), g);
-        }
+        }*/
 
-        expListView = (ExpandableListView) view.findViewById(R.id.lvExp);
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+        String endpoint = "goals/present/" + id;
+        String uri = url + endpoint;
 
+        System.out.println("using url: " + uri);
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (com.android.volley.Request.Method.GET, uri, null, new com.android.volley.Response.Listener<JSONObject>() {
 
-        prepareListData();
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response.toString());
+                        try {
+                            getGoals(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
+                        expListView = (ExpandableListView) view.findViewById(R.id.lvExp);
+                        listDataHeader = new ArrayList<String>();
+                        listDataChild = new HashMap<String, List<String>>();
 
-        listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
+                        prepareListData();
 
-        // setting list adapter
-        expListView.setAdapter(listAdapter);
+                        listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
 
-        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+                        // setting list adapter
+                        expListView.setAdapter(listAdapter);
 
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                if (lastExpandedPosition != -1
-                        && groupPosition != lastExpandedPosition) {
-                    expListView.collapseGroup(lastExpandedPosition);
-                }
-                lastExpandedPosition = groupPosition;
-            }
-        });
+                        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+                            @Override
+                            public void onGroupExpand(int groupPosition) {
+                                if (lastExpandedPosition != -1
+                                        && groupPosition != lastExpandedPosition) {
+                                    expListView.collapseGroup(lastExpandedPosition);
+                                }
+                                lastExpandedPosition = groupPosition;
+                            }
+                        });
+
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error);
+                    }
+                });
+
+        Requester.getInstance(getContext()).addToRequestQueue(jsObjRequest);
+
 
 
         return view;
@@ -314,7 +388,7 @@ public class CurrentGoals extends Fragment {
             }
 
             listDataHeader.add(header);
-            s.add(goal.getId() + " - " +goal.getDescription() + " - DUE: " + goal.getEnd_dateStr());
+            s.add(goal.getId() + " - DUE: " + goal.getEnd_dateStr());
             listDataChild.put(listDataHeader.get(i), s);
             i++;
 

@@ -12,14 +12,18 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.capstone.app.ExpandableListAdapter;
 import com.app.capstone.app.ExpandableListAdapterPast;
 import com.app.capstone.app.Goal;
 import com.app.capstone.app.MainActivity;
 import com.app.capstone.app.NetworkRunner;
 import com.app.capstone.app.R;
+import com.app.capstone.app.Requester;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -40,7 +44,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PastGoals extends Fragment {
-    final String url = "http://www.schemefactory:5000/";
+    final String url = "http://www.schemefactory.com:5000/";
 
     ExpandableListAdapterPast listAdapter;
     ExpandableListView expListView;
@@ -56,8 +60,76 @@ public class PastGoals extends Fragment {
     private PastGoals.OnFragmentInteractionListener mListener;
 
 
-    public void getGoals(String data){
-        System.out.println(data);
+    public void getGoals(JSONObject jo) throws JSONException {
+        //JSONObject jo = new JSONObject(data);
+
+        Iterator<String> it  =  jo.keys();
+
+        HashMap<String, ArrayList> map = new HashMap<>();
+        ArrayList<String> values = null;
+
+        while( it.hasNext() ){
+            String key = it.next();
+            Object value = jo.get(key);
+            JSONObject innerJo = new JSONObject(value.toString());
+
+            Iterator<String> innerit  =  innerJo.keys();
+
+            values = new ArrayList<String>();
+
+            while( innerit.hasNext() ){
+                String k = innerit.next();
+                Object v = innerJo.get(k);
+                values.add(v.toString());
+            }
+
+            map.put(key, values);
+
+        }
+
+        for(int i = 0; i < values.size(); i++){
+            int id = -1;
+            int type = -1;
+            int priority = 1;
+            String name = null;
+            Date d = null;
+            for (Map.Entry<String, ArrayList> entry : map.entrySet()) {
+                String key = entry.getKey();
+                ArrayList value = entry.getValue();
+                String v = value.get(i).toString();
+
+
+
+                switch(key){
+                    case "Exp_Date":
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
+                        try {
+                            d = formatter.parse(v);
+                        } catch (java.text.ParseException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "Goal_ID":
+                        id = Integer.parseInt(v);
+                        break;
+                    case "Description":
+                        name = v;
+                        break;
+                    case "Goal_Type":
+                        if(v == "Personal"){
+                            type = 1;
+                        } else if (v == "Career"){
+                            type = 2;
+                        } else {
+                            type = 3;
+                        }
+                }
+            }
+            System.out.println("NAME: " + name);
+            Goal g = new Goal(name, priority, type, d, getActivity(), id);
+            goalsMap.put(g.getId(), g);
+        }
+
     }
 
     public void uncompleteGoal(View view) throws IOException, JSONException {
@@ -74,7 +146,7 @@ public class PastGoals extends Fragment {
     }
 
     private void refreshUI() throws IOException {
-        new NetworkRunner(url + "goals/past/" + id, "GET", "CurrentGoals", "{id: 1}").execute(url, "test");
+/*        new NetworkRunner(url + "goals/past/" + id, "GET", "CurrentGoals", "{id: 1}").execute(url, "test");
         if(goalsMap != null){
             goalsMap.clear();
         }
@@ -85,7 +157,7 @@ public class PastGoals extends Fragment {
             ft.detach(this).attach(this).commit();
         } catch(Exception e){
 
-        }
+        }*/
     }
 
 
@@ -105,11 +177,11 @@ public class PastGoals extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         id = ((MainActivity)getActivity()).getStudentNumber();
-        try {
+/*        try {
             refreshUI();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         super.onCreate(savedInstanceState);
 
     }
@@ -118,13 +190,14 @@ public class PastGoals extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_past_goals, container, false);
+        final View view = inflater.inflate(R.layout.fragment_past_goals, container, false);
 
-        Bundle item = getArguments();
+        /*Bundle item = getArguments();
         if(item != null && item.getString("title") != null) {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             String title = item.getString("title");
-            String description = item.getString("description");
+            int priority = item.getInt("priority");
+            int type = item.getInt("type");
             Date d = new Date();
             try {
                 d = formatter.parse(item.getString("due_date"));
@@ -132,11 +205,60 @@ public class PastGoals extends Fragment {
                 e.printStackTrace();
             }
 
-            Goal g = new Goal(title, description, d, getActivity());
+            Goal g = new Goal(title, priority, type, d, getActivity());
             goalsMap.put(g.getId(), g);
-        }
+        }*/
 
-        expListView = (ExpandableListView) view.findViewById(R.id.lvExpPast);
+        String endpoint = "goals/past/" + id;
+        String uri = url + endpoint;
+
+        System.out.println("using url: " + uri);
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (com.android.volley.Request.Method.GET, uri, null, new com.android.volley.Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response.toString());
+                        try {
+                            getGoals(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        expListView = (ExpandableListView) view.findViewById(R.id.lvExpPast);
+                        listDataHeader = new ArrayList<String>();
+                        listDataChild = new HashMap<String, List<String>>();
+
+                        prepareListData();
+
+                        listAdapter = new ExpandableListAdapterPast(getActivity(), listDataHeader, listDataChild);
+
+                        // setting list adapter
+                        expListView.setAdapter(listAdapter);
+
+                        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+                            @Override
+                            public void onGroupExpand(int groupPosition) {
+                                if (lastExpandedPosition != -1
+                                        && groupPosition != lastExpandedPosition) {
+                                    expListView.collapseGroup(lastExpandedPosition);
+                                }
+                                lastExpandedPosition = groupPosition;
+                            }
+                        });
+
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error);
+                    }
+                });
+
+        Requester.getInstance(getContext()).addToRequestQueue(jsObjRequest);
+
+   /*     expListView = (ExpandableListView) view.findViewById(R.id.lvExpPast);
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
 
@@ -161,7 +283,7 @@ public class PastGoals extends Fragment {
                 lastExpandedPosition = groupPosition;
             }
         });
-
+*/
 
         return view;
     }
@@ -220,7 +342,7 @@ public class PastGoals extends Fragment {
             }
 
             listDataHeader.add(header);
-            s.add(goal.getId() + " - " +goal.getDescription() + " - DUE: " + goal.getEnd_dateStr());
+            s.add(goal.getId() + " - DUE: " + goal.getEnd_dateStr());
             listDataChild.put(listDataHeader.get(i), s);
             i++;
 

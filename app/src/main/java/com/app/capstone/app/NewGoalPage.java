@@ -23,6 +23,9 @@ import android.widget.TextView;
 
 import com.app.capstone.app.Goals.CurrentGoals;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
@@ -198,6 +201,22 @@ public class NewGoalPage extends Fragment {
                 due_date = edittext.getText().toString();
                 title = t.getText().toString();
                 links = linksBtn.getText().toString();
+
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                Date d = new Date();
+                try {
+                    d = formatter.parse(due_date);
+                } catch (java.text.ParseException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    Goal g = new Goal(title, priority, type, d, getContext());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 bundle.putString("title", title);
                 bundle.putString("due_date", due_date);
