@@ -1,9 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     tools:context="com.app.capstone.app.Course.CourseBadges">
 
     <ProgressBar
@@ -19,30 +18,296 @@
         android:id="@+id/badges_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="18dp"
-        android:orientation="horizontal"
-        android:visibility="invisible">
+        android:layout_marginBottom="70dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
 
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            card_view:srcCompat="@drawable/ic_trophy" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/achievement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/badge_gpa_sem"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="50"
+                    card_view:srcCompat="@drawable/ic_badge_gpa_24dp" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="GPA Semester Increase"
+                    android:textAppearance="@style/TextAppearance.Design.Tab" />
+
+                <CheckedTextView
+                    android:id="@+id/checkedTextView"
+                    style="@style/checkedThemes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMarkTint="@color/colorConfirm"
+                    android:checked="true"
+                    android:clickable="false"
+                    android:fontFamily="casual"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="One Semester"
+                    android:textSize="10sp" />
+
+                <CheckedTextView
+                    android:id="@+id/checkedTextView2"
+                    style="@style/checkedThemes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checked="true"
+                    android:fontFamily="casual"
+                    android:contentDescription="Checked if ..."
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Two Semesters"
+                    android:textSize="10sp"/>
+
+                <CheckedTextView
+                    android:id="@+id/checkedTextView3"
+                    style="@style/checkedThemes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMarkTint="@color/colorConfirm"
+                    android:checked="false"
+                    android:fontFamily="casual"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Three Semesters"
+                    android:textSize="10sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/badge_gpa_year"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="50"
+                    card_view:srcCompat="@drawable/ic_trophy" />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="GPA Yearly Increase"
+                    android:textAppearance="@style/TextAppearance.Design.Tab" />
+
+                <CheckedTextView
+                    android:id="@+id/checkedTextView4"
+                    style="@style/checkedThemes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMarkTint="@color/colorConfirm"
+                    android:checked="true"
+                    android:clickable="false"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="One Year"
+                    android:textSize="10sp"/>
+
+                <CheckedTextView
+                    android:id="@+id/checkedTextView5"
+                    style="@style/checkedThemes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checked="true"
+                    android:contentDescription="Checked if ..."
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Two Years"
+                    android:textSize="10sp"/>
+
+                <CheckedTextView
+                    android:id="@+id/checkedTextView6"
+                    style="@style/checkedThemes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMarkTint="@color/colorConfirm"
+                    android:checked="true"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Three Years"
+                    android:textSize="10sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="You logged on every day this week!"
-            android:textAppearance="@android:style/TextAppearance.Material.Large" />
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/badge_goals"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="50"
+                    card_view:srcCompat="@drawable/ic_badge_goals_24dp" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="Goal Completion"
+                    android:textAppearance="@style/TextAppearance.Design.Tab" />
+
+                <CheckedTextView
+                    android:id="@+id/checkedTextView7"
+                    style="@style/checkedThemes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMarkTint="@color/colorConfirm"
+                    android:checked="true"
+                    android:clickable="false"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Three Goals" />
+
+                <CheckedTextView
+                    android:id="@+id/checkedTextView8"
+                    style="@style/checkedThemes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checked="false"
+                    android:contentDescription="Checked if ..."
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Six Goals" />
+
+                <CheckedTextView
+                    android:id="@+id/checkedTextView9"
+                    style="@style/checkedThemes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMarkTint="@color/colorConfirm"
+                    android:checked="false"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Ten Goals" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/badge_blackboard"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="50"
+                    card_view:srcCompat="@drawable/ic_badge_calendar_24dp" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="Blackboard Interaction"
+                    android:textAppearance="@style/TextAppearance.Design.Tab" />
+
+                <CheckedTextView
+                    android:id="@+id/checkedTextView10"
+                    style="@style/checkedThemes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMarkTint="@color/colorConfirm"
+                    android:checked="true"
+                    android:clickable="false"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Three Weeks" />
+
+                <CheckedTextView
+                    android:id="@+id/checkedTextView11"
+                    style="@style/checkedThemes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checked="true"
+                    android:contentDescription="Checked if ..."
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Six Weeks" />
+
+                <CheckedTextView
+                    android:id="@+id/checkedTextView12"
+                    style="@style/checkedThemes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="3"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMarkTint="@color/colorConfirm"
+                    android:checked="false"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="Twelve Weeks" />
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
 

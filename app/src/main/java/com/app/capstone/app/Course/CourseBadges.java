@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -45,7 +46,7 @@ public class CourseBadges extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_course_badges, container, false);
+        final View view = inflater.inflate(R.layout.fragment_course_badges, container, false);
 
         final LinearLayout content = (LinearLayout) view.findViewById(R.id.badges_content);
         final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.badges_spinner);
@@ -67,6 +68,10 @@ public class CourseBadges extends Fragment {
                         //TODO: Add badges dynamically
                         spinner.setVisibility(View.INVISIBLE);
                         content.setVisibility(View.VISIBLE);
+
+                        final CheckedTextView ctv = (CheckedTextView) view.findViewById(R.id.checkedTextView);
+                        final CheckedTextView ctv2 = (CheckedTextView) view.findViewById(R.id.checkedTextView2);
+
                     }
                 }, new Response.ErrorListener() {
                     @Override
