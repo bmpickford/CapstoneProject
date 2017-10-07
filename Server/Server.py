@@ -11,6 +11,12 @@ app = Flask(__name__)
 
 time = datetime.datetime.now().time()
 
+#-------------- Configuration
+
+# Current Teaching Period
+yr_period = '2017-SEM-1'
+
+
 #-------------- DB Connection
 connStr = (
     r"DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};"
@@ -118,6 +124,89 @@ def update_goal():
 
     cursor.execute(sql)
     return "Success"
+
+
+@app.route("/units/<int:studentno>", methods=['GET'])
+def get_units(studentno):
+
+    sql = "UNIT_CD from Bboard WHERE [STUDENT_ID]= %i AND [YEAR_PERIOD_CD]= '%s';" % (studentno, yr_period)
+    df = pandas.read_sql(sql, cnxn)
+    df = df.drop_duplicates()
+    data = df.to_json()
+    return data
+
+'''
+getCurrentGPA
+URL: /api/gpa/<studentno>
+FUNCTION: To get students GPA
+METHOD: GET
+BODY: null
+RESPONSE: (example)
+{ data: [
+{ course: “Bachelor of IT”, gpa: 5, average: 4.91, median: 5.2 },
+{ course: “Bachelor of Business”, gpa: 6.1, average: 5.03, median: 5.1 }
+  ]
+ }
+'''
+
+@app.route("/gpa/<int:studentno>", methods=['GET'])
+def get_Current_GPA(studentno):
+
+    sql = 'SELECT Parent_Study_Package_Full_Title, Course_GPA FROM Combined_Degree_GPA WHERE [STUDENT_ID] = %i;' % (studentno)
+
+    df = pandas.read_sql(sql,cnxn)
+    # Extract course code for gpa avgs calcs
+    cc = pandas.read_sql('SELECT Parent_Study_Package_Code FROM Combined_Degree_GPA WHERE [STUDENT_ID] = %i;' % (studentno), cnxn)
+    cc = cc['Parent_Study_Package_Code']
+    cc = cc.to_string()
+    cc = cc[-4:]
+
+    avg = get_avg_gpa(cc)
+
+    df['Mean'] = avg[0]
+    df['Median'] = avg[1]
+    data = df.to_json()
+    return data
+
+@app.route("/gpa/units/<int:studentno>", methods=['GET'])
+def get_GPA_wCP(studentno):
+
+    sql = "SELECT Course_GPA, Outstanding_CP FROM CP WHERE [STUDENT_ID] = %i;" % (studentno)
+
+    df = pandas.read_sql(sql,cnxn)
+
+    data = df.to_json()
+
+    return data
+
+def get_avg_gpa(course):
+
+    sql = "SELECT Course_GPA FROM Combined_Degree_GPA WHERE [Parent_Study_Package_Code] = '%s';" % (course)
+    df = pandas.read_sql(sql,cnxn)
+
+    # Exclude 0s
+    df = df[df['Course_GPA']!=0]
+
+    mean = float(df.mean())
+
+    median = float(df.median())
+
+    data = [mean,median]
+    print(data)
+
+    return data
+
+@app.route("/student/<int:studentno>", methods=['GET'])
+def get_Student_Details(studentno):
+
+    sql = 'SELECT * FROM Profiles WHERE [Student_ID] = %i' % (studentno)
+    data = pandas.read_sql(sql,cnxn)
+
+    data = data.to_json()
+
+    return data
+
+
 
 @app.route("/")
 def hello():
