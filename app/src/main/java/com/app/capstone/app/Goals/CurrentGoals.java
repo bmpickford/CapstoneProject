@@ -99,7 +99,6 @@ public class CurrentGoals extends Fragment {
             }
 
             map.put(key, values);
-
         }
 
         for(int i = 0; i < values.size(); i++){
@@ -143,7 +142,6 @@ public class CurrentGoals extends Fragment {
             Goal g = new Goal(name, priority, type, d, getActivity(), id);
             goalsMap.put(g.getId(), g);
         }
-
     }
 
 
@@ -246,9 +244,13 @@ public class CurrentGoals extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_current_goals, container, false);
+
+        final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.currentGoalSpinner);
+        final TextView err = (TextView) view.findViewById(R.id.errTextCurrGoal);
+
+        spinner.setVisibility(View.VISIBLE);
 
         String endpoint = "goals/present/" + id;
         String uri = url + endpoint;
@@ -260,9 +262,11 @@ public class CurrentGoals extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         System.out.println(response.toString());
+                        spinner.setBackgroundColor(View.INVISIBLE);
                         try {
                             getGoals(response);
                         } catch (JSONException e) {
+
                             e.printStackTrace();
                         }
 
@@ -294,6 +298,9 @@ public class CurrentGoals extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println(error);
+                        err.setText(error.toString());
+                        err.setVisibility(View.VISIBLE);
+                        spinner.setVisibility(View.INVISIBLE);
                     }
                 });
 

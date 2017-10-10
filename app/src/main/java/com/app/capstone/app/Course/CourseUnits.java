@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ import com.app.capstone.app.MainActivity;
 import com.app.capstone.app.R;
 import com.app.capstone.app.Requester;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,13 +68,13 @@ public class CourseUnits extends Fragment {
         return fragment;
     }
 
-    public void getUnits(JSONObject jo) throws JSONException {
+    public String[] getUnits(JSONObject jo) throws JSONException {
         Iterator<String> it = jo.keys();
 
         HashMap<String, ArrayList> map = new HashMap<>();
         ArrayList<String> values = null;
 
-        int unit_id = 1;
+/*        int unit_id = 1;
         String grade = "72%";
         String code = "CAB201";
         String name = "Programming Principles";
@@ -89,9 +92,9 @@ public class CourseUnits extends Fragment {
         unitData2.add("Embedded Systems");
         unitData2.add("31/10/2016");
         //Goal g = new Goal(name, priority, type, d, getActivity(), id);
-        unitsMap.put(unit_id, unitData);
+        unitsMap.put(unit_id, unitData);*/
 
-        /*while (it.hasNext()) {
+        while (it.hasNext()) {
             String key = it.next();
             Object value = jo.get(key);
             JSONObject innerJo = new JSONObject(value.toString());
@@ -131,13 +134,13 @@ public class CourseUnits extends Fragment {
                             e.printStackTrace();
                         }
                         break;
-                    case "Grade":
+                    case "grade":
                         grade = v;
                         break;
-                    case "Name":
+                    case "name":
                         name = v;
                         break;
-                    case "Unit_Code":
+                    case "code":
                         code = v;
                         break;
                     case "id":
@@ -154,7 +157,11 @@ public class CourseUnits extends Fragment {
             unitData.add(d.toString());
             //Goal g = new Goal(name, priority, type, d, getActivity(), id);
             unitsMap.put(unit_id, unitData);
-        }*/
+        }
+
+
+        String[] s = {"CAB201"};
+        return s;
     }
 
 
@@ -175,10 +182,15 @@ public class CourseUnits extends Fragment {
 
         spinner.setVisibility(View.VISIBLE);
 
-        String endpoint = "api/units/";
+        String endpoint = "units/" + id;
 
-        String uri = url + endpoint;
-        uri = "https://jsonplaceholder.typicode.com/posts/1";
+        String uri;
+
+        if(id.equals("0001")){
+            uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getUnits";
+        } else {
+            uri = url + endpoint;
+        }
 
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -187,17 +199,34 @@ public class CourseUnits extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        /*try {
-                            getUnits(response);
+                        String[] units = {};
+                        try {
+                            JSONObject jo = new JSONObject(response.getString("body"));
+                            //units = getUnits(jo);
+
+                            System.out.println(jo.getString("code"));
+
+                            JSONArray u = jo.getJSONArray("code");
+
+                            String[] arr=new String[u.length()];
+                            for(int i=0; i<arr.length; i++) {
+                                System.out.println(u.optString(i));
+                                System.out.println(u.get(i));
+                                arr[i]=u.optString(i);
+                            }
+                            System.out.println(arr);
+
+                            units = arr;
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        }*/
+                            messageBox("Unit data", e.toString());
+                        }
                         spinner.setVisibility(View.INVISIBLE);
 
-                        String[] u = {"CAB201: Programming Principles", "CAB202: Embedded Systems",
-                                "IFB299: Application Design and Development", "CAB301: Software Development"};
+                        //String[] u = {"CAB201: Programming Principles", "CAB202: Embedded Systems",
+                          //      "IFB299: Application Design and Development", "CAB301: Software Development"};
 
-                        for(int i = 0; i < 4; i++){
+                        for(int i = 0; i < units.length; i++){
                             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                                     ViewGroup.LayoutParams.MATCH_PARENT,
                                     ViewGroup.LayoutParams.WRAP_CONTENT
@@ -207,8 +236,10 @@ public class CourseUnits extends Fragment {
                             Button b = new Button(getActivity());
 
                             b.setLayoutParams(params);
-                            b.setText(u[i]);
+
+                            b.setText(units[i]);
                             b.setId(i);
+
                             b.setBackgroundColor(Color.WHITE);
                             b.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -231,6 +262,7 @@ public class CourseUnits extends Fragment {
                                 }
                             });
                             unitsBtns.addView(b);
+                            //b.getLayoutParams().height = 80;
                         }
 
                         /*expListView = (ExpandableListView) view.findViewById(R.id.lvExpUnits);
@@ -261,6 +293,7 @@ public class CourseUnits extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         spinner.setVisibility(View.INVISIBLE);
                         System.out.println("Units volley error: " + error);
+                        messageBox("Unit data", error.toString());
                     }
                 });
         Requester.getInstance(getContext()).addToRequestQueue(jsObjRequest);
@@ -340,5 +373,17 @@ public class CourseUnits extends Fragment {
         }
 
 
+    }
+
+    private void messageBox(String method, String message)
+    {
+        Log.d("EXCEPTION: " + method,  message);
+
+        AlertDialog.Builder messageBox = new AlertDialog.Builder(getContext());
+        messageBox.setTitle(method);
+        messageBox.setMessage(message);
+        messageBox.setCancelable(false);
+        messageBox.setNeutralButton("OK", null);
+        messageBox.show();
     }
 }

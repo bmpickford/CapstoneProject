@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             Bundle b = new Bundle();
 
-            email = "9171983";
+            //email = "9171983";
 
             b.putString("s_no", email);
             System.out.println(email);

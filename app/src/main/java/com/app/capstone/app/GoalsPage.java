@@ -143,14 +143,14 @@ public class GoalsPage extends Fragment implements CurrentGoals.OnFragmentIntera
                 Fragment fragment = null;
                 Class fragmentClass = null;
 
-                try {
+   /*             try {
                     fragment = (Fragment) fragmentClass.newInstance();
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.goalsContent, fragment).commit();
                 } catch (Exception e) {
                     System.out.println(e);
                     e.printStackTrace();
-                }
+                }*/
                 switch (item.getItemId()) {
 
                     case R.id.goal_present:

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.capstone.app.Goals.ProgressGoals;
+import com.app.capstone.app.MainActivity;
 import com.app.capstone.app.R;
 import com.app.capstone.app.Requester;
 import com.github.mikephil.charting.animation.Easing;
@@ -35,6 +38,8 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -45,6 +50,8 @@ import static com.app.capstone.app.R.id.calculatedContent;
 public class CourseCalculator extends Fragment {
     final String url = "http://www.schemefactory:5000/";
     private PieChart mChart;
+
+    String id;
 
     private OnFragmentInteractionListener mListener;
 
@@ -60,6 +67,7 @@ public class CourseCalculator extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        id = ((MainActivity)getActivity()).getStudentNumber();
         super.onCreate(savedInstanceState);
     }
 
@@ -159,9 +167,6 @@ public class CourseCalculator extends Fragment {
 
     private void calculateFromUnitsLeft(final double goal, final View view){
 
-        String endpoint = "api/gpa/units";
-        String uri = url + endpoint;
-
         final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.calculatorSpinner);
         spinner.setVisibility(View.VISIBLE);
 
@@ -169,7 +174,15 @@ public class CourseCalculator extends Fragment {
         final LinearLayout calculatedContent = (LinearLayout) view.findViewById(R.id.calculatedContent);
         final TextView goalText = (TextView) view.findViewById(R.id.calculatedGPA);
 
-        uri = "https://jsonplaceholder.typicode.com/posts/1";
+        String endpoint = "gpa/units/" + id;
+
+        String uri;
+
+        if(id.equals("0001")){
+            uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getGPACalc";
+        } else {
+            uri = url + endpoint;
+        }
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, uri, null, new Response.Listener<JSONObject>() {
@@ -196,9 +209,22 @@ public class CourseCalculator extends Fragment {
                         mChart.setHighlightPerTapEnabled(true);
 
                         double goalGPA = goal;
-                        double gpa = 5;
-                        int cpLeft = 96;
-                        int cpDone = 192;
+                        double gpa = 0;
+                        int cpLeft = 0;
+                        int cpDone = 0;
+
+                        try {
+                            JSONObject body = new JSONObject(response.getString("body"));
+
+                            gpa = Double.parseDouble(body.getJSONArray("gpa").get(0).toString());
+                            cpLeft = Integer.parseInt(body.getJSONArray("cpLeft").get(0).toString());
+                            cpDone = Integer.parseInt(body.getJSONArray("cpDone").get(0).toString());
+
+                        } catch (JSONException e) {
+                            messageBox("Get GPA Data", e.getMessage());
+                            e.printStackTrace();
+                        }
+
 
                         GPACalculator gpaCalc = new GPACalculator(goalGPA, gpa, cpLeft, cpDone);
 
@@ -228,6 +254,7 @@ public class CourseCalculator extends Fragment {
                         spinner.setVisibility(View.INVISIBLE);
                         calculatedContent.setVisibility(View.VISIBLE);
                         goalText.setText("There was an error: " + error.toString());
+                        messageBox("Get GPA Data", error.toString());
                     }
                 });
 
@@ -237,9 +264,6 @@ public class CourseCalculator extends Fragment {
     }
 
     private void calculateManually(final double goal, final int units, View view){
-        String endpoint = "api/gpa/units";
-        String uri = url + endpoint;
-
         final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.calculatorSpinner);
         spinner.setVisibility(View.VISIBLE);
 
@@ -247,7 +271,15 @@ public class CourseCalculator extends Fragment {
         final LinearLayout calculatedContent = (LinearLayout) view.findViewById(R.id.calculatedContent);
         final TextView goalText = (TextView) view.findViewById(R.id.calculatedGPA);
 
-        uri = "https://jsonplaceholder.typicode.com/posts/1";
+        String endpoint = "gpa/units/" + id;
+
+        String uri;
+
+        if(id.equals("0001")){
+            uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getGPACalc";
+        } else {
+            uri = url + endpoint;
+        }
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, uri, null, new Response.Listener<JSONObject>() {
@@ -274,9 +306,20 @@ public class CourseCalculator extends Fragment {
                         mChart.setHighlightPerTapEnabled(true);
 
                         double goalGPA = goal;
-                        double gpa = 5;
+                        double gpa = 0;
                         int cpLeft = units;
-                        int cpDone = 192;
+                        int cpDone = 0;
+
+                        try {
+                            JSONObject body = new JSONObject(response.getString("body"));
+
+                            gpa = Double.parseDouble(body.getJSONArray("gpa").get(0).toString());
+                            cpDone = Integer.parseInt(body.getJSONArray("cpDone").get(0).toString());
+
+                        } catch (JSONException e) {
+                            messageBox("Get GPA Data", e.getMessage());
+                            e.printStackTrace();
+                        }
 
                         GPACalculator gpaCalc = new GPACalculator(goalGPA, gpa, cpLeft, cpDone);
 
@@ -306,6 +349,7 @@ public class CourseCalculator extends Fragment {
                         spinner.setVisibility(View.INVISIBLE);
                         calculatedContent.setVisibility(View.VISIBLE);
                         goalText.setText("There was an error: " + error.toString());
+                        messageBox("Get GPA Data", error.toString());
                     }
                 });
 
@@ -357,7 +401,17 @@ public class CourseCalculator extends Fragment {
         mChart.invalidate();
     }
 
+    private void messageBox(String method, String message)
+    {
+        Log.d("EXCEPTION: " + method,  message);
 
+        AlertDialog.Builder messageBox = new AlertDialog.Builder(getContext());
+        messageBox.setTitle(method);
+        messageBox.setMessage(message);
+        messageBox.setCancelable(false);
+        messageBox.setNeutralButton("OK", null);
+        messageBox.show();
+    }
 
 
 }

@@ -2,10 +2,13 @@ package com.app.capstone.app.Course;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.app.capstone.app.Goal;
+import com.app.capstone.app.MainActivity;
 import com.app.capstone.app.R;
 import com.app.capstone.app.Requester;
 import com.github.mikephil.charting.animation.Easing;
@@ -30,14 +35,20 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 
 public class CourseGPA extends Fragment {
     private PieChart mChart;
     final String url = "http://www.schemefactory:5000/";
+    String id;
 
 
     private OnFragmentInteractionListener mListener;
@@ -46,7 +57,86 @@ public class CourseGPA extends Fragment {
         // Required empty public constructor
     }
 
-    public void getGPA(String data){
+    public void getGPA(JSONObject data) throws JSONException {
+        System.out.println(data.toString());
+        //JSONObject jo = new JSONObject(data);
+
+
+
+        Iterator<String> it  =  data.keys();
+
+        while( it.hasNext() ) {
+            String key = it.next();
+            Object value = data.get(key);
+
+            System.out.println(value.toString());
+        }
+
+
+ /*           Iterator<String> it  =  jo.keys();
+
+            HashMap<String, ArrayList> map = new HashMap<>();
+            ArrayList<String> values = null;
+
+            while( it.hasNext() ){
+                String key = it.next();
+                Object value = jo.get(key);
+                JSONObject innerJo = new JSONObject(value.toString());
+
+                Iterator<String> innerit  =  innerJo.keys();
+
+                values = new ArrayList<String>();
+
+                while( innerit.hasNext() ){
+                    String k = innerit.next();
+                    Object v = innerJo.get(k);
+                    values.add(v.toString());
+                }
+
+                map.put(key, values);
+            }
+
+            for(int i = 0; i < values.size(); i++){
+                int id = -1;
+                int type = -1;
+                int priority = 1;
+                String name = null;
+                Date d = null;
+                for (Map.Entry<String, ArrayList> entry : map.entrySet()) {
+                    String key = entry.getKey();
+                    ArrayList value = entry.getValue();
+                    String v = value.get(i).toString();
+
+
+                    switch(key){
+                        case "Exp_Date":
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
+                            try {
+                                d = formatter.parse(v);
+                            } catch (java.text.ParseException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case "Goal_ID":
+                            id = Integer.parseInt(v);
+                            break;
+                        case "Description":
+                            name = v;
+                            break;
+                        case "Goal_Type":
+                            if(v == "Personal"){
+                                type = 1;
+                            } else if (v == "Career"){
+                                type = 2;
+                            } else {
+                                type = 3;
+                            }
+                    }
+                }
+                System.out.println("NAME: " + name);
+                Goal g = new Goal(name, priority, type, d, getActivity(), id);
+                goalsMap.put(g.getId(), g);
+            }*/
 
     }
 
@@ -59,6 +149,7 @@ public class CourseGPA extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        id = ((MainActivity)getActivity()).getStudentNumber();
         super.onCreate(savedInstanceState);
 
     }
@@ -74,11 +165,15 @@ public class CourseGPA extends Fragment {
         final LinearLayout gpaContent = (LinearLayout) view.findViewById(R.id.gpa_content);
         final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.gpa_spinner);
 
-        String endpoint = "api/gpa/";
+        String endpoint = "gpa/" + id;
 
-        String uri = url + endpoint;
-        uri = "https://jsonplaceholder.typicode.com/posts/1";
+        String uri;
 
+        if(id.equals("0001")){
+            uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getGPA";
+        } else {
+            uri = url + endpoint;
+        }
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, uri, null, new Response.Listener<JSONObject>() {
@@ -87,10 +182,23 @@ public class CourseGPA extends Fragment {
                     public void onResponse(JSONObject response) {
                         gpaContent.setVisibility(View.VISIBLE);
                         spinner.setVisibility(View.INVISIBLE);
+                        double gpa = 0;
 
-                        title.setText("Bachelor of Information Technology");
+                        try {
+                            JSONObject body = new JSONObject(response.getString("body"));
+
+                            title.setText(body.getString("degree"));
+                            avg.setText("Average: " + body.getString("average"));
+                            median.setText("Median: " + body.getString("median"));
+                            gpa = Double.parseDouble(body.getString("gpa"));
+                        } catch (JSONException e) {
+                            messageBox("Get GPA Data", e.getMessage());
+                            e.printStackTrace();
+                        }
+
+                        /*title.setText("Bachelor of Information Technology");
                         avg.setText("Average: 5.2");
-                        median.setText("Median: 5.01");
+                        median.setText("Median: 5.01");*/
 
                         mChart = (PieChart) view.findViewById(R.id.chart1);
                         mChart.setUsePercentValues(false);
@@ -108,7 +216,7 @@ public class CourseGPA extends Fragment {
                         mChart.setRotationEnabled(false);
                         mChart.setHighlightPerTapEnabled(true);
                         double honours = 5.5;
-                        double gpa = 6.1;
+
                         int maxAngle;
 
                         if(gpa > honours){
@@ -131,6 +239,7 @@ public class CourseGPA extends Fragment {
                 gpaContent.setVisibility(View.VISIBLE);
                 spinner.setVisibility(View.INVISIBLE);
                 title.setText("There was an error: " + error.toString());
+                messageBox("Get GPA Data", error.toString());
             }
         });
 
@@ -195,5 +304,17 @@ public class CourseGPA extends Fragment {
         mChart.setData(data);
         mChart.highlightValues(null);
         mChart.invalidate();
+    }
+
+    private void messageBox(String method, String message)
+    {
+        Log.d("EXCEPTION: " + method,  message);
+
+        AlertDialog.Builder messageBox = new AlertDialog.Builder(getContext());
+        messageBox.setTitle(method);
+        messageBox.setMessage(message);
+        messageBox.setCancelable(false);
+        messageBox.setNeutralButton("OK", null);
+        messageBox.show();
     }
 }

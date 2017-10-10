@@ -16,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.app.capstone.app.MainActivity;
 import com.app.capstone.app.R;
 import com.app.capstone.app.Requester;
 
@@ -26,6 +27,7 @@ public class CourseBadges extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     final String url = "http://www.schemefactory:5000/";
+    String id;
 
     public CourseBadges() {
         // Required empty public constructor
@@ -39,6 +41,7 @@ public class CourseBadges extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        id = ((MainActivity)getActivity()).getStudentNumber();
         super.onCreate(savedInstanceState);
     }
 
@@ -54,10 +57,15 @@ public class CourseBadges extends Fragment {
         spinner.setVisibility(View.VISIBLE);
         content.setVisibility(View.INVISIBLE);
 
-        String endpoint = "api/badges/";
+        String endpoint = "badges/" + id;
 
-        String uri = url + endpoint;
-        uri = "https://jsonplaceholder.typicode.com/posts/1";
+        String uri;
+
+        if(id.equals("0001")){
+            uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getBadges";
+        } else {
+            uri = url + endpoint;
+        }
 
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest

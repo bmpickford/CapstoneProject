@@ -28,13 +28,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/border_bottom"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <ImageView
                     android:id="@+id/badge_gpa_sem"
@@ -79,11 +81,11 @@
                     android:layout_weight="1"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:checked="true"
-                    android:fontFamily="casual"
                     android:contentDescription="Checked if ..."
+                    android:fontFamily="casual"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="Two Semesters"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp" />
 
                 <CheckedTextView
                     android:id="@+id/checkedTextView3"
@@ -98,14 +100,15 @@
                     android:fontFamily="casual"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="Three Semesters"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <ImageView
                     android:id="@+id/badge_gpa_year"
@@ -138,7 +141,7 @@
                     android:clickable="false"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="One Year"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp" />
 
                 <CheckedTextView
                     android:id="@+id/checkedTextView5"
@@ -152,7 +155,7 @@
                     android:contentDescription="Checked if ..."
                     android:gravity="center_vertical|center_horizontal"
                     android:text="Two Years"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp" />
 
                 <CheckedTextView
                     android:id="@+id/checkedTextView6"
@@ -166,7 +169,7 @@
                     android:checked="true"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="Three Years"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -181,7 +184,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <ImageView
                     android:id="@+id/badge_goals"
@@ -246,7 +250,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <ImageView
                     android:id="@+id/badge_blackboard"
