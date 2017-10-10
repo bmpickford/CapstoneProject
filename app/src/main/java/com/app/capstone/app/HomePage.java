@@ -100,11 +100,8 @@ public class HomePage extends Fragment {
         double gpa = 5.01;
         double honors = 5.5;
 
-
         entries.add(new PieEntry((float) gpa, "Your GPA"));
-        entries.add(new PieEntry((float) (honors - gpa), "Honors Level"));
-        //entries.add(new PieEntry((float) (range - (gpa+(honors - gpa))), ""));
-
+        entries.add(new PieEntry((float) (honors - gpa), "Honours Level"));
 
         PieDataSet dataSet = new PieDataSet(entries, "");
 

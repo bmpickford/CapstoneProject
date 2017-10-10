@@ -110,7 +110,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
-                    card_view:srcCompat="@drawable/ic_trophy" />
+                    card_view:srcCompat="@drawable/badge_gy_g" />
 
 
                 <TextView
