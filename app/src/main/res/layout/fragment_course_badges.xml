@@ -44,7 +44,7 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:layout_weight="50"
-                    card_view:srcCompat="@drawable/ic_badge_gpa_24dp" />
+                    card_view:srcCompat="@drawable/badge_gs_s" />
 
                 <TextView
                     android:id="@+id/textView9"
@@ -57,50 +57,44 @@
                     android:textAppearance="@style/TextAppearance.Design.Tab" />
 
                 <CheckedTextView
-                    android:id="@+id/checkedTextView"
+                    android:id="@+id/gpaSTextView1"
                     style="@style/checkedThemes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMark="@drawable/badge"
                     android:checkMarkTint="@color/colorConfirm"
-                    android:checked="true"
+                    android:checked="false"
                     android:clickable="false"
-                    android:fontFamily="casual"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="One Semester"
-                    android:textSize="10sp" />
+                    android:text="One Semester"/>
 
                 <CheckedTextView
-                    android:id="@+id/checkedTextView2"
+                    android:id="@+id/gpaSTextView2"
                     style="@style/checkedThemes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:checked="true"
+                    android:checkMark="@drawable/badge"
+                    android:checked="false"
                     android:contentDescription="Checked if ..."
-                    android:fontFamily="casual"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="Two Semesters"
-                    android:textSize="10sp" />
+                    android:text="Two Semesters" />
 
                 <CheckedTextView
-                    android:id="@+id/checkedTextView3"
+                    android:id="@+id/gpaSTextView3"
                     style="@style/checkedThemes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMark="@drawable/badge"
                     android:checkMarkTint="@color/colorConfirm"
                     android:checked="false"
-                    android:fontFamily="casual"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="Three Semesters"
-                    android:textSize="10sp" />
+                    android:text="Three Semesters" />
             </LinearLayout>
 
             <LinearLayout
@@ -116,7 +110,7 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:layout_weight="50"
-                    card_view:srcCompat="@drawable/ic_trophy" />
+                    card_view:srcCompat="@drawable/badge_gy_g" />
 
                 <TextView
                     android:id="@+id/textView11"
@@ -129,47 +123,44 @@
                     android:textAppearance="@style/TextAppearance.Design.Tab" />
 
                 <CheckedTextView
-                    android:id="@+id/checkedTextView4"
+                    android:id="@+id/gpaYTextView1"
                     style="@style/checkedThemes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMark="@drawable/badge"
                     android:checkMarkTint="@color/colorConfirm"
-                    android:checked="true"
+                    android:checked="false"
                     android:clickable="false"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="One Year"
-                    android:textSize="10sp" />
+                    android:text="One Year" />
 
                 <CheckedTextView
-                    android:id="@+id/checkedTextView5"
+                    android:id="@+id/gpaYTextView2"
                     style="@style/checkedThemes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:checked="true"
+                    android:checkMark="@drawable/badge"
+                    android:checked="false"
                     android:contentDescription="Checked if ..."
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="Two Years"
-                    android:textSize="10sp" />
+                    android:text="Two Years" />
 
                 <CheckedTextView
-                    android:id="@+id/checkedTextView6"
+                    android:id="@+id/gpaYTextView3"
                     style="@style/checkedThemes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMark="@drawable/badge"
                     android:checkMarkTint="@color/colorConfirm"
-                    android:checked="true"
+                    android:checked="false"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="Three Years"
-                    android:textSize="10sp" />
+                    android:text="Three Years" />
             </LinearLayout>
 
         </LinearLayout>
@@ -193,7 +184,7 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:layout_weight="50"
-                    card_view:srcCompat="@drawable/ic_badge_goals_24dp" />
+                    card_view:srcCompat="@drawable/badge_g_b" />
 
                 <TextView
                     android:id="@+id/textView10"
@@ -206,40 +197,40 @@
                     android:textAppearance="@style/TextAppearance.Design.Tab" />
 
                 <CheckedTextView
-                    android:id="@+id/checkedTextView7"
+                    android:id="@+id/goalTextView1"
                     style="@style/checkedThemes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMark="@drawable/badge"
                     android:checkMarkTint="@color/colorConfirm"
-                    android:checked="true"
+                    android:checked="false"
                     android:clickable="false"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="Three Goals" />
 
                 <CheckedTextView
-                    android:id="@+id/checkedTextView8"
+                    android:id="@+id/goalTextView2"
                     style="@style/checkedThemes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMark="@drawable/badge"
                     android:checked="false"
                     android:contentDescription="Checked if ..."
                     android:gravity="center_vertical|center_horizontal"
                     android:text="Six Goals" />
 
                 <CheckedTextView
-                    android:id="@+id/checkedTextView9"
+                    android:id="@+id/goalTextView3"
                     style="@style/checkedThemes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMark="@drawable/badge"
                     android:checkMarkTint="@color/colorConfirm"
                     android:checked="false"
                     android:gravity="center_vertical|center_horizontal"
@@ -259,7 +250,7 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:layout_weight="50"
-                    card_view:srcCompat="@drawable/ic_badge_calendar_24dp" />
+                    card_view:srcCompat="@drawable/badge_bl_s" />
 
                 <TextView
                     android:id="@+id/textView12"
@@ -272,40 +263,40 @@
                     android:textAppearance="@style/TextAppearance.Design.Tab" />
 
                 <CheckedTextView
-                    android:id="@+id/checkedTextView10"
+                    android:id="@+id/blackboardTextView1"
                     style="@style/checkedThemes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMark="@drawable/badge"
                     android:checkMarkTint="@color/colorConfirm"
-                    android:checked="true"
+                    android:checked="false"
                     android:clickable="false"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="Three Weeks" />
 
                 <CheckedTextView
-                    android:id="@+id/checkedTextView11"
+                    android:id="@+id/blackboardTextView2"
                     style="@style/checkedThemes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:checked="true"
+                    android:checkMark="@drawable/badge"
+                    android:checked="false"
                     android:contentDescription="Checked if ..."
                     android:gravity="center_vertical|center_horizontal"
                     android:text="Six Weeks" />
 
                 <CheckedTextView
-                    android:id="@+id/checkedTextView12"
+                    android:id="@+id/blackboardTextView3"
                     style="@style/checkedThemes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:checkMark="@drawable/badge"
                     android:checkMarkTint="@color/colorConfirm"
                     android:checked="false"
                     android:gravity="center_vertical|center_horizontal"

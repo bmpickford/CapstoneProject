@@ -1,15 +1,21 @@
 package com.app.capstone.app.Course;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
+
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -22,6 +28,8 @@ import com.app.capstone.app.MainActivity;
 import com.app.capstone.app.R;
 import com.app.capstone.app.Requester;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -75,17 +83,91 @@ public class CourseBadges extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        //TODO: Add badges dynamically
                         spinner.setVisibility(View.INVISIBLE);
                         content.setVisibility(View.VISIBLE);
 
-                        final CheckedTextView ctv = (CheckedTextView) view.findViewById(R.id.checkedTextView);
-                        final CheckedTextView ctv2 = (CheckedTextView) view.findViewById(R.id.checkedTextView2);
+                        String gS = null; //GPA sem
+                        String gY = null; //GPA yr
+                        String g = null; //Goals
+                        String bl = null; //Blackboard
+
+                        try {
+                            JSONObject body = new JSONObject(response.getString("body"));
+
+                            JSONArray a = body.getJSONArray("gpa_sem");
+                            JSONArray b = body.getJSONArray("gpa_yr");
+                            JSONArray c = body.getJSONArray("goals");
+                            JSONArray d = body.getJSONArray("blackboard");
+
+
+                            gS = a.getString(0);
+                            gY = b.getString(0);
+                            g = c.getString(0);
+                            bl = d.getString(0);
+
+                        } catch (JSONException e) {
+                            messageBox("Apply Badges Data", e.toString());
+                        }
+
+                        String gpa_sem = "gpaSTextView";
+                        String gpa_yr = "gpaYTextView";
+                        String goal = "goalTextView";
+                        String blackboard = "blackboardTextView";
+
+                        int[] imgs = {Integer.parseInt(gS), Integer.parseInt(gY), Integer.parseInt(g), Integer.parseInt(bl)};
+                        String[] img_paths = {"badge_gpa_sem", "badge_gpa_year","badge_goals","badge_blackboard"};
+                        String[] img_paths_2 = {"badge_gs", "badge_gy","badge_g","badge_bl"};
+
+
+                        for(int x = 0; x < imgs.length; x++){
+                            switch(imgs[x]){
+                                case 1:
+                                    ImageView iv = (ImageView) view.findViewById((getResources().getIdentifier(img_paths[x], "id", getContext().getPackageName())));
+                                    iv.setImageResource((getResources().getIdentifier(img_paths_2[x] + "_b", "drawable", getContext().getPackageName())));
+                                    break;
+                                case 2:
+                                    ImageView iv2 = (ImageView) view.findViewById((getResources().getIdentifier(img_paths[x], "id", getContext().getPackageName())));
+                                    iv2.setImageResource((getResources().getIdentifier(img_paths_2[x] + "_s", "drawable", getContext().getPackageName())));
+                                    break;
+                                case 3:
+                                    ImageView iv3 = (ImageView) view.findViewById((getResources().getIdentifier(img_paths[x], "id", getContext().getPackageName())));
+                                    iv3.setImageResource((getResources().getIdentifier(img_paths_2[x] + "_g", "drawable", getContext().getPackageName())));
+                                    break;
+                                default:
+                                    messageBox("Data Error", "Data recieved for badges is either null or out of range. Check API call");
+                                    break;
+                            }
+                        }
+
+                        for(int j = 1; j <= Integer.parseInt(gS); j++){
+                            String w = gpa_sem + j;
+                            CheckedTextView ctv = (CheckedTextView) view.findViewById(getResources().getIdentifier(w, "id", getContext().getPackageName()));
+                            ctv.setChecked(true);
+                        }
+
+                        for(int j = 1; j <= Integer.parseInt(gY); j++){
+                            String w = gpa_yr + j;
+                            CheckedTextView ctv = (CheckedTextView) view.findViewById(getResources().getIdentifier(w, "id", getContext().getPackageName()));
+                            ctv.setChecked(true);
+                        }
+
+                        for(int j = 1; j <= Integer.parseInt(g); j++){
+                            String w = goal + j;
+                            CheckedTextView ctv = (CheckedTextView) view.findViewById(getResources().getIdentifier(w, "id", getContext().getPackageName()));
+                            ctv.setChecked(true);
+                        }
+
+                        for(int j = 1; j <= Integer.parseInt(bl); j++){
+                            String w = blackboard + j;
+                            CheckedTextView ctv = (CheckedTextView) view.findViewById(getResources().getIdentifier(w, "id", getContext().getPackageName()));
+                            ctv.setChecked(true);
+                        }
 
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        messageBox("Get Badges Data", error.toString());
                         spinner.setVisibility(View.INVISIBLE);
                         content.setVisibility(View.VISIBLE);
                         messageBox("Get Badges", error.toString());
