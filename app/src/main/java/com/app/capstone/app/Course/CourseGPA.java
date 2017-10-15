@@ -187,10 +187,10 @@ public class CourseGPA extends Fragment {
                         try {
                             JSONObject body = new JSONObject(response.getString("body"));
 
-                            title.setText(body.getString("degree"));
-                            avg.setText("Average: " + body.getString("average"));
-                            median.setText("Median: " + body.getString("median"));
-                            gpa = Double.parseDouble(body.getString("gpa"));
+                            title.setText(body.getJSONArray("Parent_Study_Package_Full_Title").getString(0));
+                            avg.setText("Average: " + body.getJSONArray("Mean").getString(0));
+                            median.setText("Median: " + body.getJSONArray("Median").getString(0));
+                            gpa = Double.parseDouble(body.getJSONArray("Course_GPA").getString(0));
                         } catch (JSONException e) {
                             messageBox("Get GPA Data", e.getMessage());
                             e.printStackTrace();

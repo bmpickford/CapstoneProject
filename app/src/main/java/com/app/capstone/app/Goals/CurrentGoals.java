@@ -29,7 +29,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.capstone.app.ExpandableListAdapter;
 import com.app.capstone.app.Goal;
 import com.app.capstone.app.MainActivity;
-import com.app.capstone.app.NetworkRunner;
 import com.app.capstone.app.NewGoalPage;
 import com.app.capstone.app.R;
 import com.app.capstone.app.Requester;
@@ -203,30 +202,6 @@ public class CurrentGoals extends Fragment {
         g.setCompleted(true);
         g.update();
     }
-
-    private void refreshUI() throws IOException {
-        System.out.println("Networking running");
-        new NetworkRunner(url + "goals/present/" + id, "GET", "CurrentGoals", "{id: 1}").execute(url, "test");
-        if(goalsMap != null){
-            goalsMap.clear();
-        }
-
-
-        try {
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.detach(this).attach(this).commit();
-        } catch(Exception e){
-
-        }
-
-/*        Fragment frg = null;
-        frg = getFragmentManager().findFragmentByTag("CurrentGoals");
-        final FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(frg);
-        ft.attach(frg);
-        ft.commit();*/
-    }
-
 
     public static CurrentGoals newInstance() throws IOException {
         CurrentGoals fragment = new CurrentGoals();

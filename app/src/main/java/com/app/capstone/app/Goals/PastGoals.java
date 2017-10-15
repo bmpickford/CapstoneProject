@@ -18,23 +18,13 @@ import com.app.capstone.app.ExpandableListAdapter;
 import com.app.capstone.app.ExpandableListAdapterPast;
 import com.app.capstone.app.Goal;
 import com.app.capstone.app.MainActivity;
-import com.app.capstone.app.NetworkRunner;
 import com.app.capstone.app.R;
 import com.app.capstone.app.Requester;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -145,21 +135,6 @@ public class PastGoals extends Fragment {
         //refreshUI();
     }
 
-    private void refreshUI() throws IOException {
-/*        new NetworkRunner(url + "goals/past/" + id, "GET", "CurrentGoals", "{id: 1}").execute(url, "test");
-        if(goalsMap != null){
-            goalsMap.clear();
-        }
-
-
-        try {
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.detach(this).attach(this).commit();
-        } catch(Exception e){
-
-        }*/
-    }
-
 
 
     public PastGoals() throws IOException {
@@ -177,11 +152,6 @@ public class PastGoals extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         id = ((MainActivity)getActivity()).getStudentNumber();
-/*        try {
-            refreshUI();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
         super.onCreate(savedInstanceState);
 
     }

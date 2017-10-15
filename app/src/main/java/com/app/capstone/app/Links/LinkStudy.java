@@ -4,26 +4,33 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.capstone.app.R;
+import com.app.capstone.app.Requester;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link LinkStudy.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link LinkStudy#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class LinkStudy extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private int[] links = new int[] {R.id.studyLink1, R.id.studyLink2, R.id.studyLink3};
+    String url = "http://www.schemefactory.com.au:5000";
 
     public LinkStudy() {
         // Required empty public constructor
@@ -41,11 +48,46 @@ public class LinkStudy extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_link_study, container, false);
-        for (int link:links) {
-            TextView t = (TextView) view.findViewById(link);
-            t.setMovementMethod(LinkMovementMethod.getInstance());
-        }
+        View view = inflater.inflate(R.layout.fragment_link_contacts, container, false);
+
+        final LinearLayout content = (LinearLayout) view.findViewById(R.id.link_contact_content);
+
+        String uri = url + "links/study";
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, uri, null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    JSONArray JSONLinks = response.getJSONArray("Links");
+                    ArrayList<String> links = new ArrayList<>();
+
+                    int len = JSONLinks.length();
+                    for (int i=0;i<len;i++){
+                        links.add(JSONLinks.get(i).toString());
+                    }
+
+                    for (String link:links) {
+                        TextView t = new TextView(getContext());
+                        t.setText(link);
+                        t.setMovementMethod(LinkMovementMethod.getInstance());
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    messageBox("Unit data", e.toString());
+                }
+            }
+
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error);
+            }
+        });
+
+        Requester.getInstance(getContext()).addToRequestQueue(jsObjRequest);
 
         return view;
     }
@@ -75,6 +117,17 @@ public class LinkStudy extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void messageBox(String method, String message) {
+        Log.d("EXCEPTION: " + method,  message);
+
+        AlertDialog.Builder messageBox = new AlertDialog.Builder(getContext());
+        messageBox.setTitle(method);
+        messageBox.setMessage(message);
+        messageBox.setCancelable(false);
+        messageBox.setNeutralButton("OK", null);
+        messageBox.show();
     }
 
 }

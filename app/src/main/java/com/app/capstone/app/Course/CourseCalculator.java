@@ -216,9 +216,9 @@ public class CourseCalculator extends Fragment {
                         try {
                             JSONObject body = new JSONObject(response.getString("body"));
 
-                            gpa = Double.parseDouble(body.getJSONArray("gpa").get(0).toString());
-                            cpLeft = Integer.parseInt(body.getJSONArray("cpLeft").get(0).toString());
-                            cpDone = Integer.parseInt(body.getJSONArray("cpDone").get(0).toString());
+                            gpa = Double.parseDouble(body.getJSONArray("Course_GPA").get(0).toString());
+                            cpLeft = Integer.parseInt(body.getJSONArray("Outstanding_CP").get(0).toString());
+                            cpDone = Integer.parseInt(body.getJSONArray("Done_CP").get(0).toString());
 
                         } catch (JSONException e) {
                             messageBox("Get GPA Data", e.getMessage());

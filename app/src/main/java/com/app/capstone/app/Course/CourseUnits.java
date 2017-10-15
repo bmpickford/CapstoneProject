@@ -26,7 +26,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.capstone.app.ExpandableListAdapter;
 import com.app.capstone.app.ExpandableListAdapterUnits;
 import com.app.capstone.app.Goal;
-import com.app.capstone.app.Goals.CurrentGoals;
 import com.app.capstone.app.MainActivity;
 import com.app.capstone.app.R;
 import com.app.capstone.app.Requester;
@@ -203,8 +202,6 @@ public class CourseUnits extends Fragment {
                         try {
                             JSONObject jo = new JSONObject(response.getString("body"));
                             //units = getUnits(jo);
-
-                            System.out.println(jo.getString("code"));
 
                             JSONArray u = jo.getJSONArray("code");
 

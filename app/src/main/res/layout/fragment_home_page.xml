@@ -6,6 +6,7 @@
     tools:context="com.app.capstone.app.HomePage">
 
     <LinearLayout
+        android:id="@+id/homepage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
