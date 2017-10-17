@@ -36,7 +36,7 @@ import org.json.JSONObject;
 public class CourseBadges extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    final String url = "http://www.schemefactory:5000/";
+    final String url = "http://www.schemefactory.com:5000/";
     String id;
 
     public CourseBadges() {
@@ -92,18 +92,18 @@ public class CourseBadges extends Fragment {
                         String bl = null; //Blackboard
 
                         try {
-                            JSONObject body = new JSONObject(response.getString("body"));
+                            JSONObject body = response;
 
-                            JSONArray a = body.getJSONArray("gpa_sem");
-                            JSONArray b = body.getJSONArray("gpa_yr");
-                            JSONArray c = body.getJSONArray("goals");
-                            JSONArray d = body.getJSONArray("blackboard");
+                            JSONObject a = body.getJSONObject("gpa_sem");
+                            JSONObject b = body.getJSONObject("gpa_yr");
+                            JSONObject c = body.getJSONObject("goals");
+                            JSONObject d = body.getJSONObject("blackboard");
 
 
-                            gS = a.getString(0);
-                            gY = b.getString(0);
-                            g = c.getString(0);
-                            bl = d.getString(0);
+                            gS = a.getString("0");
+                            gY = b.getString("0");
+                            g = c.getString("0");
+                            bl = d.getString("0");
 
                         } catch (JSONException e) {
                             messageBox("Apply Badges Data", e.toString());

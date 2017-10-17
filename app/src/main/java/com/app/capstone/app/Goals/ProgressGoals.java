@@ -66,23 +66,22 @@ public class ProgressGoals extends Fragment {
 
         final FrameLayout content = (FrameLayout) view.findViewById(R.id.goalProgressContent);
         final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.progressGoalSpinner);
-        mChart = (PieChart) view.findViewById(R.id.progress_chart);
 
 
         String endpoint = "goals/progress/" + id;
         String uri = url + endpoint;
 
-        uri = "http://www.google.com";
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, uri, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
+                        System.out.println(response.toString());
                         content.setVisibility(View.VISIBLE);
                         spinner.setVisibility(View.INVISIBLE);
 
-                        mChart = (PieChart) view.findViewById(R.id.chart1);
+                        mChart = (PieChart) view.findViewById(R.id.progress_chart);
                         mChart.setUsePercentValues(false);
                         mChart.getDescription().setEnabled(false);
                         mChart.setExtraOffsets(5, 10, 5, 5);
@@ -116,6 +115,7 @@ public class ProgressGoals extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         content.setVisibility(View.VISIBLE);
                         spinner.setVisibility(View.INVISIBLE);
+                        System.out.println(error.toString());
                     }
                 });
         Requester.getInstance(getContext()).addToRequestQueue(jsObjRequest);
@@ -164,7 +164,7 @@ public class ProgressGoals extends Fragment {
         dataSet.setIconsOffset(new MPPointF(0, 40));
         dataSet.setSelectionShift(5f);
 
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        dataSet.setColors(ColorTemplate.LIBERTY_COLORS);
 
         PieData data = new PieData(dataSet);
         data.setValueTextSize(11f);
@@ -173,4 +173,5 @@ public class ProgressGoals extends Fragment {
         mChart.highlightValues(null);
         mChart.invalidate();
     }
+
 }

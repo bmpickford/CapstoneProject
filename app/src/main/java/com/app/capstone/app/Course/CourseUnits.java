@@ -47,7 +47,7 @@ import java.util.Map;
 public class CourseUnits extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    final String url = "http://www.schemefactory:5000/";
+    final String url = "http://www.schemefactory.com:5000/";
     ExpandableListAdapterUnits listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;

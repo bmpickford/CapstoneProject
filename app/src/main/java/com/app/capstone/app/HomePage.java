@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -33,20 +34,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HomePage.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HomePage#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomePage extends Fragment {
 
     private PieChart mChart;
-    final String url = "http://www.schemefactory:5000/";
+    final String url = "http://www.schemefactory.com:5000/";
     String id;
 
 
@@ -74,12 +68,17 @@ public class HomePage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home_page, container, false);
 
-        final TextView title = (TextView) view.findViewById(R.id.gpaData1);
-        final TextView avg = (TextView) view.findViewById(R.id.gpaData2);
-        final TextView median = (TextView) view.findViewById(R.id.gpaData3);
+        final LinearLayout content = (LinearLayout) view.findViewById(R.id.homepage);
+        final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.home_spinner);
 
-        final LinearLayout gpaContent = (LinearLayout) view.findViewById(R.id.gpa_content);
-        final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.gpa_spinner);
+        content.setVisibility(View.INVISIBLE);
+        spinner.setVisibility(View.VISIBLE);
+
+
+       /* final TextView title = (TextView) view.findViewById(R.id.gpaData1);
+        final TextView avg = (TextView) view.findViewById(R.id.gpaData2);
+        final TextView median = (TextView) view.findViewById(R.id.gpaData3);*/
+
 
         String endpoint = "gpa/" + id;
 
@@ -91,47 +90,57 @@ public class HomePage extends Fragment {
             uri = url + endpoint;
         }
 
+        System.out.println("using url: " + uri);
+
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, uri, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        gpaContent.setVisibility(View.VISIBLE);
+                        content.setVisibility(View.VISIBLE);
                         spinner.setVisibility(View.INVISIBLE);
                         double gpa = 0;
+                        System.out.println(response.toString());
 
                         try {
-                            JSONObject body = new JSONObject(response.getString("body"));
+                            JSONObject body = response;
 
-                            title.setText(body.getJSONArray("Parent_Study_Package_Full_Title").getString(0));
-                            avg.setText("Average: " + body.getJSONArray("Mean").getString(0));
-                            median.setText("Median: " + body.getJSONArray("Median").getString(0));
-                            gpa = Double.parseDouble(body.getJSONArray("Course_GPA").getString(0));
+                            /*title.setText(body.getJSONObject("Parent_Study_Package_Full_Title").getString("0"));
+                            avg.setText("Average: " + body.getJSONObject("Mean").getString("0"));
+                            median.setText("Median: " + body.getJSONObject("Median").getString("0"));*/
+                            gpa = Double.parseDouble(body.getJSONObject("Course_GPA").getString("0"));
                         } catch (JSONException e) {
                             messageBox("Get GPA Data", e.getMessage());
                             e.printStackTrace();
                         }
 
                         mChart = (PieChart) view.findViewById(R.id.homechart);
+
                         mChart.setUsePercentValues(false);
+                        mChart.setCenterText("GPA \n" + Double.toString(gpa));
+                        //mChart.setCenterTextTypeface();
+                        mChart.setCenterTextSize(16);
+                        mChart.setCenterTextColor(Color.GRAY);
                         mChart.getDescription().setEnabled(false);
                         mChart.setExtraOffsets(5, 10, 5, 5);
                         mChart.setDragDecelerationFrictionCoef(0.95f);
                         mChart.setDrawHoleEnabled(true);
                         mChart.setHoleColor(Color.WHITE);
-                        mChart.setTransparentCircleColor(Color.WHITE);
+                        mChart.setTransparentCircleColor(Color.GRAY);
                         mChart.setTransparentCircleAlpha(110);
-                        mChart.setHoleRadius(58f);
+                        mChart.setHoleRadius(75f);
                         mChart.setTransparentCircleRadius(61f);
                         mChart.setDrawCenterText(true);
                         mChart.setRotationAngle(0);
                         mChart.setRotationEnabled(false);
-                        mChart.setHighlightPerTapEnabled(true);
+                        mChart.setHighlightPerTapEnabled(false);
+                        //mChart.getLegend().setEnabled(false);
                         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-                        mChart.setMaxAngle(220f);
-                        mChart.setEntryLabelColor(Color.WHITE);
-                        mChart.setEntryLabelTextSize(12f);
+                        mChart.setEntryLabelTextSize(0);
+
                         double honours = 5.5;
+
+                        System.out.println(gpa);
 
                         int maxAngle;
 
@@ -141,20 +150,21 @@ public class HomePage extends Fragment {
                             maxAngle = (int) Math.floor((honours / 7) * 360);
                         }
 
+                        System.out.println(maxAngle);
+
                         mChart.setMaxAngle(maxAngle);
 
                         setData(gpa);
 
-                        mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-                        mChart.setEntryLabelColor(Color.WHITE);
-                        mChart.setEntryLabelTextSize(12f);
+
+                        //mChart.setEntryLabelColor(Color.GRAY);
+
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        gpaContent.setVisibility(View.VISIBLE);
+                        content.setVisibility(View.VISIBLE);
                         spinner.setVisibility(View.INVISIBLE);
-                        title.setText("There was an error: " + error.toString());
                         messageBox("Get GPA Data", error.toString());
                     }
                 });
@@ -199,9 +209,9 @@ public class HomePage extends Fragment {
 
         double honors = 5.5;
 
-        entries.add(new PieEntry((float) gpa, "Your GPA"));
+        entries.add(new PieEntry((float) gpa, "GPA"));
 
-        if(honors > gpa){
+        if(honors > (gpa + 0.2)){
             entries.add(new PieEntry((float) (honors - gpa), "Honors Level"));
         }
 
@@ -212,12 +222,17 @@ public class HomePage extends Fragment {
         dataSet.setIconsOffset(new MPPointF(0, 40));
         dataSet.setSelectionShift(5f);
 
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+
+        dataSet.setColors(ColorTemplate.PASTEL_COLORS);
+        dataSet.setDrawValues(false);
 
         PieData data = new PieData(dataSet);
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.WHITE);
+
+        data.setHighlightEnabled(false);
+        //data.setValueTextSize(11f);
+        //data.setValueTextColor(Color.GRAY);
         mChart.setData(data);
+
         mChart.highlightValues(null);
         mChart.invalidate();
     }

@@ -237,7 +237,7 @@ public class CurrentGoals extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         System.out.println(response.toString());
-                        spinner.setBackgroundColor(View.INVISIBLE);
+                        spinner.setVisibility(View.INVISIBLE);
                         try {
                             getGoals(response);
                         } catch (JSONException e) {

@@ -15,19 +15,31 @@ public class GPACalculator {
     private int unitsLeft;
     private int unitsTotal;
 
-    public GPACalculator(double goalGPA, double gpa, int cpLeft, int cpDone){
+    public GPACalculator(double goalGPA, double gpa, double cpLeft, double cpDone){
         this.goalGPA = goalGPA;
         this.curGPA = gpa;
-        this.cpLeft = cpLeft;
-        this.cpDone = cpDone;
+        this.cpLeft = (int) cpLeft;
+        this.cpDone = (int)cpDone;
         calculateUnits();
     }
 
     public double calculate(){
+        if(unitsLeft <= 0){
+            return 0;
+        }
         double g = ((goalGPA * unitsTotal) - (curGPA * unitsDone)) / unitsLeft;
         DecimalFormat df = new DecimalFormat("#.00");
 
-        return Double.parseDouble(df.format(g));
+        double r = 0;
+
+        try {
+            r = Double.parseDouble(df.format(g));
+        } catch(Exception e){
+            System.out.println(g);
+            System.out.println("Err:" + e.toString());
+        }
+
+        return r;
     }
 
     private void calculateUnits(){

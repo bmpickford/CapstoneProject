@@ -1,5 +1,7 @@
 package com.app.capstone.app;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.icu.text.SimpleDateFormat;
 import android.view.View;
@@ -44,7 +46,7 @@ public class Goal {
     int type;
     Date end_date;
     Boolean completed = false;
-    String url = "http://0.0.0.0/";
+    String url = "http://www.schemefactory.com:5000/";
     int id;
     int i = 1;
 
@@ -132,11 +134,23 @@ public class Goal {
     private JSONObject getData() throws JSONException{
         JSONObject data = new JSONObject();
 
-        data.put("name", this.name);
-        data.put("priority", this.priority);
-        data.put("type", this.type);
-        data.put("end_date", this.end_date);
-        data.put("completed", this.completed);
+        data.put("Name", this.name);
+        data.put("Priority", Integer.valueOf(this.priority));
+        data.put("Goal_Type", Integer.valueOf(this.type));
+        data.put("Exp_Date", this.end_date);
+
+        Activity activity = (Activity) context;
+        String id = ((MainActivity) activity).getStudentNumber();
+
+        data.put("Student_ID", id);
+
+
+        if(this.completed){
+            data.put("Goal_Status", "1");
+        } else{
+            data.put("Goal_Status", "0");
+        }
+
         return data;
     }
 

@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 public class ProfilePage extends Fragment {
     private OnFragmentInteractionListener mListener;
-    final String url = "http://www.schemefactory:5000/";
+    final String url = "http://www.schemefactory.com:5000/";
     String id;
 
     public ProfilePage() {

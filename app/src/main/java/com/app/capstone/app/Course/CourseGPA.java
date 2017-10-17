@@ -47,7 +47,7 @@ import java.util.Map;
 
 public class CourseGPA extends Fragment {
     private PieChart mChart;
-    final String url = "http://www.schemefactory:5000/";
+    final String url = "http://www.schemefactory.com:5000/";
     String id;
 
 
@@ -185,12 +185,12 @@ public class CourseGPA extends Fragment {
                         double gpa = 0;
 
                         try {
-                            JSONObject body = new JSONObject(response.getString("body"));
+                            JSONObject body = response;
 
-                            title.setText(body.getJSONArray("Parent_Study_Package_Full_Title").getString(0));
-                            avg.setText("Average: " + body.getJSONArray("Mean").getString(0));
-                            median.setText("Median: " + body.getJSONArray("Median").getString(0));
-                            gpa = Double.parseDouble(body.getJSONArray("Course_GPA").getString(0));
+                            title.setText(body.getJSONObject("Parent_Study_Package_Full_Title").getString("0"));
+                            avg.setText("Course Average: " + body.getJSONObject("Mean").getString("0"));
+                            median.setText("Course Median: " + body.getJSONObject("Median").getString("0"));
+                            gpa = Double.parseDouble(body.getJSONObject("Course_GPA").getString("0"));
                         } catch (JSONException e) {
                             messageBox("Get GPA Data", e.getMessage());
                             e.printStackTrace();
@@ -202,19 +202,28 @@ public class CourseGPA extends Fragment {
 
                         mChart = (PieChart) view.findViewById(R.id.chart1);
                         mChart.setUsePercentValues(false);
+                        mChart.setCenterText("GPA \n" + Double.toString(gpa));
+                        //mChart.setCenterTextTypeface();
+                        mChart.setCenterTextSize(16);
+                        mChart.setCenterTextColor(Color.DKGRAY);
                         mChart.getDescription().setEnabled(false);
                         mChart.setExtraOffsets(5, 10, 5, 5);
                         mChart.setDragDecelerationFrictionCoef(0.95f);
                         mChart.setDrawHoleEnabled(true);
-                        mChart.setHoleColor(ResourcesCompat.getColor(getResources(), R.color.colorBackground, null));
-                        mChart.setTransparentCircleColor(ResourcesCompat.getColor(getResources(), R.color.colorBackground, null));
+                        mChart.setHoleColor(Color.WHITE);
+                        mChart.setTransparentCircleColor(Color.GRAY);
                         mChart.setTransparentCircleAlpha(110);
-                        mChart.setHoleRadius(58f);
+                        mChart.setHoleRadius(75f);
                         mChart.setTransparentCircleRadius(61f);
                         mChart.setDrawCenterText(true);
                         mChart.setRotationAngle(0);
                         mChart.setRotationEnabled(false);
-                        mChart.setHighlightPerTapEnabled(true);
+                        mChart.setHighlightPerTapEnabled(false);
+                        //mChart.getLegend().setEnabled(false);
+                        mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+                        mChart.setEntryLabelTextSize(0);
+                        mChart.setHoleColor(ResourcesCompat.getColor(getResources(), R.color.colorBackground, null));
+
                         double honours = 5.5;
 
                         int maxAngle;
@@ -283,9 +292,9 @@ public class CourseGPA extends Fragment {
 
         double honors = 5.5;
 
-        entries.add(new PieEntry((float) gpa, "Your GPA"));
+        entries.add(new PieEntry((float) gpa, "GPA"));
 
-        if(honors > gpa){
+        if(honors > (gpa + 0.2)){
             entries.add(new PieEntry((float) (honors - gpa), "Honors Level"));
         }
 
@@ -296,15 +305,21 @@ public class CourseGPA extends Fragment {
         dataSet.setIconsOffset(new MPPointF(0, 40));
         dataSet.setSelectionShift(5f);
 
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+
+        dataSet.setColors(ColorTemplate.PASTEL_COLORS);
+        dataSet.setDrawValues(false);
 
         PieData data = new PieData(dataSet);
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.WHITE);
+
+        data.setHighlightEnabled(false);
+        //data.setValueTextSize(11f);
+        //data.setValueTextColor(Color.GRAY);
         mChart.setData(data);
+
         mChart.highlightValues(null);
         mChart.invalidate();
     }
+
 
     private void messageBox(String method, String message)
     {

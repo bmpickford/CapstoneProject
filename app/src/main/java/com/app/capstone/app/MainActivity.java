@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
         CoursePage.OnFragmentInteractionListener, LinksPage.OnFragmentInteractionListener, SettingsPage.OnFragmentInteractionListener,
         GoalsPage.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener, CourseUnits.OnFragmentInteractionListener,
         CourseBadges.OnFragmentInteractionListener, LinkStudy.OnFragmentInteractionListener, LinkContacts.OnFragmentInteractionListener,
-        LinkHealth.OnFragmentInteractionListener, PortfolioPage.OnFragmentInteractionListener, NewGoalPage.OnFragmentInteractionListener,
+        LinkHealth.OnFragmentInteractionListener, NewGoalPage.OnFragmentInteractionListener,
         CurrentGoals.OnFragmentInteractionListener, PastGoals.OnFragmentInteractionListener, ProgressGoals.OnFragmentInteractionListener,
         CourseCalculator.OnFragmentInteractionListener, UnitDetailPage.OnFragmentInteractionListener {
 

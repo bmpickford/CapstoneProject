@@ -48,7 +48,7 @@ import static com.app.capstone.app.R.id.calculatedContent;
 
 
 public class CourseCalculator extends Fragment {
-    final String url = "http://www.schemefactory:5000/";
+    final String url = "http://www.schemefactory.com:5000/";
     private PieChart mChart;
 
     String id;
@@ -194,31 +194,37 @@ public class CourseCalculator extends Fragment {
                         calculatedContent.setVisibility(View.VISIBLE);
 
                         mChart.setUsePercentValues(false);
-                        mChart.getDescription().setEnabled(false);
+                        //mChart.setCenterTextTypeface();
                         mChart.setExtraOffsets(5, 10, 5, 5);
+                        mChart.getDescription().setEnabled(false);
                         mChart.setDragDecelerationFrictionCoef(0.95f);
                         mChart.setDrawHoleEnabled(true);
-                        mChart.setHoleColor(ResourcesCompat.getColor(getResources(), R.color.colorBackground, null));
-                        mChart.setTransparentCircleColor(ResourcesCompat.getColor(getResources(), R.color.colorBackground, null));
+                        mChart.setHoleColor(Color.WHITE);
+                        mChart.setTransparentCircleColor(Color.GRAY);
                         mChart.setTransparentCircleAlpha(110);
-                        mChart.setHoleRadius(58f);
+                        mChart.setHoleRadius(75f);
                         mChart.setTransparentCircleRadius(61f);
                         mChart.setDrawCenterText(true);
                         mChart.setRotationAngle(0);
                         mChart.setRotationEnabled(false);
-                        mChart.setHighlightPerTapEnabled(true);
+                        mChart.setHighlightPerTapEnabled(false);
+                        //mChart.getLegend().setEnabled(false);
+                        mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+                        mChart.setEntryLabelTextSize(0);
+                        mChart.setHoleColor(ResourcesCompat.getColor(getResources(), R.color.colorBackground, null));
+
 
                         double goalGPA = goal;
                         double gpa = 0;
-                        int cpLeft = 0;
-                        int cpDone = 0;
+                        double cpLeft = 0;
+                        double cpDone = 0;
 
                         try {
-                            JSONObject body = new JSONObject(response.getString("body"));
+                            JSONObject body = response;
 
-                            gpa = Double.parseDouble(body.getJSONArray("Course_GPA").get(0).toString());
-                            cpLeft = Integer.parseInt(body.getJSONArray("Outstanding_CP").get(0).toString());
-                            cpDone = Integer.parseInt(body.getJSONArray("Done_CP").get(0).toString());
+                            gpa = Double.parseDouble(body.getJSONObject("Course_GPA").get("0").toString());
+                            cpLeft = Double.parseDouble(body.getJSONObject("Outstanding_CP").get("0").toString());
+                            cpDone = 192;//Double.parseDouble(body.getJSONObject("Done_CP").get("0").toString());
 
                         } catch (JSONException e) {
                             messageBox("Get GPA Data", e.getMessage());
@@ -295,26 +301,30 @@ public class CourseCalculator extends Fragment {
                         mChart.setExtraOffsets(5, 10, 5, 5);
                         mChart.setDragDecelerationFrictionCoef(0.95f);
                         mChart.setDrawHoleEnabled(true);
-                        mChart.setHoleColor(ResourcesCompat.getColor(getResources(), R.color.colorBackground, null));
-                        mChart.setTransparentCircleColor(ResourcesCompat.getColor(getResources(), R.color.colorBackground, null));
+                        mChart.setHoleColor(Color.WHITE);
+                        mChart.setTransparentCircleColor(Color.GRAY);
                         mChart.setTransparentCircleAlpha(110);
-                        mChart.setHoleRadius(58f);
+                        mChart.setHoleRadius(75f);
                         mChart.setTransparentCircleRadius(61f);
                         mChart.setDrawCenterText(true);
                         mChart.setRotationAngle(0);
                         mChart.setRotationEnabled(false);
-                        mChart.setHighlightPerTapEnabled(true);
+                        mChart.setHighlightPerTapEnabled(false);
+                        //mChart.getLegend().setEnabled(false);
+                        mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+                        mChart.setEntryLabelTextSize(0);
+                        mChart.setHoleColor(ResourcesCompat.getColor(getResources(), R.color.colorBackground, null));
 
                         double goalGPA = goal;
                         double gpa = 0;
-                        int cpLeft = units;
-                        int cpDone = 0;
+                        double cpLeft = units;
+                        double cpDone = 0;
 
                         try {
-                            JSONObject body = new JSONObject(response.getString("body"));
+                            JSONObject body = response;
 
-                            gpa = Double.parseDouble(body.getJSONArray("gpa").get(0).toString());
-                            cpDone = Integer.parseInt(body.getJSONArray("cpDone").get(0).toString());
+                            gpa = Double.parseDouble(body.getJSONObject("Course_GPA").get("0").toString());
+                            cpDone = 192;//Double.parseDouble(body.getJSONObject("Done_CP").get("0").toString());
 
                         } catch (JSONException e) {
                             messageBox("Get GPA Data", e.getMessage());
@@ -391,12 +401,17 @@ public class CourseCalculator extends Fragment {
         dataSet.setIconsOffset(new MPPointF(0, 40));
         dataSet.setSelectionShift(5f);
 
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+
+        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        dataSet.setDrawValues(false);
 
         PieData data = new PieData(dataSet);
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.WHITE);
+
+        data.setHighlightEnabled(false);
+        //data.setValueTextSize(11f);
+        //data.setValueTextColor(Color.GRAY);
         mChart.setData(data);
+
         mChart.highlightValues(null);
         mChart.invalidate();
     }
