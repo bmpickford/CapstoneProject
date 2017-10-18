@@ -8,8 +8,26 @@
         android:id="@+id/calculatedContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/unit_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/unit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textAppearance="@android:style/TextAppearance.Material.Widget.ActionBar.Subtitle"
+            android:textSize="20dp" />
 
         <ProgressBar
             android:id="@+id/units_detail_spinner"

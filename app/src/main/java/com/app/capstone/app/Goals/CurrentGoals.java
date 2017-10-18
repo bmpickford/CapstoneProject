@@ -8,6 +8,7 @@ import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +16,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.telecom.Call;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,9 +76,8 @@ public class CurrentGoals extends Fragment {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void getGoals(JSONObject jo) throws JSONException {
-        //JSONObject jo = new JSONObject(data);
-
         Iterator<String> it  =  jo.keys();
 
         HashMap<String, ArrayList> map = new HashMap<>();
@@ -146,10 +147,6 @@ public class CurrentGoals extends Fragment {
 
     public CurrentGoals() throws IOException {
         // Required empty public constructor
-    }
-
-    public CurrentGoals(String d) throws IOException {
-        this.d = d;
     }
 
     public void deleteGoal(View view) throws IOException {
@@ -228,12 +225,19 @@ public class CurrentGoals extends Fragment {
         spinner.setVisibility(View.VISIBLE);
 
         String endpoint = "goals/present/" + id;
-        String uri = url + endpoint;
+        String uri;// = url + endpoint;
+
+        if(id.equals("0001")){
+            uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getPresentGoals";
+        } else {
+            uri = url + endpoint;
+        }
 
         System.out.println("using url: " + uri);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (com.android.volley.Request.Method.GET, uri, null, new com.android.volley.Response.Listener<JSONObject>() {
 
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onResponse(JSONObject response) {
                         System.out.println(response.toString());
@@ -241,7 +245,7 @@ public class CurrentGoals extends Fragment {
                         try {
                             getGoals(response);
                         } catch (JSONException e) {
-
+                            messageBox("Formatting goal data", e.toString());
                             e.printStackTrace();
                         }
 
@@ -273,9 +277,8 @@ public class CurrentGoals extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println(error);
-                        err.setText(error.toString());
-                        err.setVisibility(View.VISIBLE);
                         spinner.setVisibility(View.INVISIBLE);
+                        messageBox("Goal Server Error", error.toString());
                     }
                 });
 
@@ -315,6 +318,7 @@ public class CurrentGoals extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void prepareListData() {
 
         int i = 0;
@@ -351,5 +355,17 @@ public class CurrentGoals extends Fragment {
         }
 
 
+    }
+
+    private void messageBox(String method, String message)
+    {
+        Log.d("EXCEPTION: " + method,  message);
+
+        AlertDialog.Builder messageBox = new AlertDialog.Builder(getContext());
+        messageBox.setTitle(method);
+        messageBox.setMessage(message);
+        messageBox.setCancelable(false);
+        messageBox.setNeutralButton("OK", null);
+        messageBox.show();
     }
 }

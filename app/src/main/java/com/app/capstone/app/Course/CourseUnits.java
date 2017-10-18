@@ -5,7 +5,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -67,6 +69,7 @@ public class CourseUnits extends Fragment {
         return fragment;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public String[] getUnits(JSONObject jo) throws JSONException {
         Iterator<String> it = jo.keys();
 
@@ -200,7 +203,7 @@ public class CourseUnits extends Fragment {
 
                         String[] units = {};
                         try {
-                            JSONObject jo = new JSONObject(response.getString("body"));
+                            JSONObject jo = response;
                             //units = getUnits(jo);
 
                             JSONArray u = jo.getJSONArray("code");

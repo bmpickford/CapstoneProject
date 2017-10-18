@@ -3,13 +3,18 @@ package com.app.capstone.app.Goals;
 import android.content.Context;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -50,6 +55,7 @@ public class PastGoals extends Fragment {
     private PastGoals.OnFragmentInteractionListener mListener;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void getGoals(JSONObject jo) throws JSONException {
         //JSONObject jo = new JSONObject(data);
 
@@ -179,19 +185,33 @@ public class PastGoals extends Fragment {
             goalsMap.put(g.getId(), g);
         }*/
 
+        final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.pastGoalSpinner);
+
+
         String endpoint = "goals/past/" + id;
-        String uri = url + endpoint;
+        String uri;// = url + endpoint;
+
+        if(id.equals("0001")){
+            uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getPastGoals";
+        } else {
+            uri = url + endpoint;
+        }
+
+        spinner.setVisibility(View.VISIBLE);
 
         System.out.println("using url: " + uri);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (com.android.volley.Request.Method.GET, uri, null, new com.android.volley.Response.Listener<JSONObject>() {
 
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onResponse(JSONObject response) {
+                        spinner.setVisibility(View.INVISIBLE);
                         System.out.println(response.toString());
                         try {
                             getGoals(response);
                         } catch (JSONException e) {
+                            messageBox("Formatting goal data", e.toString());
                             e.printStackTrace();
                         }
 
@@ -222,6 +242,8 @@ public class PastGoals extends Fragment {
                 }, new com.android.volley.Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        spinner.setVisibility(View.INVISIBLE);
+                        messageBox("Goal server error", error.toString());
                         System.out.println(error);
                     }
                 });
@@ -304,9 +326,9 @@ public class PastGoals extends Fragment {
             boolean sameDay = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
                     cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
             if(sameDay){
-                header = goal.getName() + "  - DUE NOW";
+                header = goal.getName();
             } else if(new Date().after(goal.getEnd_date())){
-                header = goal.getName() + "  - OVERDUE";
+                header = goal.getName();
             } else {
                 header = goal.getName();
             }
@@ -321,5 +343,17 @@ public class PastGoals extends Fragment {
         }
 
 
+    }
+
+    private void messageBox(String method, String message)
+    {
+        Log.d("EXCEPTION: " + method,  message);
+
+        AlertDialog.Builder messageBox = new AlertDialog.Builder(getContext());
+        messageBox.setTitle(method);
+        messageBox.setMessage(message);
+        messageBox.setCancelable(false);
+        messageBox.setNeutralButton("OK", null);
+        messageBox.show();
     }
 }

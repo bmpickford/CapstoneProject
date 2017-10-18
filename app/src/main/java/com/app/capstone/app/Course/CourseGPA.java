@@ -239,8 +239,6 @@ public class CourseGPA extends Fragment {
                         setData(gpa);
 
                         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-                        mChart.setEntryLabelColor(Color.WHITE);
-                        mChart.setEntryLabelTextSize(12f);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -290,12 +288,12 @@ public class CourseGPA extends Fragment {
 
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
 
-        double honors = 5.5;
+        double honours = 5.5;
 
         entries.add(new PieEntry((float) gpa, "GPA"));
 
-        if(honors > (gpa + 0.2)){
-            entries.add(new PieEntry((float) (honors - gpa), "Honors Level"));
+        if(honours > (gpa + 0.2)){
+            entries.add(new PieEntry((float) (honours - gpa), "honours Level"));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "");
@@ -306,7 +304,7 @@ public class CourseGPA extends Fragment {
         dataSet.setSelectionShift(5f);
 
 
-        dataSet.setColors(ColorTemplate.PASTEL_COLORS);
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         dataSet.setDrawValues(false);
 
         PieData data = new PieData(dataSet);
