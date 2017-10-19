@@ -93,7 +93,7 @@ public class HomePage extends Fragment {
         final LinearLayout badge_link = (LinearLayout) view.findViewById(R.id.badge_link);
         final LinearLayout gpa_link = (LinearLayout) view.findViewById(R.id.gpa_link);
 
-        /*goal_link.setOnClickListener(new View.OnClickListener() {
+        goal_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment = null;
@@ -105,6 +105,8 @@ public class HomePage extends Fragment {
                     fragment = (Fragment) fragmentClass.newInstance();
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(com.app.capstone.app.R.id.flContent, fragment).commit();
+
+                    ((MainActivity)getActivity()).navigateMenu("goals");
                 } catch (Exception e) {
                     System.out.println(e);
                     e.printStackTrace();
@@ -124,6 +126,7 @@ public class HomePage extends Fragment {
                     fragment = (Fragment) fragmentClass.newInstance();
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(com.app.capstone.app.R.id.flContent, fragment).commit();
+                    ((MainActivity)getActivity()).navigateMenu("course");
                 } catch (Exception e) {
                     System.out.println(e);
                     e.printStackTrace();
@@ -143,12 +146,13 @@ public class HomePage extends Fragment {
                     fragment = (Fragment) fragmentClass.newInstance();
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(com.app.capstone.app.R.id.flContent, fragment).commit();
+                    ((MainActivity)getActivity()).navigateMenu("course");
                 } catch (Exception e) {
                     System.out.println(e);
                     e.printStackTrace();
                 }
             }
-        });*/
+        });
 
         setGPA(view, spinner, content);
         setBadges(view);
@@ -192,12 +196,12 @@ public class HomePage extends Fragment {
 
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
 
-        double honours = 5.5;
+        double Honours = 5.5;
 
         entries.add(new PieEntry((float) gpa, "GPA"));
 
-        if(honours > (gpa + 0.2)){
-            entries.add(new PieEntry((float) (honours - gpa), "honours Level"));
+        if(Honours > (gpa + 0.2)){
+            entries.add(new PieEntry((float) (Honours - gpa), "Honours Level"));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "");
@@ -244,6 +248,8 @@ public class HomePage extends Fragment {
             uri = url + endpoint;
         }
 
+        final TextView gpa_title = (TextView) view.findViewById(R.id.gpa_title);
+
         System.out.println("using url: " + uri);
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -259,6 +265,7 @@ public class HomePage extends Fragment {
                         try {
                             JSONObject body = response;
                             gpa = Double.parseDouble(body.getJSONObject("Course_GPA").getString("0"));
+                            gpa_title.setText(body.getJSONObject("Course_Code").getString("0"));
                         } catch (JSONException e) {
                             messageBox("Get GPA Data", e.getMessage());
                             e.printStackTrace();
@@ -288,16 +295,16 @@ public class HomePage extends Fragment {
                         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
                         mChart.setEntryLabelTextSize(0);
 
-                        double honours = 5.5;
+                        double Honours = 5.5;
 
                         System.out.println(gpa);
 
                         int maxAngle;
 
-                        if(gpa > honours){
+                        if(gpa > Honours){
                             maxAngle = (int) Math.floor((gpa / 7) * 360);
                         } else {
-                            maxAngle = (int) Math.floor((honours / 7) * 360);
+                            maxAngle = (int) Math.floor((Honours / 7) * 360);
                         }
 
                         System.out.println(maxAngle);

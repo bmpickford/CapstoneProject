@@ -239,4 +239,21 @@ public class MainActivity extends AppCompatActivity
         pg.uncompleteGoal(view);
     }
 
+    public void navigateMenu(String type){
+        NavigationView navigationView = (NavigationView) findViewById(com.app.capstone.app.R.id.nav_view);
+        switch(type){
+            case "course":
+                navigationView.setCheckedItem(R.id.nav_course);
+                break;
+            case "goals":
+                navigationView.setCheckedItem(R.id.nav_goals);
+                break;
+            default:
+                navigationView.setCheckedItem(R.id.nav_home);
+                break;
+        }
+
+
+    }
+
 }
