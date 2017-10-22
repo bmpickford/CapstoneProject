@@ -40,18 +40,6 @@
                 android:outlineProvider="bounds"
                 android:paddingTop="6dp">
 
-                <TextView
-                    android:id="@+id/gpa_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:text="GPA"
-                    android:textAlignment="center"
-                    android:textAllCaps="true"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
-
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/homechart"
                     android:layout_width="match_parent"

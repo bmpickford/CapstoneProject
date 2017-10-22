@@ -74,12 +74,6 @@ public class HomePage extends Fragment {
         content.setVisibility(View.INVISIBLE);
         spinner.setVisibility(View.VISIBLE);
 
-
-       /* final TextView title = (TextView) view.findViewById(R.id.gpaData1);
-        final TextView avg = (TextView) view.findViewById(R.id.gpaData2);
-        final TextView median = (TextView) view.findViewById(R.id.gpaData3);*/
-
-
         String endpoint = "gpa/" + id;
 
         String uri;
@@ -105,9 +99,6 @@ public class HomePage extends Fragment {
                         try {
                             JSONObject body = response;
 
-                            /*title.setText(body.getJSONObject("Parent_Study_Package_Full_Title").getString("0"));
-                            avg.setText("Average: " + body.getJSONObject("Mean").getString("0"));
-                            median.setText("Median: " + body.getJSONObject("Median").getString("0"));*/
                             gpa = Double.parseDouble(body.getJSONObject("Course_GPA").getString("0"));
                         } catch (JSONException e) {
                             messageBox("Get GPA Data", e.getMessage());
@@ -122,7 +113,7 @@ public class HomePage extends Fragment {
                         mChart.setCenterTextSize(16);
                         mChart.setCenterTextColor(Color.GRAY);
                         mChart.getDescription().setEnabled(false);
-                        mChart.setExtraOffsets(5, 10, 5, 5);
+                        mChart.setExtraOffsets(10, 10, 10, 10);
                         mChart.setDragDecelerationFrictionCoef(0.95f);
                         mChart.setDrawHoleEnabled(true);
                         mChart.setHoleColor(Color.WHITE);
@@ -134,7 +125,7 @@ public class HomePage extends Fragment {
                         mChart.setRotationAngle(0);
                         mChart.setRotationEnabled(false);
                         mChart.setHighlightPerTapEnabled(false);
-                        //mChart.getLegend().setEnabled(false);
+                        mChart.getLegend().setEnabled(false);
                         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
                         mChart.setEntryLabelTextSize(0);
 
@@ -211,9 +202,7 @@ public class HomePage extends Fragment {
 
         entries.add(new PieEntry((float) gpa, "GPA"));
 
-        if(honors > (gpa + 0.2)){
-            entries.add(new PieEntry((float) (honors - gpa), "Honors Level"));
-        }
+
 
         PieDataSet dataSet = new PieDataSet(entries, "");
 
@@ -229,8 +218,6 @@ public class HomePage extends Fragment {
         PieData data = new PieData(dataSet);
 
         data.setHighlightEnabled(false);
-        //data.setValueTextSize(11f);
-        //data.setValueTextColor(Color.GRAY);
         mChart.setData(data);
 
         mChart.highlightValues(null);
