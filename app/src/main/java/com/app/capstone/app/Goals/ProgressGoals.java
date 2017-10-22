@@ -77,11 +77,7 @@ public class ProgressGoals extends Fragment {
         String endpoint = "goals/progress/" + id;
         String uri;
 
-        if(id.equals("0001")){
-            uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getGoalProgress";
-        } else {
-            uri = url + endpoint;
-        }
+        uri = "http://ec2-54-202-120-169.us-west-2.compute.amazonaws.com:5000/" + endpoint;
 
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -98,8 +94,8 @@ public class ProgressGoals extends Fragment {
                         int completedGoals = 8;
 
                         try {
-                            totalGoals = response.getInt("Total");
-                            completedGoals = response.getInt("Completed");
+                            totalGoals = response.getInt("total");
+                            completedGoals = response.getInt("completed");
                         } catch (JSONException e) {
                             messageBox("Formatting goal data", e.toString());
                             e.printStackTrace();

@@ -122,22 +122,24 @@ public class Goal {
 
     public void updateGoal() throws JSONException, IOException {
         JSONObject data = getData();
-        sendRequest(((String.format("goal/%s", this.id))), "PUT", data);
+        data.put("Completed", this.completed);
+        sendRequest(((String.format("goals/%s", this.id))), "PUT", data);
     }
 
     private void createGoal() throws JSONException, IOException {
         JSONObject data = getData();
-        sendRequest("goal", "POST", data);
+        data.put("Completed", 0);
+        sendRequest("goals", "POST", data);
     }
 
     private void deleteGoal() throws IOException, JSONException {
-        sendRequest(((String.format("goal/%s", this.id))), "DELETE", null);
+        sendRequest(((String.format("goals/%s", this.id))), "DELETE", null);
     }
 
     private JSONObject getData() throws JSONException{
         JSONObject data = new JSONObject();
 
-        data.put("Name", this.name);
+        data.put("Description", this.name);
         data.put("Priority", Integer.valueOf(this.priority));
         data.put("Goal_Type", Integer.valueOf(this.type));
         data.put("Exp_Date", this.end_date);
@@ -146,7 +148,6 @@ public class Goal {
         String id = ((MainActivity) activity).getStudentNumber();
 
         data.put("Student_ID", id);
-
 
         if(this.completed){
             data.put("Goal_Status", "1");
@@ -162,7 +163,7 @@ public class Goal {
     private void sendRequest(String endpoint, String method, JSONObject data) throws IOException, JSONException {
         final int req;
         JSONObject jsonData = null;
-        String uri = this.url + endpoint;
+        String uri = "http://ec2-54-202-120-169.us-west-2.compute.amazonaws.com:5000/" + endpoint;
 
         switch(method){
             case "POST":

@@ -1,5 +1,6 @@
 package com.app.capstone.app.Goals;
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,9 +28,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.app.capstone.app.ExpandableListAdapter;
 import com.app.capstone.app.Goal;
+import com.app.capstone.app.GoalsPage;
 import com.app.capstone.app.MainActivity;
 import com.app.capstone.app.NewGoalPage;
 import com.app.capstone.app.R;
@@ -44,6 +48,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -51,10 +57,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.Inflater;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static android.R.attr.fragment;
+import static android.R.attr.type;
+import static com.app.capstone.app.R.layout.fragment_current_goals;
 
 
 public class CurrentGoals extends Fragment {
@@ -71,7 +82,7 @@ public class CurrentGoals extends Fragment {
     final String url = "http://www.schemefactory.com:5000/";
 
 
-    private HashMap<Integer, Goal> goalsMap = new HashMap<>();// = getGoals();
+    private HashMap<Integer, Goal> goalsMap;// = getGoals();
     private OnFragmentInteractionListener mListener;
 
 
@@ -149,14 +160,14 @@ public class CurrentGoals extends Fragment {
         // Required empty public constructor
     }
 
-    public void deleteGoal(View view) throws IOException {
+    public void deleteGoal(final View view) throws IOException {
         View parent = (View) view.getParent().getParent().getParent();
         TextView taskTextViewItem = (TextView) parent.findViewById(R.id.lblListItem);
         String b = String.valueOf(taskTextViewItem.getText());
         String[] splitStr = b.split("-");
         String idStr = splitStr[0].replace(" ", "");
-        int id = Integer.parseInt(idStr);
-        final Goal g = goalsMap.get(id);
+        final int id2 = Integer.parseInt(idStr);
+        //final Goal g = goalsMap.get(id);
 
 
         AlertDialog.Builder builder;
@@ -170,13 +181,11 @@ public class CurrentGoals extends Fragment {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         System.out.println("Deleting");
-                        try {
-                            g.delete();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        /*try {
+                            //update(id2, "DELETE", view);
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        }
+                        }*/
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -189,16 +198,10 @@ public class CurrentGoals extends Fragment {
     }
 
     public void updateGoal(View view) throws IOException, JSONException {
-        View parent = (View) view.getParent().getParent().getParent();
-        TextView taskTextViewItem = (TextView) parent.findViewById(R.id.lblListItem);
-        String b = String.valueOf(taskTextViewItem.getText());
-        String[] splitStr = b.split("-");
-        String idStr = splitStr[0].replace(" ", "");
-        int id = Integer.parseInt(idStr);
-        final Goal g = goalsMap.get(id);
-        g.setCompleted(true);
-        g.update();
+
     }
+
+
 
     public static CurrentGoals newInstance() throws IOException {
         CurrentGoals fragment = new CurrentGoals();
@@ -217,7 +220,7 @@ public class CurrentGoals extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_current_goals, container, false);
+        final View view = inflater.inflate(fragment_current_goals, container, false);
 
         final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.currentGoalSpinner);
         final TextView err = (TextView) view.findViewById(R.id.errTextCurrGoal);
@@ -227,11 +230,11 @@ public class CurrentGoals extends Fragment {
         String endpoint = "goals/present/" + id;
         String uri;// = url + endpoint;
 
-        if(id.equals("0001")){
-            uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getPresentGoals";
-        } else {
-            uri = url + endpoint;
-        }
+        goalsMap = new HashMap<>();
+
+
+        uri = "http://ec2-54-202-120-169.us-west-2.compute.amazonaws.com:5000/" + endpoint;
+
 
         System.out.println("using url: " + uri);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -243,7 +246,35 @@ public class CurrentGoals extends Fragment {
                         System.out.println(response.toString());
                         spinner.setVisibility(View.INVISIBLE);
                         try {
-                            getGoals(response);
+                            //getGoals(response);
+                            for(int i = 0; i < response.getJSONArray("data").length(); i++){
+                                JSONObject ja = response.getJSONArray("data").getJSONObject(i);
+                                String name;
+                                int priority;
+                                int type;
+                                int goal_id;
+                                Date date = null;
+
+                                name = ja.getString("name");
+                                priority = Integer.parseInt(ja.getString("priority"));
+                                type = Integer.parseInt(ja.getString("type"));
+                                goal_id = ja.getInt("id");
+
+                                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                                SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                try {
+                                    date = formatter.parse(ja.getString("expiry"));
+                                } catch (java.text.ParseException e) {
+                                    try {
+                                        date = formatter2.parse(ja.getString("expiry"));
+                                    } catch (ParseException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                }
+
+                                Goal g = new Goal(name, priority, type, date, getActivity(), goal_id);
+                                goalsMap.put(goal_id, g);
+                            }
                         } catch (JSONException e) {
                             messageBox("Formatting goal data", e.toString());
                             e.printStackTrace();
@@ -272,6 +303,20 @@ public class CurrentGoals extends Fragment {
                             }
                         });
 
+                        LayoutInflater infalInflater = (LayoutInflater) getActivity()
+                                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View convertView = infalInflater.inflate(R.layout.list_item, null);
+
+
+                        Button btn = (Button) convertView.findViewById(R.id.completeGoalBtn);
+
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                System.out.println("BUTTTON 2222");
+                            }
+                        });
+
                     }
                 }, new com.android.volley.Response.ErrorListener() {
                     @Override
@@ -283,6 +328,8 @@ public class CurrentGoals extends Fragment {
                 });
 
         Requester.getInstance(getContext()).addToRequestQueue(jsObjRequest);
+
+
 
 
 
@@ -368,4 +415,7 @@ public class CurrentGoals extends Fragment {
         messageBox.setNeutralButton("OK", null);
         messageBox.show();
     }
+
+
+
 }

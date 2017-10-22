@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -191,11 +192,7 @@ public class PastGoals extends Fragment {
         String endpoint = "goals/past/" + id;
         String uri;// = url + endpoint;
 
-        if(id.equals("0001")){
-            uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getPastGoals";
-        } else {
-            uri = url + endpoint;
-        }
+        uri = "http://ec2-54-202-120-169.us-west-2.compute.amazonaws.com:5000/" + endpoint;
 
         spinner.setVisibility(View.VISIBLE);
 
@@ -209,7 +206,34 @@ public class PastGoals extends Fragment {
                         spinner.setVisibility(View.INVISIBLE);
                         System.out.println(response.toString());
                         try {
-                            getGoals(response);
+                            for(int i = 0; i < response.getJSONArray("data").length(); i++){
+                                JSONObject ja = response.getJSONArray("data").getJSONObject(i);
+                                String name;
+                                int priority;
+                                int type;
+                                int goal_id;
+                                Date date = null;
+
+                                name = ja.getString("name");
+                                priority = Integer.parseInt(ja.getString("priority"));
+                                type = Integer.parseInt(ja.getString("type"));
+                                goal_id = ja.getInt("id");
+
+                                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                                SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                try {
+                                    date = formatter.parse(ja.getString("expiry"));
+                                } catch (java.text.ParseException e) {
+                                    try {
+                                        date = formatter2.parse(ja.getString("expiry"));
+                                    } catch (ParseException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                }
+
+                                Goal g = new Goal(name, priority, type, date, getActivity(), goal_id);
+                                goalsMap.put(goal_id, g);
+                            }
                         } catch (JSONException e) {
                             messageBox("Formatting goal data", e.toString());
                             e.printStackTrace();
@@ -308,6 +332,7 @@ public class PastGoals extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void prepareListData() {
 
         int i = 0;
