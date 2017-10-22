@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.icu.text.SimpleDateFormat;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
@@ -88,6 +90,7 @@ public class Goal {
         return this.end_date;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public String getEnd_dateStr(){
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         return df.format(this.end_date);

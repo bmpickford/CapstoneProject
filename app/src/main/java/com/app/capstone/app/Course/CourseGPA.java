@@ -4,11 +4,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +49,7 @@ import java.util.Map;
 
 
 public class CourseGPA extends Fragment {
-    private PieChart mChart;
+   // private PieChart mChart;
     final String url = "http://www.schemefactory.com:5000/";
     String id;
 
@@ -158,9 +161,18 @@ public class CourseGPA extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_course_gpa, container, false);
 
+        PieChart mChart;
+        PieChart mChart2;
+
         final TextView title = (TextView) view.findViewById(R.id.gpaData1);
         final TextView avg = (TextView) view.findViewById(R.id.gpaData2);
         final TextView median = (TextView) view.findViewById(R.id.gpaData3);
+        final TextView code = (TextView) view.findViewById(R.id.title);
+
+        final TextView title2 = (TextView) view.findViewById(R.id.gpaData21);
+        final TextView avg2 = (TextView) view.findViewById(R.id.gpaData22);
+        final TextView median2 = (TextView) view.findViewById(R.id.gpaData23);
+        final TextView code2 = (TextView) view.findViewById(R.id.title2);
 
         final LinearLayout gpaContent = (LinearLayout) view.findViewById(R.id.gpa_content);
         final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.gpa_spinner);
@@ -178,69 +190,98 @@ public class CourseGPA extends Fragment {
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, uri, null, new Response.Listener<JSONObject>() {
 
+                    @RequiresApi(api = Build.VERSION_CODES.M)
                     @Override
                     public void onResponse(JSONObject response) {
                         gpaContent.setVisibility(View.VISIBLE);
                         spinner.setVisibility(View.INVISIBLE);
+
+                        PieChart chart1 = (PieChart) view.findViewById(R.id.chart1);
+                        PieChart chart2 = (PieChart) view.findViewById(R.id.chart2);
+
                         double gpa = 0;
+                        double gpa2 = 0;
+
+                        double Honours = 5.5;
+
+                        int maxAngle;
+                        int maxAngle2;
 
                         try {
                             JSONObject body = response;
 
+                            if(response.getJSONObject("Mean").length() > 1){
+                                LinearLayout degree_2 = (LinearLayout) view.findViewById(R.id.second_degree);
+                                degree_2.setVisibility(View.VISIBLE);
+
+                                title2.setText(body.getJSONObject("Parent_Study_Package_Full_Title").getString("1"));
+                                avg2.setText("Course Average: " + body.getJSONObject("Mean").getString("1"));
+                                median2.setText("Course Median: " + body.getJSONObject("Median").getString("1"));
+                                code2.setText(body.getJSONObject("Course_Code").getString("1"));
+                                gpa2 = Double.parseDouble(body.getJSONObject("Course_GPA").getString("1"));
+
+                                if(gpa2 > Honours){
+                                    maxAngle2 = (int) Math.floor((gpa2 / 7) * 360);
+                                } else {
+                                    maxAngle2 = (int) Math.floor((Honours / 7) * 360);
+                                }
+
+                                chart2.setMaxAngle(maxAngle2);
+
+                                setData(gpa2, chart2);
+                                setChartDisplay(chart2, gpa2, maxAngle2);
+                            } else {
+                                LinearLayout degree_1 = (LinearLayout) view.findViewById(R.id.first_degree);
+                                LinearLayout degree_data = (LinearLayout) view.findViewById(R.id.first_degree_data);
+
+                                degree_1.setOrientation(LinearLayout.VERTICAL);
+                                degree_1.setPadding(60, 60, 60, 60);
+                                degree_1.setGravity(View.TEXT_ALIGNMENT_CENTER);
+                                degree_1.setForegroundGravity(View.TEXT_ALIGNMENT_CENTER);
+
+                                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) chart1.getLayoutParams();
+                                lp.gravity = Gravity.CENTER_HORIZONTAL;
+                                chart1.setLayoutParams(lp);
+                                chart1.setForegroundGravity(View.TEXT_ALIGNMENT_CENTER);
+
+                                LinearLayout.LayoutParams llp = (LinearLayout.LayoutParams) degree_data.getLayoutParams();
+                                llp.gravity = Gravity.CENTER_HORIZONTAL;
+                                degree_data.setLayoutParams(llp);
+                                degree_data.setPadding(120, 120, 120, 120);
+                                degree_data.setGravity(View.TEXT_ALIGNMENT_CENTER);
+                                degree_data.setForegroundGravity(View.TEXT_ALIGNMENT_CENTER);
+
+                                title.setGravity(Gravity.CENTER_HORIZONTAL);
+                                avg.setGravity(Gravity.CENTER_HORIZONTAL);
+                                median.setGravity(Gravity.CENTER_HORIZONTAL);
+                            }
+
                             title.setText(body.getJSONObject("Parent_Study_Package_Full_Title").getString("0"));
                             avg.setText("Course Average: " + body.getJSONObject("Mean").getString("0"));
                             median.setText("Course Median: " + body.getJSONObject("Median").getString("0"));
+                            code.setText(body.getJSONObject("Course_Code").getString("0"));
+
+                            title.setVisibility(View.VISIBLE);
                             gpa = Double.parseDouble(body.getJSONObject("Course_GPA").getString("0"));
+
+                            if(gpa > Honours){
+                                maxAngle = (int) Math.floor((gpa / 7) * 360);
+                            } else {
+                                maxAngle = (int) Math.floor((Honours / 7) * 360);
+                            }
+
+                            chart1.setMaxAngle(maxAngle);
+
+                            setChartDisplay(chart1, gpa, maxAngle);
+
+                            setData(gpa, chart1);
                         } catch (JSONException e) {
                             messageBox("Get GPA Data", e.getMessage());
                             e.printStackTrace();
                         }
 
-                        /*title.setText("Bachelor of Information Technology");
-                        avg.setText("Average: 5.2");
-                        median.setText("Median: 5.01");*/
 
-                        mChart = (PieChart) view.findViewById(R.id.chart1);
-                        mChart.setUsePercentValues(false);
-                        mChart.setCenterText("GPA \n" + Double.toString(gpa));
-                        //mChart.setCenterTextTypeface();
-                        mChart.setCenterTextSize(16);
-                        mChart.setCenterTextColor(Color.DKGRAY);
-                        mChart.getDescription().setEnabled(false);
-                        mChart.setExtraOffsets(5, 10, 5, 5);
-                        mChart.setDragDecelerationFrictionCoef(0.95f);
-                        mChart.setDrawHoleEnabled(true);
-                        mChart.setHoleColor(Color.WHITE);
-                        mChart.setTransparentCircleColor(Color.GRAY);
-                        mChart.setTransparentCircleAlpha(110);
-                        mChart.setHoleRadius(75f);
-                        mChart.setTransparentCircleRadius(61f);
-                        mChart.setDrawCenterText(true);
-                        mChart.setRotationAngle(0);
-                        mChart.setRotationEnabled(false);
-                        mChart.setHighlightPerTapEnabled(false);
-                        //mChart.getLegend().setEnabled(false);
-                        mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-                        mChart.setEntryLabelTextSize(0);
-                        mChart.setHoleColor(ResourcesCompat.getColor(getResources(), R.color.colorBackground, null));
 
-                        double honours = 5.5;
-
-                        int maxAngle;
-
-                        if(gpa > honours){
-                            maxAngle = (int) Math.floor((gpa / 7) * 360);
-                        } else {
-                            maxAngle = (int) Math.floor((honours / 7) * 360);
-                        }
-
-                        mChart.setMaxAngle(maxAngle);
-
-                        setData(gpa);
-
-                        mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-                        mChart.setEntryLabelColor(Color.WHITE);
-                        mChart.setEntryLabelTextSize(12f);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -286,16 +327,16 @@ public class CourseGPA extends Fragment {
     }
 
 
-    private void setData(double gpa) {
+    private void setData(double gpa, PieChart mChart) {
 
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
 
-        double honors = 5.5;
+        double Honours = 5.5;
 
         entries.add(new PieEntry((float) gpa, "GPA"));
 
-        if(honors > (gpa + 0.2)){
-            entries.add(new PieEntry((float) (honors - gpa), "Honors Level"));
+        if(Honours > (gpa + 0.1)){
+            entries.add(new PieEntry((float) (Honours - gpa), "Honours Level"));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "");
@@ -306,7 +347,7 @@ public class CourseGPA extends Fragment {
         dataSet.setSelectionShift(5f);
 
 
-        dataSet.setColors(ColorTemplate.PASTEL_COLORS);
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         dataSet.setDrawValues(false);
 
         PieData data = new PieData(dataSet);
@@ -331,5 +372,32 @@ public class CourseGPA extends Fragment {
         messageBox.setCancelable(false);
         messageBox.setNeutralButton("OK", null);
         messageBox.show();
+    }
+
+    private void setChartDisplay(PieChart mChart, double gpa, int maxAngle){
+
+        mChart.setUsePercentValues(false);
+        mChart.setCenterText("GPA \n" + Double.toString(gpa));
+        //mChart.setCenterTextTypeface();
+        mChart.setExtraOffsets(0, 5, 0, 0);
+        mChart.setCenterTextSize(16);
+        mChart.setCenterTextColor(Color.GRAY);
+        mChart.getDescription().setEnabled(false);
+        mChart.setDragDecelerationFrictionCoef(0.95f);
+        mChart.setDrawHoleEnabled(true);
+        mChart.setHoleColor(Color.WHITE);
+        mChart.setTransparentCircleColor(Color.WHITE);
+        mChart.setTransparentCircleAlpha(110);
+        mChart.setHoleRadius(80f);
+        mChart.setTransparentCircleRadius(75f);
+        mChart.setDrawCenterText(true);
+        mChart.setRotationAngle(0);
+        mChart.setRotationEnabled(false);
+        mChart.setHighlightPerTapEnabled(false);
+        //mChart.getLegend().setEnabled(false);
+        mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
+        mChart.setEntryLabelTextSize(0);
+        System.out.println(maxAngle);
+
     }
 }

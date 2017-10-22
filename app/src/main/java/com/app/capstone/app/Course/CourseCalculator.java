@@ -194,15 +194,14 @@ public class CourseCalculator extends Fragment {
                         calculatedContent.setVisibility(View.VISIBLE);
 
                         mChart.setUsePercentValues(false);
-                        //mChart.setCenterTextTypeface();
-                        mChart.setExtraOffsets(5, 10, 5, 5);
+
                         mChart.getDescription().setEnabled(false);
                         mChart.setDragDecelerationFrictionCoef(0.95f);
                         mChart.setDrawHoleEnabled(true);
                         mChart.setHoleColor(Color.WHITE);
                         mChart.setTransparentCircleColor(Color.GRAY);
                         mChart.setTransparentCircleAlpha(110);
-                        mChart.setHoleRadius(75f);
+                        mChart.setHoleRadius(80f);
                         mChart.setTransparentCircleRadius(61f);
                         mChart.setDrawCenterText(true);
                         mChart.setRotationAngle(0);
@@ -235,8 +234,11 @@ public class CourseCalculator extends Fragment {
                         GPACalculator gpaCalc = new GPACalculator(goalGPA, gpa, cpLeft, cpDone);
 
                         double neededGPA = gpaCalc.calculate();
-
-                        goalText.setText("Current GPA: " + String.valueOf(gpa) + "\n\nTo achieve a GPA of: " + String.valueOf(goalGPA) + "\n\nYou neeed and average GPA of: " + String.valueOf(neededGPA) + " over " + String.valueOf(cpLeft / 12) + " units");
+                        mChart.setCenterText("You need a GPA of \n" + Math.round(neededGPA * 100.0) / 100.0);
+                        mChart.setCenterTextSize(16);
+                        mChart.setCenterTextColor(Color.DKGRAY);
+                        int units_s = (int) Math.ceil(cpLeft / 12);
+                        goalText.setText("Current GPA: " + String.valueOf(gpa) + "\n\nTo achieve a GPA of: " + String.valueOf(goalGPA) + "\n\nYou neeed and average GPA of: " + String.valueOf(neededGPA) + " over " + String.valueOf(units_s) + " units");
                         int maxAngle;
 
                         if(gpa > neededGPA){
@@ -250,8 +252,6 @@ public class CourseCalculator extends Fragment {
                         setData(gpa, neededGPA);
 
                         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-                        mChart.setEntryLabelColor(Color.WHITE);
-                        mChart.setEntryLabelTextSize(12f);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -304,7 +304,7 @@ public class CourseCalculator extends Fragment {
                         mChart.setHoleColor(Color.WHITE);
                         mChart.setTransparentCircleColor(Color.GRAY);
                         mChart.setTransparentCircleAlpha(110);
-                        mChart.setHoleRadius(75f);
+                        mChart.setHoleRadius(80f);
                         mChart.setTransparentCircleRadius(61f);
                         mChart.setDrawCenterText(true);
                         mChart.setRotationAngle(0);
@@ -334,8 +334,11 @@ public class CourseCalculator extends Fragment {
                         GPACalculator gpaCalc = new GPACalculator(goalGPA, gpa, cpLeft, cpDone);
 
                         double neededGPA = gpaCalc.calculate();
-
-                        goalText.setText("Current GPA: " + String.valueOf(gpa) + "\n\nTo achieve a GPA of: " + String.valueOf(goalGPA) + "\n\nYou neeed and average GPA of: " + String.valueOf(neededGPA) + " over " + String.valueOf(cpLeft / 12) + " units");
+                        mChart.setCenterText("You need a GPA of \n" + Math.round(neededGPA * 100.0) / 100.0);
+                        mChart.setCenterTextSize(16);
+                        mChart.setCenterTextColor(Color.DKGRAY);
+                        int units_s = (int) Math.ceil(cpLeft / 12);
+                        goalText.setText("Current GPA: " + String.valueOf(gpa) + "\n\nTo achieve a GPA of: " + String.valueOf(goalGPA) + "\n\nYou neeed and average GPA of: " + String.valueOf(neededGPA) + " over " + String.valueOf(units_s) + " units");
                         int maxAngle;
 
                         if(gpa > neededGPA){
@@ -349,8 +352,7 @@ public class CourseCalculator extends Fragment {
                         setData(gpa, neededGPA);
 
                         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
-                        mChart.setEntryLabelColor(Color.WHITE);
-                        mChart.setEntryLabelTextSize(12f);
+
                     }
                 }, new Response.ErrorListener() {
                     @Override
