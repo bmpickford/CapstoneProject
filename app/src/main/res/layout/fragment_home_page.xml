@@ -41,6 +41,8 @@
                 android:outlineProvider="bounds"
                 android:paddingTop="6dp">
 
+<<<<<<< HEAD
+=======
                 <TextView
                     android:id="@+id/gpa_title"
                     android:layout_width="match_parent"
@@ -53,6 +55,7 @@
                     android:textSize="24dp"
                     android:textStyle="bold" />
 
+>>>>>>> 6018c22e8cf71621763f7244ca90d13fea39ec55
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/homechart"
                     android:layout_width="match_parent"

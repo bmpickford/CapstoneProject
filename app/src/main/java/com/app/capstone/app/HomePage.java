@@ -88,6 +88,8 @@ public class HomePage extends Fragment {
         content.setVisibility(View.INVISIBLE);
         spinner.setVisibility(View.VISIBLE);
 
+<<<<<<< HEAD
+=======
 
         final LinearLayout goal_link = (LinearLayout) view.findViewById(R.id.goal_link);
         final LinearLayout badge_link = (LinearLayout) view.findViewById(R.id.badge_link);
@@ -238,6 +240,7 @@ public class HomePage extends Fragment {
     }
 
     private  void setGPA(final View view, final ProgressBar spinner, final LinearLayout content){
+>>>>>>> 6018c22e8cf71621763f7244ca90d13fea39ec55
         String endpoint = "gpa/" + id;
 
         String uri;
@@ -264,6 +267,10 @@ public class HomePage extends Fragment {
 
                         try {
                             JSONObject body = response;
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6018c22e8cf71621763f7244ca90d13fea39ec55
                             gpa = Double.parseDouble(body.getJSONObject("Course_GPA").getString("0"));
                             gpa_title.setText(body.getJSONObject("Course_Code").getString("0"));
                         } catch (JSONException e) {
@@ -279,7 +286,7 @@ public class HomePage extends Fragment {
                         mChart.setCenterTextSize(16);
                         mChart.setCenterTextColor(Color.GRAY);
                         mChart.getDescription().setEnabled(false);
-                        mChart.setExtraOffsets(5, 10, 5, 5);
+                        mChart.setExtraOffsets(10, 10, 10, 10);
                         mChart.setDragDecelerationFrictionCoef(0.95f);
                         mChart.setDrawHoleEnabled(true);
                         mChart.setHoleColor(Color.WHITE);
@@ -291,7 +298,7 @@ public class HomePage extends Fragment {
                         mChart.setRotationAngle(0);
                         mChart.setRotationEnabled(false);
                         mChart.setHighlightPerTapEnabled(false);
-                        //mChart.getLegend().setEnabled(false);
+                        mChart.getLegend().setEnabled(false);
                         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
                         mChart.setEntryLabelTextSize(0);
 
@@ -396,6 +403,10 @@ public class HomePage extends Fragment {
                             messageBox("Apply Badges Data", e.toString());
                         }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6018c22e8cf71621763f7244ca90d13fea39ec55
 
 
 
@@ -412,6 +423,11 @@ public class HomePage extends Fragment {
 
     private void setGoals(View view){
 
+<<<<<<< HEAD
+        data.setHighlightEnabled(false);
+        mChart.setData(data);
+=======
+>>>>>>> 6018c22e8cf71621763f7244ca90d13fea39ec55
 
         final LinearLayout goal_content = (LinearLayout) view.findViewById(R.id.home_goal_content);
 
