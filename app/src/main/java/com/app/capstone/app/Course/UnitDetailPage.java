@@ -30,6 +30,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -70,14 +71,16 @@ public class UnitDetailPage extends Fragment {
 
         int uid = item.getInt("id");
 
-        String endpoint = "units/detail/" + uid;
+        System.out.println("ID: " + uid);
+
+        String endpoint = "units/" + id + "/" + uid;
 
         String uri;
 
         if(id.equals("0001")){
             uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getUnitDetail/" + uid;
         } else {
-            uri = url + endpoint;
+            uri = "http://ec2-54-202-120-169.us-west-2.compute.amazonaws.com:5000/" + endpoint;
         }
 
         final ProgressBar spinner = (ProgressBar) view.findViewById(R.id.units_detail_spinner);
@@ -89,14 +92,18 @@ public class UnitDetailPage extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
+                        System.out.println(response.toString());
+
                         spinner.setVisibility(View.INVISIBLE);
                         double grade = 0;// = 68.0;
                         double average = 0;
                         try{
-                            grade = Double.parseDouble(response.getJSONObject("Unit_Grade").getString("0"));
-                            average = Double.parseDouble(response.getJSONObject("Unit_Mean").getString("0"));
-                            String code_j = response.getJSONObject("Unit_Title").getString("0");
-                            String name_j = response.getJSONObject("Unit_Name").getString("0");
+                            JSONObject ja = response.getJSONArray("data").getJSONObject(0);
+
+                            grade = Double.parseDouble(ja.getString("mark"));
+                            average = Double.parseDouble(ja.getString("average"));
+                            String code_j = ja.getString("code");
+                            String name_j = ja.getString("name");
 
                             code.setText(code_j);
                             name.setText(name_j);

@@ -30,7 +30,7 @@ public class LinkContacts extends Fragment {
 
 
     private int[] links = new int[] {R.id.contactLink1, R.id.contactLink2, R.id.contactLink3};
-    String url = "http://www.schemefactory.com.au:5000";
+    String url = "http://www.schemefactory.com.au:5000/";
 
 
     private OnFragmentInteractionListener mListener;

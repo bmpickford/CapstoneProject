@@ -184,7 +184,7 @@ public class CourseGPA extends Fragment {
         if(id.equals("0001")){
             uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getGPA";
         } else {
-            uri = url + endpoint;
+            uri = "http://ec2-54-202-120-169.us-west-2.compute.amazonaws.com:5000/" + endpoint;
         }
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -208,17 +208,16 @@ public class CourseGPA extends Fragment {
                         int maxAngle2;
 
                         try {
-                            JSONObject body = response;
+                            JSONObject body = response.getJSONArray("data").getJSONObject(0);
 
-                            if(response.getJSONObject("Mean").length() > 1){
+                            if(!body.getString("degree_2").equals("0") && !(body.getString("degree_2").equals(0))){
                                 LinearLayout degree_2 = (LinearLayout) view.findViewById(R.id.second_degree);
                                 degree_2.setVisibility(View.VISIBLE);
 
-                                title2.setText(body.getJSONObject("Parent_Study_Package_Full_Title").getString("1"));
-                                avg2.setText("Course Average: " + body.getJSONObject("Mean").getString("1"));
-                                median2.setText("Course Median: " + body.getJSONObject("Median").getString("1"));
-                                code2.setText(body.getJSONObject("Course_Code").getString("1"));
-                                gpa2 = Double.parseDouble(body.getJSONObject("Course_GPA").getString("1"));
+                                title2.setText(body.getString("degree_2"));
+                                avg2.setText("Course Average: " + body.getString("avg2"));
+                                code2.setText(body.getString("degree_2"));
+                                gpa2 = Double.parseDouble(body.getString("degree_2_gpa"));
 
                                 if(gpa2 > Honours){
                                     maxAngle2 = (int) Math.floor((gpa2 / 7) * 360);
@@ -256,13 +255,12 @@ public class CourseGPA extends Fragment {
                                 median.setGravity(Gravity.CENTER_HORIZONTAL);
                             }
 
-                            title.setText(body.getJSONObject("Parent_Study_Package_Full_Title").getString("0"));
-                            avg.setText("Course Average: " + body.getJSONObject("Mean").getString("0"));
-                            median.setText("Course Median: " + body.getJSONObject("Median").getString("0"));
-                            code.setText(body.getJSONObject("Course_Code").getString("0"));
+                            title.setText(body.getString("degree_1"));
+                            avg.setText("Course Average: " + body.getString("avg1"));
+                            code.setText(body.getString("degree_1"));
 
                             title.setVisibility(View.VISIBLE);
-                            gpa = Double.parseDouble(body.getJSONObject("Course_GPA").getString("0"));
+                            gpa = Double.parseDouble(body.getString("degree_1_gpa"));
 
                             if(gpa > Honours){
                                 maxAngle = (int) Math.floor((gpa / 7) * 360);

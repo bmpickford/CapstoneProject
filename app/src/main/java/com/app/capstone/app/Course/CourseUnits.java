@@ -191,7 +191,7 @@ public class CourseUnits extends Fragment {
         if(id.equals("0001")){
             uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getUnits";
         } else {
-            uri = url + endpoint;
+             uri = "http://ec2-54-202-120-169.us-west-2.compute.amazonaws.com:5000/" + endpoint;
         }
 
 
@@ -202,29 +202,26 @@ public class CourseUnits extends Fragment {
                     public void onResponse(JSONObject response) {
 
                         String[] units = {};
+                        String[] ids = {};
                         try {
-                            JSONObject jo = response;
-                            //units = getUnits(jo);
+                            JSONArray jo = response.getJSONArray("data");
 
-                            JSONArray u = jo.getJSONArray("code");
-
-                            String[] arr=new String[u.length()];
+                            String[] arr=new String[jo.length()];
+                            String[] arr2=new String[jo.length()];
                             for(int i=0; i<arr.length; i++) {
-                                System.out.println(u.optString(i));
-                                System.out.println(u.get(i));
-                                arr[i]=u.optString(i);
+                                JSONObject item = jo.getJSONObject(i);
+                                arr[i] = item.getString("code");
+                                arr2[i] = item.getString("id");
                             }
-                            System.out.println(arr);
 
                             units = arr;
+                            ids = arr2;
                         } catch (JSONException e) {
                             e.printStackTrace();
                             messageBox("Unit data", e.toString());
                         }
                         spinner.setVisibility(View.INVISIBLE);
 
-                        //String[] u = {"CAB201: Programming Principles", "CAB202: Embedded Systems",
-                          //      "IFB299: Application Design and Development", "CAB301: Software Development"};
 
                         for(int i = 0; i < units.length; i++){
                             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -238,13 +235,14 @@ public class CourseUnits extends Fragment {
                             b.setLayoutParams(params);
 
                             b.setText(units[i]);
-                            b.setId(i);
+                            b.setId(Integer.parseInt(ids[i]));
 
                             b.setBackgroundColor(Color.WHITE);
                             b.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     int unit_id = view.getId();
+                                    System.out.println("ID: " + unit_id);
                                     System.out.println(unit_id);
                                     Bundle b = new Bundle();
                                     b.putInt("id", unit_id);
@@ -328,6 +326,7 @@ public class CourseUnits extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void prepareListData() {
 
         int i = 0;

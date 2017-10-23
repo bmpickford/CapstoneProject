@@ -30,7 +30,7 @@ public class LinkStudy extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private int[] links = new int[] {R.id.studyLink1, R.id.studyLink2, R.id.studyLink3};
-    String url = "http://www.schemefactory.com.au:5000";
+    String url = "http://www.schemefactory.com.au:5000/";
 
     public LinkStudy() {
         // Required empty public constructor

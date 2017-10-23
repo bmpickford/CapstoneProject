@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class LinkHealth extends Fragment {
 
     private int[] links = new int[] {R.id.healthLink1, R.id.healthLink2, R.id.healthLink3};
-    String url = "http://www.schemefactory.com.au:5000";
+    String url = "http://www.schemefactory.com.au:5000/";
 
     private OnFragmentInteractionListener mListener;
 

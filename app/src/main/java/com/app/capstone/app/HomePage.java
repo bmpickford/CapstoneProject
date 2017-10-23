@@ -2,6 +2,7 @@ package com.app.capstone.app;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,7 +45,9 @@ import com.github.mikephil.charting.utils.MPPointF;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -88,8 +91,7 @@ public class HomePage extends Fragment {
         content.setVisibility(View.INVISIBLE);
         spinner.setVisibility(View.VISIBLE);
 
-<<<<<<< HEAD
-=======
+
 
         final LinearLayout goal_link = (LinearLayout) view.findViewById(R.id.goal_link);
         final LinearLayout badge_link = (LinearLayout) view.findViewById(R.id.badge_link);
@@ -157,7 +159,7 @@ public class HomePage extends Fragment {
         });
 
         setGPA(view, spinner, content);
-        setBadges(view);
+        setBadges(view, false);
         setGoals(view);
 
 
@@ -240,7 +242,6 @@ public class HomePage extends Fragment {
     }
 
     private  void setGPA(final View view, final ProgressBar spinner, final LinearLayout content){
->>>>>>> 6018c22e8cf71621763f7244ca90d13fea39ec55
         String endpoint = "gpa/" + id;
 
         String uri;
@@ -248,7 +249,7 @@ public class HomePage extends Fragment {
         if(id.equals("0001")){
             uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getGPA";
         } else {
-            uri = url + endpoint;
+            uri = "http://ec2-54-202-120-169.us-west-2.compute.amazonaws.com:5000/" + endpoint;
         }
 
         final TextView gpa_title = (TextView) view.findViewById(R.id.gpa_title);
@@ -266,13 +267,10 @@ public class HomePage extends Fragment {
                         System.out.println(response.toString());
 
                         try {
-                            JSONObject body = response;
-<<<<<<< HEAD
+                            JSONObject body = response.getJSONArray("data").getJSONObject(0);
 
-=======
->>>>>>> 6018c22e8cf71621763f7244ca90d13fea39ec55
-                            gpa = Double.parseDouble(body.getJSONObject("Course_GPA").getString("0"));
-                            gpa_title.setText(body.getJSONObject("Course_Code").getString("0"));
+                            gpa = Double.parseDouble(body.getString("course_gpa"));
+                            gpa_title.setText(body.getString("code"));
                         } catch (JSONException e) {
                             messageBox("Get GPA Data", e.getMessage());
                             e.printStackTrace();
@@ -337,16 +335,17 @@ public class HomePage extends Fragment {
 
     }
 
-    private void setBadges(final View view){
+    private void setBadges(final View view, boolean recursive){
         String endpoint = "badges/" + id;
 
         String uri;
 
-        if(id.equals("0001")){
+        if(id.equals("0001") || recursive){
             uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getBadges";
         } else {
             uri = url + endpoint;
         }
+
 
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -394,7 +393,7 @@ public class HomePage extends Fragment {
                                         iv3.setImageResource((getResources().getIdentifier(img_paths_2[x] + "_g", "drawable", getContext().getPackageName())));
                                         break;
                                     default:
-                                        messageBox("Data Error", "Data recieved for badges is either null or out of range. Check API call");
+                                        messageBox("Data Error", "Data received for badges is either null or out of range. Check API call");
                                         break;
                                 }
                             }
@@ -403,10 +402,6 @@ public class HomePage extends Fragment {
                             messageBox("Apply Badges Data", e.toString());
                         }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 6018c22e8cf71621763f7244ca90d13fea39ec55
 
 
 
@@ -414,7 +409,7 @@ public class HomePage extends Fragment {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        messageBox("Get Badges", error.toString());
+                        //setBadges(view, true);
                     }
                 });
         Requester.getInstance(getContext()).addToRequestQueue(jsObjRequest);
@@ -422,12 +417,6 @@ public class HomePage extends Fragment {
     }
 
     private void setGoals(View view){
-
-<<<<<<< HEAD
-        data.setHighlightEnabled(false);
-        mChart.setData(data);
-=======
->>>>>>> 6018c22e8cf71621763f7244ca90d13fea39ec55
 
         final LinearLayout goal_content = (LinearLayout) view.findViewById(R.id.home_goal_content);
 
@@ -438,7 +427,7 @@ public class HomePage extends Fragment {
         if(id.equals("0001")){
             uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getPresentGoals";
         } else {
-            uri = url + endpoint;
+            uri = "http://ec2-54-202-120-169.us-west-2.compute.amazonaws.com:5000/" + endpoint;
         }
 
         System.out.println("using url: " + uri);
@@ -451,14 +440,39 @@ public class HomePage extends Fragment {
                         System.out.println(response.toString());
                         LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         llp.setMargins(80, 0, 80, 0); // llp.setMargins(left, top, right, bottom);
-
+                        int max = 3;
                         try {
-                            for(int i = 0; i < 3; i++){
+                            if(response.getJSONArray("data").length() <= 3){
+                                max = response.getJSONArray("data").length();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            for(int i = 0; i < max; i++){
+                                JSONObject ja = response.getJSONArray("data").getJSONObject(i);
                                 TextView tv=new TextView(getContext());
                                 tv.setLayoutParams(llp);
-                                String desc = response.getJSONObject("Description").getString(String.valueOf(i));
-                                String exp = response.getJSONObject("Exp_Date").getString(String.valueOf(i));
-                                tv.setText(desc + " - DUE: " + exp);
+                                String desc = ja.getString("name");
+                                String exp = ja.getString("expiry");
+                                
+                                Date date = null;
+
+                                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                                SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                try {
+                                    date = formatter.parse(ja.getString("expiry"));
+                                } catch (java.text.ParseException e) {
+                                    try {
+                                        date = formatter2.parse(ja.getString("expiry"));
+                                    } catch (ParseException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                }
+
+                                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                                df.format(date);
+                                tv.setText(desc + " - DUE: " + df.format(date));
                                 tv.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.border));
 
 

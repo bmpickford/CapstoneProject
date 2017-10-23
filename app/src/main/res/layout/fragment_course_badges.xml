@@ -64,7 +64,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
                     android:checkMark="@drawable/badge"
-                    android:checkMarkTint="@color/colorConfirm"
                     android:checked="false"
                     android:clickable="false"
                     android:gravity="center_vertical|center_horizontal"
@@ -91,7 +90,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
                     android:checkMark="@drawable/badge"
-                    android:checkMarkTint="@color/colorConfirm"
                     android:checked="false"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="Three Semesters" />
@@ -130,7 +128,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
                     android:checkMark="@drawable/badge"
-                    android:checkMarkTint="@color/colorConfirm"
                     android:checked="false"
                     android:clickable="false"
                     android:gravity="center_vertical|center_horizontal"
@@ -157,7 +154,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
                     android:checkMark="@drawable/badge"
-                    android:checkMarkTint="@color/colorConfirm"
                     android:checked="false"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="Three Years" />
@@ -204,7 +200,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
                     android:checkMark="@drawable/badge"
-                    android:checkMarkTint="@color/colorConfirm"
                     android:checked="false"
                     android:clickable="false"
                     android:gravity="center_vertical|center_horizontal"
@@ -231,7 +226,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
                     android:checkMark="@drawable/badge"
-                    android:checkMarkTint="@color/colorConfirm"
                     android:checked="false"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="Ten Goals" />
@@ -270,7 +264,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
                     android:checkMark="@drawable/badge"
-                    android:checkMarkTint="@color/colorConfirm"
                     android:checked="false"
                     android:clickable="false"
                     android:gravity="center_vertical|center_horizontal"
@@ -297,7 +290,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="3"
                     android:checkMark="@drawable/badge"
-                    android:checkMarkTint="@color/colorConfirm"
                     android:checked="false"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="Twelve Weeks" />
