@@ -340,11 +340,9 @@ public class HomePage extends Fragment {
 
         String uri;
 
-        if(id.equals("0001") || recursive){
-            uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getBadges";
-        } else {
-            uri = url + endpoint;
-        }
+
+        uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getBadges";
+
 
 
 
@@ -360,6 +358,7 @@ public class HomePage extends Fragment {
                         String bl = null; //Blackboard
 
                         try {
+                            System.out.println(response.toString());
                             JSONObject body = response;
 
                             JSONObject a = body.getJSONObject("gpa_sem");
@@ -373,6 +372,11 @@ public class HomePage extends Fragment {
                             g = c.getString("0");
                             bl = d.getString("0");
 
+                            System.out.println(Integer.parseInt(gS));
+                            System.out.println(Integer.parseInt(gY));
+                            System.out.println(Integer.parseInt(g));
+                            System.out.println(Integer.parseInt(bl));
+
                             int[] imgs = {Integer.parseInt(gS), Integer.parseInt(gY), Integer.parseInt(g), Integer.parseInt(bl)};
                             String[] img_paths = {"home_gpa_sem", "home_gpa_year","home_goals","home_blackboard"};
                             String[] img_paths_2 = {"badge_gs", "badge_gy","badge_g","badge_bl"};
@@ -380,6 +384,10 @@ public class HomePage extends Fragment {
 
                             for(int x = 0; x < imgs.length; x++){
                                 switch(imgs[x]){
+                                    case 0:
+                                        ImageView iv0 = (ImageView) view.findViewById((getResources().getIdentifier(img_paths[x], "id", getContext().getPackageName())));
+                                        iv0.setImageResource((getResources().getIdentifier(img_paths_2[x] + "_0", "drawable", getContext().getPackageName())));
+                                        break;
                                     case 1:
                                         ImageView iv = (ImageView) view.findViewById((getResources().getIdentifier(img_paths[x], "id", getContext().getPackageName())));
                                         iv.setImageResource((getResources().getIdentifier(img_paths_2[x] + "_b", "drawable", getContext().getPackageName())));

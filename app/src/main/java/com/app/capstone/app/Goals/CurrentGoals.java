@@ -303,19 +303,6 @@ public class CurrentGoals extends Fragment {
                             }
                         });
 
-                        LayoutInflater infalInflater = (LayoutInflater) getActivity()
-                                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        View convertView = infalInflater.inflate(R.layout.list_item, null);
-
-
-                        Button btn = (Button) convertView.findViewById(R.id.completeGoalBtn);
-
-                        btn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                System.out.println("BUTTTON 2222");
-                            }
-                        });
 
                     }
                 }, new com.android.volley.Response.ErrorListener() {

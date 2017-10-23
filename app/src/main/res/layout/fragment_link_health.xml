@@ -62,6 +62,82 @@
             android:paddingTop="@dimen/list_p_top"
             android:text="@string/healthLink3"
             android:textColorLink="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/healthLink4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/list_m_bottom"
+            android:layout_marginStart="@dimen/list_m_left"
+            android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginTop="@dimen/list_m_top"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:elevation="@dimen/list_elevation"
+            android:paddingBottom="@dimen/list_p_bottom"
+            android:paddingLeft="@dimen/list_m_left"
+            android:paddingEnd="@dimen/list_p_right"
+            android:paddingTop="@dimen/list_p_top"
+            android:text="@string/healthLink4"
+            android:textColorLink="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/healthLink5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/list_m_bottom"
+            android:layout_marginStart="@dimen/list_m_left"
+            android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginTop="@dimen/list_m_top"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:elevation="@dimen/list_elevation"
+            android:paddingBottom="@dimen/list_p_bottom"
+            android:paddingLeft="@dimen/list_m_left"
+            android:paddingEnd="@dimen/list_p_right"
+            android:paddingTop="@dimen/list_p_top"
+            android:text="@string/healthLink5"
+            android:textColorLink="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/healthLink6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/list_m_bottom"
+            android:layout_marginStart="@dimen/list_m_left"
+            android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginTop="@dimen/list_m_top"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:elevation="@dimen/list_elevation"
+            android:paddingBottom="@dimen/list_p_bottom"
+            android:paddingLeft="@dimen/list_m_left"
+            android:paddingEnd="@dimen/list_p_right"
+            android:paddingTop="@dimen/list_p_top"
+            android:text="@string/healthLink6"
+            android:textColorLink="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/healthLink7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/list_m_bottom"
+            android:layout_marginStart="@dimen/list_m_left"
+            android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginTop="@dimen/list_m_top"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:elevation="@dimen/list_elevation"
+            android:paddingBottom="@dimen/list_p_bottom"
+            android:paddingLeft="@dimen/list_m_left"
+            android:paddingEnd="@dimen/list_p_right"
+            android:paddingTop="@dimen/list_p_top"
+            android:text="@string/healthLink7"
+            android:textColorLink="@android:color/black"/>
     </LinearLayout>
 
 </FrameLayout>

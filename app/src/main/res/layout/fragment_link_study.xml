@@ -67,6 +67,82 @@
             android:text="@string/studyLink3"
             android:textColorLink="@android:color/black"/>
 
+        <TextView
+            android:id="@+id/studyLink4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/list_m_bottom"
+            android:layout_marginStart="@dimen/list_m_left"
+            android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginTop="@dimen/list_m_top"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:elevation="@dimen/list_elevation"
+            android:paddingBottom="@dimen/list_p_bottom"
+            android:paddingLeft="@dimen/list_m_left"
+            android:paddingEnd="@dimen/list_p_right"
+            android:paddingTop="@dimen/list_p_top"
+            android:text="@string/studyLink4"
+            android:textColorLink="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/studyLink5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/list_m_bottom"
+            android:layout_marginStart="@dimen/list_m_left"
+            android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginTop="@dimen/list_m_top"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:elevation="@dimen/list_elevation"
+            android:paddingBottom="@dimen/list_p_bottom"
+            android:paddingLeft="@dimen/list_m_left"
+            android:paddingEnd="@dimen/list_p_right"
+            android:paddingTop="@dimen/list_p_top"
+            android:text="@string/studyLink5"
+            android:textColorLink="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/studyLink6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/list_m_bottom"
+            android:layout_marginStart="@dimen/list_m_left"
+            android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginTop="@dimen/list_m_top"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:elevation="@dimen/list_elevation"
+            android:paddingBottom="@dimen/list_p_bottom"
+            android:paddingLeft="@dimen/list_m_left"
+            android:paddingEnd="@dimen/list_p_right"
+            android:paddingTop="@dimen/list_p_top"
+            android:text="@string/studyLink6"
+            android:textColorLink="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/studyLink7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/list_m_bottom"
+            android:layout_marginStart="@dimen/list_m_left"
+            android:layout_marginEnd="@dimen/list_m_right"
+            android:layout_marginTop="@dimen/list_m_top"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:elevation="@dimen/list_elevation"
+            android:paddingBottom="@dimen/list_p_bottom"
+            android:paddingLeft="@dimen/list_m_left"
+            android:paddingEnd="@dimen/list_p_right"
+            android:paddingTop="@dimen/list_p_top"
+            android:text="@string/studyLink7"
+            android:textColorLink="@android:color/black"/>
+
 
     </LinearLayout>
 

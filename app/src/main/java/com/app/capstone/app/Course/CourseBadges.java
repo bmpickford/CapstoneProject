@@ -71,12 +71,7 @@ public class CourseBadges extends Fragment {
 
         String uri;
 
-        if(id.equals("0001")){
-            uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getBadges";
-        } else {
-            uri = url + endpoint;
-        }
-
+        uri = "https://3ws25qypv8.execute-api.ap-southeast-2.amazonaws.com/prod/getBadges";
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, uri, null, new Response.Listener<JSONObject>() {
@@ -121,6 +116,10 @@ public class CourseBadges extends Fragment {
 
                         for(int x = 0; x < imgs.length; x++){
                             switch(imgs[x]){
+                                case 0:
+                                    ImageView iv0 = (ImageView) view.findViewById((getResources().getIdentifier(img_paths[x], "id", getContext().getPackageName())));
+                                    iv0.setImageResource((getResources().getIdentifier(img_paths_2[x] + "_0", "drawable", getContext().getPackageName())));
+                                    break;
                                 case 1:
                                     ImageView iv = (ImageView) view.findViewById((getResources().getIdentifier(img_paths[x], "id", getContext().getPackageName())));
                                     iv.setImageResource((getResources().getIdentifier(img_paths_2[x] + "_b", "drawable", getContext().getPackageName())));

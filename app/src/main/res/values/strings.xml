@@ -12,10 +12,18 @@
     <string name="studyLink1"><a href="https://www.lynda.com">Lynda</a></string>
     <string name="studyLink2"><a href="https://www.library.qut.edu.au/help/stimulate.jsp">STIMulate</a></string>
     <string name="studyLink3"><a href="https://www.student.qut.edu.au/about/faculties-institutes-and-divisions/oodgeroo">Indigenous Help</a></string>
+    <string name="studyLink4"><a href="https://www.student.qut.edu.au/learning-and-assessment/studying-effectively">Studying Effectively</a></string>
+    <string name="studyLink5"><a href="https://www.student.qut.edu.au/learning-and-assessment/writing-and-referencing">Writing and Referencing</a></string>
+    <string name="studyLink6"><a href="https://www.student.qut.edu.au/learning-and-assessment/assignments">Assignment Help</a></string>
+    <string name="studyLink7"><a href="https://www.citewrite.qut.edu.au/cite/">Cite|Write</a></string>
 
     <string name="healthLink1"><a href="http://www.health-centre.qut.edu.au/">QUT health</a></string>
     <string name="healthLink2"><a href="https://www.student.qut.edu.au/health-and-wellbeing/personal-support-and-counselling/qut-counselling-services">Counselling</a></string>
     <string name="healthLink3"><a href="https://www.student.qut.edu.au/health-and-wellbeing/personal-support-and-counselling/chaplaincy">Chaplaincy</a></string>
+    <string name="healthLink4"><a href="https://www.student.qut.edu.au/international">International Help</a></string>
+    <string name="healthLink5"><a href="https://www.student.qut.edu.au/health-and-wellbeing/safety-and-security">Safety and Security</a></string>
+    <string name="healthLink6"><a href="https://www.student.qut.edu.au/health-and-wellbeing/rights-conduct-and-grievances">Code of Conduct</a></string>
+    <string name="healthLink7"><a href="https://www.student.qut.edu.au/enrolment/fees-and-finances/financial-help-and-support">Financial Help</a></string>
 
     <string name="contactLink1"><a href="https://www.student.qut.edu.au/student-life/student-exchange">Exchange</a></string>
     <string name="contactLink2"><a href="https://www.student.qut.edu.au/student-life/clubs-social-activities/clubs-and-projects/find-a-club-or-project">Clubs</a></string>
