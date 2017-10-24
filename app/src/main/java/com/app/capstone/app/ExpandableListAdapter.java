@@ -239,7 +239,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 requestBody = jsonData.toString();
                 break;
             case "DELETE":
-                req = com.android.volley.Request.Method.PUT;
+                req = com.android.volley.Request.Method.DELETE;
                 break;
         }
 

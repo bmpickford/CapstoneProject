@@ -112,9 +112,17 @@ public class UnitDetailPage extends Fragment {
                             e.printStackTrace();
                         }
 
+                        String c_text;
+                        if(grade == 0){
+                            c_text = "No mark \nrecorded";
+                            average = 0;
+                        } else {
+                            c_text = grade + "%";
+                        }
+
                         mChart = (PieChart) view.findViewById(R.id.unitChart);
                         mChart.setUsePercentValues(false);
-                        mChart.setCenterText(grade + "%");
+                        mChart.setCenterText(c_text);
                         mChart.setCenterTextSize(18);
                         mChart.setCenterTextColor(Color.GRAY);
                         mChart.getDescription().setEnabled(false);

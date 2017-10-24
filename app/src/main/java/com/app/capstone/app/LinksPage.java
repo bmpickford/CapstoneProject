@@ -22,14 +22,6 @@ import com.app.capstone.app.Links.LinkHealth;
 import com.app.capstone.app.Links.LinkStudy;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link LinksPage.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link LinksPage#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LinksPage extends Fragment {
 
     private OnFragmentInteractionListener mListener;
@@ -48,7 +40,7 @@ public class LinksPage extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fragment fragment = null;
-        Class fragmentClass = LinkContacts.class;
+        Class fragmentClass = LinkStudy.class;
         try {
             fragment = (Fragment) fragmentClass.newInstance();
             FragmentManager fragmentManager = getFragmentManager();
@@ -73,10 +65,6 @@ public class LinksPage extends Fragment {
                 Class fragmentClass = null;
                 switch (item.getItemId()) {
 
-                    case R.id.action_contacts:
-                        fragmentClass = LinkContacts.class;
-                        System.out.println("You clicked contacts");
-                        break;
                     case R.id.action_study:
                         fragmentClass = LinkStudy.class;
                         System.out.println("You clicked study");
